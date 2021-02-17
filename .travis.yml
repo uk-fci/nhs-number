@@ -11,3 +11,7 @@ python:
 
 install:
   - pip install pipenv
+  - pip install pytest
+
+script: pytest
+
