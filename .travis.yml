@@ -11,10 +11,11 @@ python:
 
 install:
   - pip install pipenv
-  - pip install pytest
+  - pip install pytest-cov
+  - pip install codecov
 
 script:
-  pytest --cov=amortization --cov-report=xml -v
+  pytest --cov=nhs_number --cov-report=xml -v
 
 after_success:
   codecov
