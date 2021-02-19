@@ -15,76 +15,95 @@ class Test(TestCase):
         self.assertTrue(is_valid('9876543210 '))
 
     def test_is_valid_format_basic(self):
-        input = '0123456789'
+        num_string = '0123456789'
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_basic_pad_right(self):
-        input = '0123456789 '
+        num_string = '0123456789 '
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_basic_pad_left(self):
-        input = ' 0123456789'
+        num_string = ' 0123456789'
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_basic_pad_both(self):
-        input = ' 0123456789 '
+        num_string = ' 0123456789 '
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_internal(self):
-        input = '012 345 6789'
+        num_string = '012 345 6789'
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_internal_pad_right(self):
-        input = '012 345 6789 '
+        num_string = '012 345 6789 '
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_internal_pad_left(self):
-        input = ' 012 345 6789'
+        num_string = ' 012 345 6789'
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_internal_pad_both(self):
-        input = ' 012 345 6789 '
+        num_string = ' 012 345 6789 '
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_invalid_format_internal(self):
-        input = '01 2345 6789'
+        num_string = '01 2345 6789'
         expected = ''
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_hyphen(self):
-        input = '012-345-6789'
+        num_string = '012-345-6789'
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_hyphen_pad_right(self):
-        input = '012-345-6789 '
+        num_string = '012-345-6789 '
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_hyphen_pad_left(self):
-        input = ' 012-345-6789'
+        num_string = ' 012-345-6789'
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_valid_format_hyphen_pad_both(self):
-        input = ' 012-345-6789 '
+        num_string = ' 012-345-6789 '
         expected = '0123456789'
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_invalid_format_hyphen(self):
-        input = '01-2345-6789'
+        num_string = '01-2345-6789'
         expected = ''
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
 
     def test_is_invalid_format_mixed(self):
-        input = '012 345-6789'
+        num_string = '012 345-6789'
         expected = ''
-        self.assertEqual(expected, normalise_number(input))
+        self.assertEqual(expected, normalise_number(num_string))
+
+    def test_is_invalid_format_short(self):
+        num_string = '012345678'
+        expected = ''
+        self.assertEqual(expected, normalise_number(num_string))
+
+    def test_is_invalid_format_long(self):
+        num_string = '01234567890'
+        expected = ''
+        self.assertEqual(expected, normalise_number(num_string))
+
+    def test_is_invalid_format_letters(self):
+        num_string = 'ABCDEFGHIJ'
+        expected = ''
+        self.assertEqual(expected, normalise_number(num_string))
+
+    def test_is_invalid_wrong_format(self):
+        num_string = '123 456 789'
+        self.assertFalse(is_valid(num_string))
