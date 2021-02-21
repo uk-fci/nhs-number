@@ -11,7 +11,21 @@ python:
 
 install:
   - pip install pipenv
-  - pip install pytest
+  - pip install pytest-cov
+  - pip install codecov
 
-script: pytest
+script:
+  pytest --cov=nhs_number --cov-report=term -v
 
+after_success:
+  codecov
+
+deploy:
+  provider: pypi
+  user: $TEST_PYPI_USER
+  password: $TEST_PYPI_PASS
+  server: https://test.pypi.org/legacy/
+  distributions: "sdist bdist_wheel"
+  on:
+    branch: staging
+    condition: $TRAVIS_PYTHON_VERSION = "3.6"
