@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = '1.0.0'
+VERSION = '1.1.1'
 
 setup(
     name='nhs_number',
@@ -15,12 +15,12 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
         'Topic :: Office/Business :: Financial',
         'Topic :: Scientific/Engineering :: Mathematics',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Intended Audience:: Developers',
+        'Intended Audience :: Developers',
         'Intended Audience :: Healthcare Industry',
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Medical Science Apps.',
