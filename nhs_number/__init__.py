@@ -3,7 +3,7 @@ Python code to check the validity of NHS Numbers
 """
 # License: MIT (http://www.opensource.org/licenses/mit-license.php)
 
-__version__ = '1.2.0'
+__version__ = '1.2.1'
 __author__ = "Andy Law <andy.law@roslin.ed.ac.uk>"
 
 import re

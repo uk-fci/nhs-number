@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
-VERSION = '1.2.0'
+VERSION = '1.2.1'
 
 setup(
     name='nhs_number',
     version=VERSION,
     py_modules=['nhs_number'],
-    packages=find_packages(),
+    packages=find_packages(include=['nhs_number']),
     url='https://github.com/andylaw/NhsNumberChecks',
     download_url='https://github.com/andylaw/NhsNumberChecks/tarball/{}'.format(VERSION),
     license='MIT',
