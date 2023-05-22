@@ -8,6 +8,9 @@ python:
   - 3.5
   - 3.6
   - 3.7
+  - 3.8
+  - 3.9
+  - 3.10
 
 install:
   - pip install pipenv
@@ -28,7 +31,7 @@ deploy:
     distributions: "sdist bdist_wheel"
     on:
       branch: staging
-      condition: $TRAVIS_PYTHON_VERSION = "3.6"
+      condition: $TRAVIS_PYTHON_VERSION = "3.10"
   #
   - provider: pypi
     user: $PYPI_USER
@@ -36,4 +39,4 @@ deploy:
     distributions: "sdist bdist_wheel"
     on:
       branch: main
-      condition: $TRAVIS_PYTHON_VERSION = "3.6"
+      condition: $TRAVIS_PYTHON_VERSION = "3.10"
