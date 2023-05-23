@@ -1,5 +1,7 @@
 # NhsNumberChecks
-Package to provide utilities to check NHS Numbers for validity
+
+Python package to provide utilities for NHS Numbers, including validity checks, normalisation, and generation.
+
 <table>
     <tr>
         <td>License</td>
