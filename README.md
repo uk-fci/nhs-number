@@ -45,32 +45,40 @@ pip install nhs-number
 
 ## Basic Usage
 
+Provides a set of tools to handle NHS numbers, mainly validation and normalisation of the number, and generation of numbers for testing. IMPORTANT: **You should never need to generate an NHS Number for a live system**. Live numbers are always generated in some kind of central registry, such as the NHS Spine in England, and they are assigned to patients.
+
 ```python
 import nhs_number
 
 nhs_number.is_valid('1234567890')
-# True
-
-nhs_number.is_valid('1234567891')
 # False
 
-nhs_number.normalise('1234567890')
-# '123 456 7890'
+nhs_number.is_valid('1234567891')
+# True
+
+nhs_number.normalise('123 456 7891')
+# '1234567891'
 ```
 
 ---
 
 ## What is an NHS Number?
 
-The NHS Number is a single patient identifier used across the NHS in England and Wales.
+The NHS Number is a single patient identifier used across the NHS in England, Wales, and the Isle of Man.
 
 In 2015, the NHS Number was legally mandated to be used as a single patient identifier across health and care with the introduction of the [The Health and Social Care (Safety and Quality) Bill](https://www.digitalhealth.net/2015/10/nhs-number-use-becomes-law/).
 
-Scotland and Northern Ireland have similar single patient idenfifiers on which there is more information below.
+Scotland and Northern Ireland have similar single patient identifiers, on which there is more information below.
 
 ## Using the NHS number within services and systems
 
 The use of the NHS number in health and care organisations is specified in an the [Information Standards Board](https://digital.nhs.uk/data-and-information/information-standards) standard [ISB 0149 NHS Number](https://digital.nhs.uk/data-and-information/information-standards/information-standards-and-data-collections-including-extractions/publications-and-notifications/standards-and-collections/isb-0149-nhs-number)
+
+These identifiers are referred to by different devolved nations with different terminology:
+
+* Health and Care Number ("H&C Number") in Northern Ireland
+* Community Health Index ("CHI Number") in Scotland
+
 
 ### Live Number Ranges
 
@@ -117,3 +125,12 @@ The package has been adopted by the [Faculty of Clinical Informatics](https://ww
 * [Mark Bailey](https://github.com/Cotswoldsmaker) - Acting Chair of the [Faculty of Clinical Informatics](https://www.facultyofclinicalinformatics.org.uk/)
 
 * [Mark Sellors](https://github.com/sellorm) - author of [nhssums](https://pypi.org/project/nhssums/)
+
+
+### Information Sources and further reading
+
+* [NHS Numbers and the systems used to manage them - An overview for research users](https://www.closer.ac.uk/wp-content/uploads/CLOSER-NHS-ID-Resource-Report-Apr2018.pdf)
+
+* [Wikipedia: NHS numbers](https://en.wikipedia.org/wiki/NHS_number)
+
+* [blu3id's Three Word NHS Number POC](https://blu3id.uk/posts/three-word-nhs-number)
