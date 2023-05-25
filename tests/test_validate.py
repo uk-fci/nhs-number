@@ -16,3 +16,8 @@ class ValidationTests(TestCase):
 
     def test_is_invalid_wrong_format(self):
         self.assertFalse(is_valid('123 456 789'))
+
+    def test_is_valid_randomly_generated(self):
+        self.assertTrue(is_valid('9990000018'))
+
+
