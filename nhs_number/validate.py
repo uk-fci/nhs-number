@@ -8,12 +8,14 @@ __author__ = "Andy Law <andy.law@roslin.ed.ac.uk>"
 
 from nhs_number.normalise import normalise_number
 
-def is_valid(nhs_number):
+def is_valid(nhs_number:str) -> bool:
     """
-    Checks the supplied NHS number (as a string) is valid and returns True or False
+    Checks the supplied NHS number (as a string) is valid and returns True or False.
+
+    Internally this uses the normalise_number() function to check that this is a valid format to start with.
+    Any non-valid input will result in returning False.
     """
-    # Use the normalise_number() function to check that this is a valid format to start with
-    # Any non-valid input will result in an empty string return
+
     nhs_number = normalise_number(nhs_number)
     if not nhs_number:
         return False
