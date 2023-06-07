@@ -11,6 +11,7 @@ Contributors
 """
 
 from nhs_number.normalise import normalise_number
+from nhs_number.constants import Region
 
 
 def calculate_checksum(identifier_digits: str) -> int:
@@ -33,7 +34,7 @@ def calculate_checksum(identifier_digits: str) -> int:
     return checksum
 
 
-def is_valid(nhs_number: str) -> bool:
+def is_valid(nhs_number: str, for_region: Region = None) -> bool:
     """
     Checks the supplied NHS number (as a string) is valid and returns True or False.
 
@@ -47,16 +48,23 @@ def is_valid(nhs_number: str) -> bool:
     How NHS Number validation works: https://www.datadictionary.nhs.uk/attributes/nhs_number.html
 
     """
-
+    # Normalise the NHS number to remove any spaces or dashes
     nhs_number = normalise_number(nhs_number)
     if not nhs_number:
         return False
 
+    # If the NHS number is outside of the range for the supplied region, return False
+    if for_region:
+        if not (
+            int(nhs_number) >= for_region.start and int(nhs_number) <= for_region.end
+        ):
+            return False
+        # Additional checks for Scotland CHI number DOB validity will go here
+
+    # Test for checksum validity
     # The first 9 numbers are used to calculate the checksum, which should match the last digit
     (identifier_digits, check_digit) = (nhs_number[:-1], int(nhs_number[-1]))
-
     calculated_checksum = calculate_checksum(identifier_digits)
-
     # NOTE: a checksum of 10 is invalid (and is quoted as a special case), but the check for equality
     # will catch that circumstance anyway
     return False if calculated_checksum != check_digit else True
