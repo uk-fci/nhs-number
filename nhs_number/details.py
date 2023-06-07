@@ -1,16 +1,46 @@
+"""
+Returns more detailed information on NHS numbers.
+
+License: MIT (http://www.opensource.org/licenses/mit-license.php)
+
+Contributors
+* Marcus Baw <marcusbaw@gmail.com>
+"""
+
+# standard imports
+
+# third-party imports
+
+# local imports
 from nhs_number import REGIONS
 from nhs_number.validate import is_valid, calculate_checksum
+
 
 class NhsNumber:
     nhs_number: str
     """
-    A class which returns more information about an NHS Number than simply validity.
+    A class which returns more information about an NHS Number than simply Boolean validity.
+
+    nhs_number: str
+        The NHS number to be validated, returned to you as a sense-check.
+    identifier_digits: str
+        The first 9 digits of the NHS number, which are the identifier digits.
+    check_digit: int
+        The 10th digit of the NHS number, which is the check digit.
+    valid: bool
+        Whether the NHS number is valid or not according to the checksum comparison.
+    calculated_checksum: int
+        The checksum calculated from the identifier digits, so you can compare it to the check digit.
+    region: Region
+        The region the NHS number is valid in, if any. Returns an instance of the Region class from the constants module.
+    region_comment: str
+        The name of the region the NHS number is valid in, if any. Returns a string.
 
     Usage:
     >>> from nhs_number import NhsNumber
     >>> nhs_number = NhsNumber('9876543210')
     >>> vars(nhs_number)
-    {'nhs_number': '9876543210', 'identifier_digits': '987654321', 'check_digit': 0, 'valid': True, 'calculated_checksum': 0, 'region_comment': 'Not to be issued (Synthetic/test patients PDS)'}
+    {'nhs_number': '9876543210', 'identifier_digits': '987654321', 'check_digit': 0, 'valid': True, 'calculated_checksum': 0, 'region': <nhs_number.constants.Region object at 0x7fcb31de5e90>, 'region_comment': 'Not to be issued (Synthetic/test patients PDS)'}
 
     """
 
@@ -34,8 +64,8 @@ class NhsNumber:
         region_comment = "Number did not match a known NHS number range"
 
         # determine the region the number is valid in
-        for region in REGIONS:
-            if int(identifier_digits) >= region.start and int(identifier_digits) <= region.end:
+        for handle, region in REGIONS.items():
+            if int(nhs_number) >= region.start and int(nhs_number) <= region.end:
                 region_comment = region.label
                 self.region = region
 
