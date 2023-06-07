@@ -20,4 +20,6 @@ class ValidationTests(TestCase):
     def test_is_valid_randomly_generated(self):
         self.assertTrue(is_valid('9990000018'))
 
+    def test_is_valid_leading_zero_chi(self):
+        self.assertTrue(is_valid('0607230002'))
 
