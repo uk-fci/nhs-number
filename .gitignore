@@ -132,3 +132,5 @@ dmypy.json
 testdata*
 local-test-data/
 
+# vscode
+.vscode/
