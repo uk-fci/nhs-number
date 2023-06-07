@@ -1,12 +1,26 @@
 """
 Normalises NHS numbers into a standard string format
-"""
 
+Originally derived from Andy Law's nhs_number Python package validation code
+
+License: MIT (http://www.opensource.org/licenses/mit-license.php)
+
+Contributors
+* Andy Law <andy.law@roslin.ed.ac.uk>
+* Marcus Baw <marcusbaw@gmail.com>
+"""
+# standard imports
 import re
 
-GOOD_FORMAT = r'^(\d{10}|\d{3} \d{3} \d{4}|\d{3}-\d{3}-\d{4})$'
+# third-party imports
 
-def normalise_number(nhs_number:str) -> str:
+# local imports
+
+
+GOOD_FORMAT = r"^(\d{10}|\d{3} \d{3} \d{4}|\d{3}-\d{3}-\d{4})$"
+
+
+def normalise_number(nhs_number: str) -> str:
     """
     Extract the 10 digits of an NHS number if the supplied string is a valid
     format. If supplied as an int it will attempt to convert it to a string for processing.
@@ -24,6 +38,6 @@ def normalise_number(nhs_number:str) -> str:
     """
     working_number = str(nhs_number).strip()
     if re.search(GOOD_FORMAT, working_number) is None:
-        working_number = ''
-    working_number = re.sub('[- ]', '', working_number)
+        working_number = ""
+    working_number = re.sub("[- ]", "", working_number)
     return working_number
