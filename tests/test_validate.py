@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from nhs_number import is_valid
-from nhs_number.constants import REGIONS
+from nhs_number import REGIONS, REGION_ENGLAND_WALES_IOM
 
 
 class ValidationTests(TestCase):
@@ -24,7 +24,9 @@ class ValidationTests(TestCase):
         self.assertTrue(is_valid("0607230002"))
 
     def test_valid_england_wales_number(self):
-        self.assertTrue(is_valid("4000000632", for_region=REGIONS["ENGLAND_WALES_IOM_1"]))
+        self.assertTrue(is_valid("4000000632",
+                                 for_region=REGION_ENGLAND_WALES_IOM))
 
     def test_invalid_england_wales_number(self):
-        self.assertFalse(is_valid("9876543210", for_region=REGIONS["ENGLAND_WALES_IOM_1"]))
+        self.assertFalse(is_valid("9876543210",
+                                  for_region=REGION_ENGLAND_WALES_IOM))

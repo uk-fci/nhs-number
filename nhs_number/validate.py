@@ -55,9 +55,7 @@ def is_valid(nhs_number: str, for_region: Region = None) -> bool:
 
     # If the NHS number is outside of the range for the supplied region, return False
     if for_region:
-        if not (
-            int(nhs_number) >= for_region.start and int(nhs_number) <= for_region.end
-        ):
+        if not for_region.contains_number(nhs_number):
             return False
         # Additional checks for Scotland CHI number DOB validity will go here
 

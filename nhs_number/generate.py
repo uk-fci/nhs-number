@@ -6,23 +6,20 @@ License: MIT (http://www.opensource.org/licenses/mit-license.php)
 Contributors
 * Marcus Baw <marcusbaw@gmail.com>
 """
-
+import random
 # standard imports
 from random import randint
 
 # third-party imports
 
 # local imports
-from nhs_number.validate import is_valid
-from nhs_number.constants import Region
+from nhs_number.validate import is_valid, calculate_checksum
+from nhs_number import Region, FULL_RANGE
 
 
 def generate(
     valid: bool = True,
     for_region: Region = None,
-    start: int = 0,  # defaults to 0
-    end: int = 9_999_999_999,  # defaults to 9_999_999_999
-    randomised: bool = False,
     quantity: int = 1,
 ) -> list:
 
@@ -39,12 +36,6 @@ def generate(
         for_region: Region
             If supplied, the start and end ranges for the supplied region will be used
             and any start and end ranges supplied in the function call will be ignored.
-        start: int
-            If supplied, the start range for the NHS numbers to be generated.
-        end: int
-            If supplied, the end range for the NHS numbers to be generated.
-        randomised: bool
-            If True, the NHS numbers will be generated randomly within the start and end ranges, otherwise they will be generated sequentially.
         quantity: int
             How many NHS numbers to generate.
 
@@ -56,34 +47,27 @@ def generate(
     # initialise the list of NHS numbers to be returned
     nhs_numbers = []
 
-    if start > end:
-        raise ValueError("The start range cannot be greater than the end range")
+    ranges=[FULL_RANGE]
 
     if for_region:
         if isinstance(for_region, Region):
-            # if a region is supplied, use the start and end ranges for that region
-            # and ignore any start and end ranges supplied in the function call
-            start = for_region.start
-            end = for_region.end
+            ranges = for_region.ranges
         else:
             raise TypeError("The for_region argument must be of type Region")
 
-    # generates valid NHS numbers between the start and end ranges supplied
-    if not randomised:
-        for candidate in range(start, end):
-            if len(nhs_numbers) < quantity:
-                candidate_str = str(candidate).zfill(10)
-                if is_valid(candidate_str) == valid:
-                    nhs_numbers.append(candidate_str)
+    # generates valid random NHS numbers within the given REGION range
+    while len(nhs_numbers) < quantity:
+        this_range = random.choice(ranges)
+        candidate = randint(this_range.start, this_range.end) // 10
+        candidate_str = str(candidate).zfill(9)
+        checksum_str = str(calculate_checksum(candidate_str))
+        if len(checksum_str) == 1:
+            if valid:
+                nhs_numbers.append(candidate_str + checksum_str)
             else:
-                break
-
-    else:  # (ie. randomised == True)
-        # generates valid random NHS numbers between the start and end ranges supplied
-        while len(nhs_numbers) < quantity:
-            candidate = randint(start, end)
-            candidate_str = str(candidate).zfill(10)
-            if is_valid(candidate_str) == valid:
-                nhs_numbers.append(candidate_str)
+                wrong_checksum_str = checksum_str
+                while wrong_checksum_str == checksum_str:
+                    wrong_checksum_str= str(random.choice(range(0,10)))
+                nhs_numbers.append(candidate_str + wrong_checksum_str)
 
     return nhs_numbers

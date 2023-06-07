@@ -65,7 +65,7 @@ class NhsNumber:
 
         # determine the region the number is valid in
         for handle, region in REGIONS.items():
-            if int(nhs_number) >= region.start and int(nhs_number) <= region.end:
+            if region.contains_number(nhs_number):
                 region_comment = region.label
                 self.region = region
 
