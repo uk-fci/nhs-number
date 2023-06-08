@@ -50,3 +50,15 @@ def test_nhs_numbers_for_a_specific_region():
     assert len(nhs_numbers) == 1
     assert is_valid(nhs_numbers[0])
     assert REGION_ENGLAND_WALES_IOM.contains_number(nhs_numbers[0])
+
+
+def test_fail_when_non_region_supplied():
+    """
+    Test that we get an error if we supply something other than a Region
+    object as the for_region argument
+    :return:
+    """
+    with pytest.raises(TypeError) as error:
+        # noinspection PyTypeChecker
+        nhs_numbers = generate(for_region="REGION_ENGLAND_WALES_IOM")
+
