@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from nhs_number import is_valid
-from nhs_number import REGIONS, REGION_ENGLAND_WALES_IOM
+from nhs_number import REGION_ENGLAND_WALES_IOM
 
 
 class ValidationTests(TestCase):
