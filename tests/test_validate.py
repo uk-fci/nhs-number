@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from nhs_number import is_valid
+from nhs_number import is_valid, calculate_checksum
 from nhs_number import REGION_ENGLAND_WALES_IOM
 
 
@@ -30,3 +30,9 @@ class ValidationTests(TestCase):
     def test_invalid_england_wales_number(self):
         self.assertFalse(is_valid("9876543210",
                                   for_region=REGION_ENGLAND_WALES_IOM))
+
+    def test_checksum_returns_none_if_less_than_nine_digits(self):
+        self.assertIsNone(calculate_checksum("123456"))
+
+    def test_checksum_returns_none_if_more_than_nine_digits(self):
+        self.assertIsNone(calculate_checksum("12345678901223456"))
