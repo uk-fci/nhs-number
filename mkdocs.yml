@@ -1,6 +1,54 @@
 # This file configures the documentation site
 
-site_name: My Docs
+site_name: nhs-number
+repo_url: https://github.com/uk-fci/nhs-number
+repo_name: uk-fci/nhs-number
 
+copyright: Copyright &copy; 2021-2023 Andy Law, The University of Edinburgh, and the Faculty of Clinical Informatics
+
+# explicitly defines the Nav so we can set order of pages other than default alphabetical
+nav:
+  - Introduction: "index.md"
+  - Installation: "installation.md"
+  - Usage: "usage.md"
+  - NHS Numbers: "nhs-numbers.md"
+  - Contributors: "contributors.md"
+  - Changelog: "changelog.md"
+
+# footer links and variables
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/ukfci
+    - icon: fontawesome/brands/github
+      link: https://github.com/uk-fci
+
+# theme and mkdocs additional features
 theme:
   name: material
+  icon:
+    logo: material/check-all
+  features:
+    - content.action.edit # explicitly adds edit button (Material4MkDocs9.0)
+    - content.action.view # explicitly adds view button (Material4MkDocs9.0)
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+    - navigation.footer
+
+# markdown additional features
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
