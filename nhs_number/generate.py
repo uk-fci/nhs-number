@@ -1,19 +1,20 @@
 """
 Generates valid or invalid NHS numbers, for testing
 
-License: MIT (http://www.opensource.org/licenses/mit-license.php)
+License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors
 * Marcus Baw <marcusbaw@gmail.com>
 """
 import random
+
 # standard imports
 from random import randint
 
 # third-party imports
 
 # local imports
-from nhs_number.validate import is_valid, calculate_checksum
+from nhs_number.validate import calculate_checksum
 from nhs_number import Region, FULL_RANGE
 
 
@@ -26,28 +27,32 @@ def generate(
     """
     Generates valid or invalid NHS numbers, for testing.
 
-    IMPORTANT: This function is not intended to be used to create real NHS numbers. It is for testing purposes only.
+    IMPORTANT: This function is not intended to be used to create real NHS
+    numbers. It is for testing purposes only.
     All live NHS numbers are allocated centrally and are not generated locally.
 
     Optional keyword arguments:
 
         valid: bool
-            Determines whether the NHS numbers to be generated are valid or invalid.
+            Determines whether the NHS numbers to be generated are valid or
+            invalid.
         for_region: Region
-            If supplied, the start and end ranges for the supplied region will be used
-            and any start and end ranges supplied in the function call will be ignored.
+            If supplied, the start and end ranges for the supplied region will
+            be used and any start and end ranges supplied in the function
+            call will be ignored.
         quantity: int
             How many NHS numbers to generate.
 
     The algorithm used here is very naive and could be significantly optimised.
-    But it is fairly fast anyway and works well enough for the purposes of this library.
+    But it is fairly fast anyway and works well enough for the purposes of
+    this library.
     Contributions are welcome.
     """
 
     # initialise the list of NHS numbers to be returned
     nhs_numbers = []
 
-    ranges=[FULL_RANGE]
+    ranges = [FULL_RANGE]
 
     if for_region:
         if isinstance(for_region, Region):
@@ -67,7 +72,7 @@ def generate(
             else:
                 wrong_checksum_str = checksum_str
                 while wrong_checksum_str == checksum_str:
-                    wrong_checksum_str= str(random.choice(range(0,10)))
+                    wrong_checksum_str = str(random.choice(range(0, 10)))
                 nhs_numbers.append(candidate_str + wrong_checksum_str)
 
     return nhs_numbers
