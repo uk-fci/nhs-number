@@ -1,7 +1,7 @@
 """
 Returns more detailed information on NHS numbers.
 
-License: MIT (http://www.opensource.org/licenses/mit-license.php)
+License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors
 * Marcus Baw <marcusbaw@gmail.com>
@@ -19,7 +19,8 @@ from nhs_number.validate import is_valid, calculate_checksum
 class NhsNumber:
     nhs_number: str
     """
-    A class which returns more information about an NHS Number than simply Boolean validity.
+    A class which returns more information about an NHS Number than simply
+    Boolean validity.
 
     nhs_number: str
         The NHS number to be validated, returned to you as a sense-check.
@@ -28,13 +29,17 @@ class NhsNumber:
     check_digit: int
         The 10th digit of the NHS number, which is the check digit.
     valid: bool
-        Whether the NHS number is valid or not according to the checksum comparison.
+        Whether the NHS number is valid or not according to the checksum
+        comparison.
     calculated_checksum: int
-        The checksum calculated from the identifier digits, so you can compare it to the check digit.
+        The checksum calculated from the identifier digits, so you can compare
+        it to the check digit.
     region: Region
-        The region the NHS number is valid in, if any. Returns an instance of the Region class from the constants module.
+        The region the NHS number is valid in, if any. Returns an instance of
+        the Region class from the constants module.
     region_comment: str
-        The name of the region the NHS number is valid in, if any. Returns a string.
+        The name of the region the NHS number is valid in, if any. Returns a
+        string.
 
     Usage:
     >>> from nhs_number import NhsNumber
@@ -48,7 +53,10 @@ class NhsNumber:
         self.nhs_number = nhs_number
 
         # split the number into its parts
-        (identifier_digits, check_digit) = (nhs_number[:-1], int(nhs_number[-1]))
+        (identifier_digits, check_digit) = (
+            nhs_number[:-1],
+            int(nhs_number[-1]),
+        )
         self.identifier_digits = identifier_digits
         self.check_digit = check_digit
 
