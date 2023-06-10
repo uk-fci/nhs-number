@@ -61,4 +61,3 @@ def test_fail_when_non_region_supplied():
     with pytest.raises(TypeError) as error:
         # noinspection PyTypeChecker
         nhs_numbers = generate(for_region="REGION_ENGLAND_WALES_IOM")
-
