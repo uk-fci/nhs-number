@@ -49,7 +49,7 @@ def test_format_internal_pad_both():
     assert expected == standardise_format(num_string)
 
 
-def test_format_internal():
+def test_format_internal_invalid_format():
     num_string = "01 2345 6789"
     expected = ""
     assert expected == standardise_format(num_string)
@@ -79,7 +79,7 @@ def test_format_hyphen_pad_both():
     assert expected == standardise_format(num_string)
 
 
-def test_format_hyphen():
+def test_format_hyphen_invalid_format():
     num_string = "01-2345-6789"
     expected = ""
     assert expected == standardise_format(num_string)
