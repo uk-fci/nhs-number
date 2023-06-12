@@ -1,4 +1,6 @@
-from nhs_number import standardise_format
+import pytest
+
+from nhs_number import standardise_format, normalise_number
 
 
 def test_format_basic():
@@ -125,3 +127,9 @@ def test_format_9_digit_int():
     number = 123456789
     expected = "0123456789"
     assert expected == standardise_format(number)
+
+
+def test_normalise_deprecated():
+    with pytest.deprecated_call():
+        # noinspection PyDeprecation
+        normalise_number("1234567890")
