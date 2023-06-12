@@ -28,7 +28,7 @@ jobs:
 
   pypi-test-publish:
     needs: ['build']
-    environment: 'publish'
+    environment: test-release
 
     name: Upload from staging branch to TEST.pypi.org
     runs-on: ubuntu-latest
