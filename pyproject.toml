@@ -10,6 +10,7 @@ license = "MIT"
 readme = "README.md"
 packages = [{include = "nhs_number"}]
 homepage = "https://uk-fci.github.io/nhs-number/"
+documentation = "https://uk-fci.github.io/nhs-number/"
 repository = "https://github.com/uk-fci/nhs-number"
 
 exclude = ["tests/local-test-data/*"]
@@ -32,6 +33,14 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2"
+black = "^23.3.0"
+poetry = "^1.5.1"
+
+[tool.poetry.urls]
+"Issue Tracker" = "https://github.com/uk-fci/nhs-number/issues"
 
 [build-system]
 requires = ["poetry-core"]

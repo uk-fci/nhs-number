@@ -1,0 +1,21 @@
+# formatting
+black
+
+# testing
+pytest
+
+#################### DOCS ####################
+# documentation site - Material for MkDocs
+mkdocs-material
+
+# for the feature which displays authors at the bottom of the page
+mkdocs-git-committers-plugin-2
+
+# for the feature which displays last edit date at the bottom of the page
+mkdocs-git-revision-date-localized-plugin
+
+# for the feature which enables 'foldable' admonition text (used for large code blocks)
+mkdocs-macros-plugin
+
+# for the PDF export feature
+mkdocs-with-pdf
