@@ -56,7 +56,7 @@ nhs_number.is_valid('1234567890')
 nhs_number.is_valid('1234567891')
 # True
 
-nhs_number.normalise('123 456 7891')
+nhs_number.standardise_format('123 456 7891')
 # '1234567891'
 ```
 
