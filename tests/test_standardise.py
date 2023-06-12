@@ -107,3 +107,21 @@ def test_format_letters():
     num_string = "ABCDEFGHIJ"
     expected = ""
     assert expected == standardise_format(num_string)
+
+
+def test_format_10_digit_int():
+    number = 1234567890
+    expected = "1234567890"
+    assert expected == standardise_format(number)
+
+
+def test_format_11_digit_int():
+    number = 12345678901
+    expected = ""
+    assert expected == standardise_format(number)
+
+
+def test_format_9_digit_int():
+    number = 123456789
+    expected = "0123456789"
+    assert expected == standardise_format(number)

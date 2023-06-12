@@ -20,7 +20,7 @@ import re
 GOOD_FORMAT = r"^(\d{10}|\d{3} \d{3} \d{4}|\d{3}-\d{3}-\d{4})$"
 
 
-def standardise_format(nhs_number: str) -> str:
+def standardise_format(nhs_number: str | int) -> str:
     """
     Extract the 10 digits of an NHS number if the supplied string is a valid
     format. If supplied as an int it will attempt to convert it to a string for
@@ -38,7 +38,10 @@ def standardise_format(nhs_number: str) -> str:
     :param nhs_number:
     :return: 10 digit numerical string or the empty string
     """
-    working_number = str(nhs_number).strip()
+    if isinstance(nhs_number, int):
+        working_number = str(nhs_number).zfill(10)
+    else:
+        working_number = nhs_number.strip()
     if re.search(GOOD_FORMAT, working_number) is None:
         working_number = ""
     working_number = re.sub("[- ]", "", working_number)
