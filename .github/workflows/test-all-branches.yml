@@ -1,5 +1,8 @@
 # Applies a test matrix to any new code pushed to the repo
 
+
+name: Tests pushes and PRs against multiple Python versions
+
 on:
   push:
     branches: '**'

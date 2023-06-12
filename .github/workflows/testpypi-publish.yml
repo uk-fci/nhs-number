@@ -26,12 +26,14 @@ jobs:
         with:
           path: ./dist
 
+  # this is a separate job so that the build job does not have access to the PyPI token
   pypi-test-publish:
+    needs: ['build']
+    environment: test-release
+
     name: Upload from staging branch to TEST.pypi.org
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/<your-pypi-project-name>
+
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
@@ -41,4 +43,5 @@ jobs:
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages_dir: artifact/
+        repository_url: https://test.pypi.org/legacy/
+        packages-dir: artifact
