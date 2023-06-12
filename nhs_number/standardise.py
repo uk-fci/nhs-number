@@ -11,6 +11,7 @@ Contributors
 """
 # standard imports
 import re
+import warnings
 
 # third-party imports
 
@@ -46,3 +47,9 @@ def standardise_format(nhs_number: str | int) -> str:
         working_number = ""
     working_number = re.sub("[- ]", "", working_number)
     return working_number
+
+
+def normalise_number(nhs_number: str) -> str:
+    warnings.warn("The normalise_number() function is deprecated - use "
+                  "standardise_format() instead")
+    return standardise_format(nhs_number)
