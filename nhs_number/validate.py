@@ -9,8 +9,8 @@ Contributors
 * Andy Law <andy.law@roslin.ed.ac.uk>
 * Marcus Baw <marcusbaw@gmail.com>
 """
-
-from nhs_number.normalise import normalise_number
+from __future__ import annotations # for Python 3.7 (remove once we stop supporting 3.7)
+from nhs_number.standardise import standardise_format
 from nhs_number.constants import Region
 
 
@@ -56,7 +56,7 @@ def is_valid(nhs_number: str, for_region: Region = None) -> bool:
 
     """
     # Normalise the NHS number to remove any spaces or dashes
-    nhs_number = normalise_number(nhs_number)
+    nhs_number = standardise_format(nhs_number)
     if not nhs_number:
         return False
 
