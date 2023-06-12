@@ -27,11 +27,12 @@ jobs:
           path: ./dist
 
   pypi-test-publish:
+    needs: ['build']
+    environment: 'publish'
+
     name: Upload from staging branch to TEST.pypi.org
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/<your-pypi-project-name>
+
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
@@ -42,3 +43,4 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         packages_dir: artifact/
+        repository-url: https://test.pypi.org/
