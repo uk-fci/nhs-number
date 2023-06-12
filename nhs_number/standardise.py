@@ -10,6 +10,7 @@ Contributors
 * Marcus Baw <marcusbaw@gmail.com>
 """
 # standard imports
+from __future__ import annotations # for Python 3.7 (remove once we stop supporting 3.7)
 import re
 import warnings
 

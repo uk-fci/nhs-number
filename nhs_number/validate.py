@@ -9,7 +9,7 @@ Contributors
 * Andy Law <andy.law@roslin.ed.ac.uk>
 * Marcus Baw <marcusbaw@gmail.com>
 """
-
+from __future__ import annotations # for Python 3.7 (remove once we stop supporting 3.7)
 from nhs_number.standardise import standardise_format
 from nhs_number.constants import Region
 
