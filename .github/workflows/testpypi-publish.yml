@@ -26,6 +26,7 @@ jobs:
         with:
           path: ./dist
 
+  # this is a separate job so that the build job does not have access to the PyPI token
   pypi-test-publish:
     needs: ['build']
     environment: test-release
@@ -38,6 +39,8 @@ jobs:
     steps:
     - name: Download package distributions from build job
       uses: actions/download-artifact@v3
+      with:
+        name: dist/
 
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
