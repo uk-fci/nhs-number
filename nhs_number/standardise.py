@@ -51,5 +51,5 @@ def standardise_format(nhs_number: str | int) -> str:
 
 def normalise_number(nhs_number: str) -> str:
     warnings.warn("The normalise_number() function is deprecated - use "
-                  "standardise_format() instead")
+                  "standardise_format() instead", DeprecationWarning)
     return standardise_format(nhs_number)
