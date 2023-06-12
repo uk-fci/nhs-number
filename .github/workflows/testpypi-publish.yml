@@ -42,5 +42,5 @@ jobs:
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages_dir: artifact/
-        repository-url: https://test.pypi.org/
+        packages-dir: artifact/
+        repository-url: https://test.pypi.org/legacy/
