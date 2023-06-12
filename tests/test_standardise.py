@@ -1,5 +1,3 @@
-from unittest import TestCase
-
 from nhs_number import standardise_format
 
 
