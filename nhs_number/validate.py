@@ -10,7 +10,7 @@ Contributors
 * Marcus Baw <marcusbaw@gmail.com>
 """
 
-from nhs_number.normalise import standardise_format
+from nhs_number.standardise import standardise_format
 from nhs_number.constants import Region
 
 
