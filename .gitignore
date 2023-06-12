@@ -128,10 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Local-only test data
-testdata*
-local-test-data/
-
 # vscode
 .vscode/
 

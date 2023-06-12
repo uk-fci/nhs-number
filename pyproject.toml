@@ -12,21 +12,22 @@ packages = [{include = "nhs_number"}]
 homepage = "https://uk-fci.github.io/nhs-number/"
 repository = "https://github.com/uk-fci/nhs-number"
 
-classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'License :: OSI Approved :: MIT License',
-        'Topic :: Scientific/Engineering :: Mathematics',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Healthcare Industry',
-        'Intended Audience :: Science/Research',
-        'Topic :: Scientific/Engineering :: Medical Science Apps.',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
-        ]
+exclude = ["tests/local-test-data/*"]
+
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'License :: OSI Approved :: MIT License',
+    'Topic :: Scientific/Engineering :: Mathematics',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Intended Audience :: Developers',
+    'Intended Audience :: Healthcare Industry',
+    'Intended Audience :: Science/Research',
+    'Topic :: Scientific/Engineering :: Medical Science Apps.',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
     ]
 
 [tool.poetry.dependencies]
