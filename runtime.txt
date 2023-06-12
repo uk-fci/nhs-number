@@ -1,0 +1,3 @@
+# required for netlify deploy of the docs
+
+3.11

@@ -35,9 +35,10 @@ classifiers = [
 python = "^3.7"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2"
+pytest = "^7.3.1"
 black = "^23.3.0"
-poetry = "^1.5.1"
+mkdocs-material = "^9.1.15"
+
 
 [tool.poetry.urls]
 "Issue Tracker" = "https://github.com/uk-fci/nhs-number/issues"
