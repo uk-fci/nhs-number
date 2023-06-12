@@ -2,7 +2,10 @@
 name = "nhs-number"
 version = "1.2.2"
 description = "Python package to provide utilities for NHS Numbers, including validity checks, normalisation, and generation."
-authors = ["Andy Law <andy.law@roslin.ed.ac.uk>", "Marcus Baw <marcusbaw@gmail.com>"]
+authors = [
+    "Andy Law <andy.law@roslin.ed.ac.uk>",
+    "Marcus Baw <marcusbaw@gmail.com>",
+    ]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "nhs_number"}]
@@ -10,7 +13,10 @@ packages = [{include = "nhs_number"}]
 [tool.poetry.dependencies]
 python = "^3.7"
 
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
+experimental-string-processing = true
