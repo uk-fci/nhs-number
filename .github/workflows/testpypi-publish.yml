@@ -1,7 +1,7 @@
 # .github/workflows/testpypi-publish.yml
 # This workflow will build a Python project, and publish it to TEST.pypi.org
 
-name: Publish commits to staging branch to TEST.pypi.org
+name: Publish library to TEST.pypi.org on push to `staging` branch
 
 on:
   push:
