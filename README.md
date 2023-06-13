@@ -33,9 +33,9 @@ Python package to provide utilities for NHS Numbers, including validity checks, 
 
 ## Documentation
 
-[Documentation](docs/index.md)
+A new and improved documentation site is available at <https://nhs-number.uk-fci.tech>
+
 
 ## Changelog
 
-[Changelog](docs/changelog.md)
-
+<https://nhs-number.uk-fci.tech/changelog/>

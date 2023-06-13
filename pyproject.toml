@@ -9,8 +9,8 @@ authors = [
 license = "MIT"
 readme = "README.md"
 packages = [{include = "nhs_number"}]
-homepage = "https://uk-fci.github.io/nhs-number/"
-documentation = "https://uk-fci.github.io/nhs-number/"
+homepage = "https://nhs-number.uk-fci.tech/"
+documentation = "https://nhs-number.uk-fci.tech/"
 repository = "https://github.com/uk-fci/nhs-number"
 
 exclude = ["tests/local-test-data/*"]
