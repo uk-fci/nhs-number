@@ -1,7 +1,7 @@
 # .github/workflows/pypi-publish.yml
 # This workflow will build the Python project, and publish it to pypi.org
 
-name: Publish commits to main branch to pypi.org
+name: Publish library to pypi.org on pushes to `main` branch
 
 on:
   push:
