@@ -12,8 +12,8 @@ Python package to provide utilities for NHS Numbers, including validity checks, 
         <td><img src="https://img.shields.io/pypi/v/nhs-number" alt="Version badge"></td>
     </tr>
     <tr>
-        <td>Travis CI</td>
-        <td><img src='https://www.travis-ci.com/andylaw/NhsNumberChecks.svg?branch=main'></td>
+        <td>Supported versions</td>
+        <td><img src='https://img.shields.io/pypi/pyversions/nhs-number.svg'></td>
         <td>Coverage</td>
         <td><img src='https://codecov.io/gh/andylaw/NhsNumberChecks/branch/main/graph/badge.svg'></td>
     </tr>
@@ -28,10 +28,6 @@ Python package to provide utilities for NHS Numbers, including validity checks, 
         <td><img src='https://img.shields.io/pypi/status/nhs-number'></td>
         <td>Downloads</td>
         <td><img src='https://img.shields.io/pypi/dm/nhs-number'></td>
-    </tr>
-    <tr>
-        <td>Supported versions</td>
-        <td><img src='https://img.shields.io/pypi/pyversions/nhs-number.svg'></td>
     </tr>
 </table>
 
