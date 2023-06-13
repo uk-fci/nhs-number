@@ -1,0 +1,47 @@
+# .github/workflows/pypi-publish.yml
+# This workflow will build the Python project, and publish it to pypi.org
+
+name: Publish commits to main branch to pypi.org
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build the distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
+
+      - run: |
+          pip install poetry
+          poetry build
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./dist
+
+  # this is a separate job so that the build job does not have access to the PyPI token
+  pypi-test-publish:
+    needs: ['build']
+    environment: release
+
+    name: Upload from main branch to pypi.org
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+    steps:
+    - name: Download package distributions from build job
+      uses: actions/download-artifact@v3
+
+    - name: Publish package distributions to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository_url: https://test.pypi.org/legacy/
+        packages-dir: artifact
