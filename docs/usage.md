@@ -73,8 +73,8 @@ True
 ```
 
 ### Regions
-You can obtain Region objects via the package's `REGION_*` constants:
 
+You can obtain Region objects via the package's `REGION_*` constants:
 
 ```python
 >>> import nhs_number

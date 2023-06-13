@@ -9,7 +9,7 @@ The NHS Number is a single patient identifier used across the NHS. In the variou
 
 ### How do I find out my NHS Number?
 
-Identifying individual NHS Numbers is outside the scope of this package, but if you are curious you can find out you rNHS number here [NHS website](https://www.nhs.uk/nhs-services/online-services/find-nhs-number/) for patients in England, Wales and the IOM, and here [NHS Scotland](https://www.nhsinform.scot/care-support-and-rights/nhs-services/nhs-number) for patients in Scotland.
+Identifying individual NHS Numbers is outside the scope of this package, but if you are curious you can find out your NHS number here [NHS website](https://www.nhs.uk/nhs-services/online-services/find-nhs-number/) for patients in England, Wales and the IOM, and here [NHS Scotland](https://www.nhsinform.scot/care-support-and-rights/nhs-services/nhs-number) for patients in Scotland.
 
 ### England, Wales and the Isle of Man 🏴󠁧󠁢󠁥󠁮󠁧󠁿 🏴󠁧󠁢󠁷󠁬󠁳󠁿 🇮🇲
 
@@ -76,4 +76,3 @@ NHS Numbers in England, Wales and the Isle of Man are a simple 9-digit number wi
 For those with an unnaturally strong interest in the NHS Number, you may enjoy the following:
 
 - [blu3id's Three Word NHS Number POC](https://blu3id.uk/posts/three-word-nhs-number)
-

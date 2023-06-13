@@ -5,13 +5,13 @@ authors: Dr Marcus Baw
 
 ## What is an IHI?
 
-The Individual Health Identifier (IHI) is a single patient identifier used across the Republic of Ireland. It is a 16-digit GS1 code, which embeds the 'NHS number' section within it.
+The Individual Health Identifier (IHI) is a single patient identifier used across the Republic of Ireland. It is a 16-digit [GS1](https://www.gs1.org/industries/healthcare/standards) code, which embeds the 'NHS number' section *within* it.
 
-We were unable to find much detail about the detailed technical structure of it in the public domain but following inquiries we were able to obtain the following information from the HSE:
+We were unable to find much detail about the detailed technical structure of the IHI published on the open internet, but following some inquiries we were able to obtain the following information from the HSE:
 
-A subset of NHS Numbers were reserved for the Republic of Ireland. Core IHI numbers align with this bank of numbers and are currently drawn from a range of 81200000n to 85999999n. (Where `n` is a Modulo 11 check digit from 0 to 9)
+A subset of NHS Numbers were reserved for the Republic of Ireland. Core IHI numbers align with this bank of numbers and are currently drawn from a range of 81200000n to 85999999n, where `n` is a standard NHS number modulo 11 check digit from 0 to 9.
 
-The full IHI number is 18 digits long and the core number resides in positions 8 to 17 of the full 18 digit number. We have 2 check digits in place – one at the end of the core 10 digit number (Modulus 11 check) and one at the end of the full 18 digit number (GS1 check digit).
+The **full** IHI number is 18 digits long and the 'core' number (NHS number portion) resides in positions 8 to 17 of the full 18 digit number. There are 2 check digits in place – one at the end of the core 10 digit number (Modulus 11 check) and one at the end of the full 18 digit number (GS1 check digit).
 
 The first seven digits of the GS1 code are intended to ensure that the IHI number is globally unique:
 
