@@ -37,9 +37,9 @@ def calculate_checksum(identifier_digits: str) -> int | None:
     return checksum
 
 
-def is_valid(nhs_number: str, for_region: Region = None) -> bool:
+def is_valid(nhs_number: str | int, for_region: Region = None) -> bool:
     """
-    Checks the supplied NHS number (as a string) is valid and returns True
+    Checks the supplied NHS number (as a string or integer) is valid and returns True
     or False.
 
     Internally this uses the normalise_number() function to check that this is
