@@ -24,8 +24,9 @@ This package aims to provide a single, well-maintained, well-documented solution
 docs/_assets/_snippets/live-usage-warning.md
 --8<--
 
-!!! note "Scottish CHI Number validation"
-    At present, this library does not reliably validate Scottish CHI Numbers. This is because the first 6 digits of a Scottish CHI Number must be a valid DDMMYY Date of Birth, and this library does not currently check for this. At the moment, only the correct number range is checked for.
+--8<--
+docs/_assets/_snippets/scottish-chi-number.md
+--8<--
 
 ## Roadmap
 
