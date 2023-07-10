@@ -14,11 +14,11 @@ nav:
   - Getting Started:
     - Installation: "installation.md"
     - Usage: "usage.md"
-  - Contributing:
+  - Developer Guide:
     - Project Structure: "developing.md"
     - Documentation: 'documentation.md'
     - Useful URLs: "useful_urls.md"
-    - Contributors: "contributors.md"
+  - Contributors: "contributors.md"
   - Changelog: "changelog.md"
 
 # footer links and variables
