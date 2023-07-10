@@ -89,7 +89,18 @@ nhs_number.generate(for_region=nhs_number.REGION_ENGLAND)
 # ['7709030025']
 ```
 
+## `NhsNumber` object
 
+For further details on the NHS number, including further [`Region`](#regions)-specific information, instantiate an `NhsNumber` object using a valid NHS number as a string:
+
+```python
+from nhs_number import NhsNumber
+
+nhs_number = NhsNumber('9876543210')
+
+vars(nhs_number)
+# {'nhs_number': '9876543210', 'identifier_digits': '987654321', 'check_digit': 0, 'valid': True, 'calculated_checksum': 0, 'region': <nhs_number.constants.Region object at 0x000001A0AD3CD490>, 'region_comment': 'Not to be issued (Synthetic/test patients PDS)'}
+```
 
 ## Regions
 
@@ -118,3 +129,4 @@ nhs_number.ENGLAND_WALES_IOM == nhs_number.REGION_ENGLAND
 --8<--
 docs/_assets/_snippets/scottish-chi-number.md
 --8<--
+
