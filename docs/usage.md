@@ -9,7 +9,7 @@ docs/_assets/_snippets/live-usage-warning.md
 
 ## `is_valid()`
 
-Returns `True` if the NHS Number is valid, `False` if not.
+Returns `True` if the NHS Number is valid.
 
 **Arguments**:
 
