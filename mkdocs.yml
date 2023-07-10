@@ -32,8 +32,9 @@ extra:
 # theme and mkdocs additional features
 theme:
   name: material
-  icon:
-    logo: material/check-all
+  logo: _assets/_images/logo.svg
+  favicon: _assets/_images/logo.svg
+  custom_dir: 'overrides'
   features:
     - content.action.edit # explicitly adds edit button (Material4MkDocs9.0)
     - content.action.view # explicitly adds view button (Material4MkDocs9.0)
@@ -48,6 +49,12 @@ theme:
     - navigation.top
     - navigation.tracking
     - toc.follow
+
+watch:
+  - overrides
+
+extra_css:
+  - _assets/_stylesheets/extra.css
 
 # markdown additional features
 markdown_extensions:

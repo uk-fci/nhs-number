@@ -5,6 +5,8 @@ authors: Dr Marcus Baw
 
 ## 1.3.3
 
+- Aesthetic documentation updates
+
 ## 1.3.2
 
 * GitHub action for CI/CD to publish to live PyPi
