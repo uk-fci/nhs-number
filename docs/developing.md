@@ -23,20 +23,20 @@ authors: Dr Marcus Baw
 
 ## Useful URLs
 
-### Github :simple-github
+### Github :simple-github:
 
 `nhs-number` GitHub repo <https://github.com/uk-fci/nhs-number>
 
-### PyPi :simple-pypi
+### PyPi :simple-pypi:
 
 `nhs-number` on PyPI <https://pypi.org/project/nhs-number/>
 `nhs-number` on **Test** PyPi <https://test.pypi.org/project/nhs-number/>
 
-### Netlify :simple-netlify
+### Netlify :simple-netlify:
 
 <https://app.netlify.com/sites/nhs-number/overview>
 
-### uk-fci.tech domain :material-domain
+### uk-fci.tech domain :material-domain:
 
 The `uk-fci.tech` domain is managed on NameCheap by @pacharanero
 
