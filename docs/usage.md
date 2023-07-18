@@ -54,6 +54,10 @@ True
 
 ### `generate()`
 
+Returns a list of 1 or more valid NHS numbers generated randomly. 
+
+By default numbers will be generated from any valid range, including ranges allocated for live patient use.
+
 ```python
 
 >>> import nhs_number
@@ -71,6 +75,9 @@ True
 >>> nhs_number.generate(for_region=nhs_number.REGION_ENGLAND)
 ['7709030025']
 ```
+
+!!! warning "Working with synethetic / unallocated numbers only"
+    If you want to avoid generating numbers which may have been allocated to real patients, apply the `for_region=REGION_SYNTHETIC` parameter to constrain the output of the function to only numbers from the 900000000n - 999999999n testing range.
 
 ### Regions
 
