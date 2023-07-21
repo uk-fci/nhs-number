@@ -32,7 +32,8 @@ extra:
 # theme and mkdocs additional features
 theme:
   name: material
-  logo: _assets/_images/done_all.svg
+  icon:
+    logo: material/check-all
   favicon: _assets/_images/done_all.svg
   custom_dir: 'overrides'
   features:
