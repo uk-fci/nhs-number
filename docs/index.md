@@ -1,9 +1,22 @@
 # nhs-number
 
-<figure markdown>
-  ![hero snippet](./_assets/_images/heroCodeSnippet.png)
+```python
+>>> import nhs_number
+
+# Validation
+>>> nhs_number.is_valid('469 819 4180')
+True
+
+# Generation (for testing purposes)
+>>> nhs_number.generate(quantity=5, for_region=nhs_number.REGION_ENGLAND)
+['6239431915', '7634140872', '4069990771', '4453051670', '4843474045']
+
+# Normalisation
+>>> nhs_number.normalise_number("406-999-0771")
+'4069990771'
+```
+
   <figcaption>Validation, generation and normalisation of NHS Numbers</figcaption>
-</figure>
 
 A Python package to provide utilities for NHS Numbers, including validity checks, normalisation, and generation.
 
