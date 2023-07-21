@@ -24,8 +24,9 @@
     margin-left: 0.1rem;
 }
 
-.md-header__button.md-logo >img {
-    height: 3rem;
+.md-header__button.md-logo >svg {
+    height: 2rem;
+    fill: var(--nhs-core-white)
 }
 
 .md-banner {
