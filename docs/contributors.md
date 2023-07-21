@@ -5,11 +5,11 @@ authors: Dr Marcus Baw
 
 ## Acknowledgements
 
-This package is a collaboration between a number of individuals, groups and teams, who were each separately maintaining some kind of NHS Number Python package. We felt that rather than having several packages with overlapping functionality, it would be better to combine our efforts into a single package.
+This package is a collaboration between several individuals, groups and teams, each separately maintaining some NHS Number Python package. Rather than having several packages with overlapping functionality, it was thought that combining efforts into a single package would be better.
 
-The package derives from code written by Andy Law at the Roslin Institute, and in an effort to place it under the aegis of an Organisation on GitHub, it has been adopted by the [Faculty of Clinical Informatics](https://www.facultyofclinicalinformatics.org.uk/), with the collective aim to develop it into the canonical NHS Number package for Python.
+The package derives from code written by Andy Law at the Roslin Institute, and to place it under the aegis of an Organisation on GitHub, it has been adopted by the [Faculty of Clinical Informatics](https://www.facultyofclinicalinformatics.org.uk/), with the collective aim to develop it into the canonical NHS Number package for Python.
 
-### Authors and contributors
+## Authors and contributors
 
 - [Andy Law](https://github.com/andylaw) - author of the PyPi package [nhs-number](https://pypi.org/project/nhs-number/), head of research computing at The Roslin Institute.
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nhs-number"
-version = "1.3.3"
+version = "1.3.4"
 description = "Python package to provide utilities for NHS Numbers, including validity checks, normalisation, and generation."
 authors = [
     "Andy Law <andy.law@roslin.ed.ac.uk>",

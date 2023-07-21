@@ -3,7 +3,14 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 1.3.4
+- Revert of the new logo, minor edits to the documentation, accepted Anchit PR
+- Reverted to plain code rather than Carbon for the code snippets.
+- No changes to Python code
+
 ## 1.3.3
+
+- Aesthetic documentation updates
 
 ## 1.3.2
 

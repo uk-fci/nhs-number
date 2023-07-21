@@ -8,12 +8,17 @@ copyright: Copyright &copy; 2021-2023 Andy Law, The University of Edinburgh, and
 
 # explicitly defines the Nav so we can set order of pages other than default alphabetical
 nav:
-  - Introduction: "index.md"
-  - About NHS Numbers: "nhs-numbers.md"
-  - Installation: "installation.md"
-  - Usage: "usage.md"
+  - Introduction:
+    - "index.md"
+    - About NHS Numbers: "nhs-numbers.md"
+  - Getting Started:
+    - Installation: "installation.md"
+    - Usage: "usage.md"
+  - Developer Guide:
+    - Project Structure: "developing.md"
+    - Documentation: 'documentation.md'
+    - Useful URLs: "useful_urls.md"
   - Contributors: "contributors.md"
-  - Developing: "developing.md"
   - Changelog: "changelog.md"
 
 # footer links and variables
@@ -29,13 +34,28 @@ theme:
   name: material
   icon:
     logo: material/check-all
+  favicon: _assets/_images/done_all.svg
+  custom_dir: 'overrides'
   features:
     - content.action.edit # explicitly adds edit button (Material4MkDocs9.0)
     - content.action.view # explicitly adds view button (Material4MkDocs9.0)
     - content.code.copy
     - content.code.select
     - content.code.annotate
-    - navigation.footer
+    - navigation.expand
+    - navigation.footer # explicitly adds footer prev/next (Material4MkDocs9.0)
+    - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
+
+watch:
+  - overrides
+
+extra_css:
+  - _assets/_stylesheets/extra.css
 
 # markdown additional features
 markdown_extensions:
@@ -51,5 +71,8 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.snippets:
+      check_paths: true
+  - toc:
+      permalink: false

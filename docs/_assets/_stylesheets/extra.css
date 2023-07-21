@@ -1,0 +1,46 @@
+:root {
+    --nhs-core-blue: #005EB8;
+    --nhs-core-white: #FFFFFF;
+    --md-accent-fg-color: var(--nhs-core-blue);
+    --md-primary-fg-color--dark: var(--nhs-core-blue);
+    --md-typeset-a-color: var(--nhs-core-blue);
+}
+
+.md-header__ellipsis .md-ellipsis {
+    font-size: 1.5rem;
+}
+
+/* nav   */
+
+/* mobile nav sidebar */
+@media screen and (max-width: 76.1875em) {
+    .md-nav--primary .md-nav__title[for=__drawer] {
+        background-color: white;
+        color: black;
+    }
+}
+
+[dir=ltr] .md-header__title {
+    margin-left: 0.1rem;
+}
+
+.md-header__button.md-logo >svg {
+    height: 2rem;
+    fill: var(--nhs-core-white)
+}
+
+.md-banner {
+    display: flex;
+}
+
+.md-banner__inner.md-grid.md-typeset{
+    max-height: 1rem;
+}
+
+.md-header, .md-tabs {
+    background-color: var(--nhs-core-blue);
+}
+
+.md-nav__item .md-nav__link--active {
+    color: var(--nhs-core-blue);
+}

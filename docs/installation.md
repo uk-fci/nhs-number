@@ -1,9 +1,7 @@
 ---
-title: nhs-number
+title: Install
 authors: Dr Marcus Baw
 ---
-
-## Installation
 
 To install using `pip`:
 
