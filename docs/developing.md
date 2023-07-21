@@ -34,6 +34,8 @@ poetry run pytest
 
 This project uses [Poetry](https://python-poetry.org/docs/) for dependency management and packaging.
 
+Any edit **MUST** have a new version number otherwise it will be rejected by PyPi.
+
 Publication to PyPi is handled by GitHub Actions. The workflows are defined in the `.github/workflows` folder.
 
 Pushes of code to the `staging` branch will trigger a publication to Test PyPi.
