@@ -36,6 +36,10 @@ This project uses [Poetry](https://python-poetry.org/docs/) for dependency manag
 
 Any edit **MUST** have a new version number otherwise it will be rejected by PyPi.
 
+To publish a new version to PyPi, update the version number in `pyproject.toml`.
+
+Also add a note to the `docs/changelog.md` file to explain the updates.
+
 Publication to PyPi is handled by GitHub Actions. The workflows are defined in the `.github/workflows` folder.
 
 Pushes of code to the `staging` branch will trigger a publication to Test PyPi.
