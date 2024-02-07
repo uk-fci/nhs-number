@@ -7,6 +7,8 @@ authors: Dr Marcus Baw
 
 - Adds Python 3.12 to the supported versions which are tested in the GitHub Action CI/CD pipeline.
 - Removes Python 3.7 from the supported versions which are tested in the GitHub Action CI/CD pipeline.
+- Adds a source document regarding the NHS number specification to the docs/_source-documents folder.
+- Upgrades all GitHub Actions within workflows (eg `actions/checkout@v3`) to latest version of the Node 20-based actions
 
 ## 1.3.4
 
