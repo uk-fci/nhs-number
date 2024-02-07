@@ -13,8 +13,8 @@ jobs:
     name: Build the distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4 # latest as at Feb 2024
+      - uses: actions/setup-python@v5 # latest as at Feb 2024
         with:
           python-version: 3.11
 
@@ -22,7 +22,7 @@ jobs:
           pip install poetry
           poetry build
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4 # latest as at Feb 2024
         with:
           path: ./dist
 
@@ -38,9 +38,9 @@ jobs:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
     - name: Download package distributions from build job
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4 # latest as at Feb 2024
 
     - name: Publish package distributions to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+      uses: pypa/gh-action-pypi-publish@release/v1 # latest as at Feb 2024
       with:
         packages-dir: artifact
