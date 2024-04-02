@@ -3,7 +3,8 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
-## 1.3.7
+
+## 1.4.0
 
 - Add a check to ensure CHI numbers start with a date
 - Generated numbers now come from synthetic range
