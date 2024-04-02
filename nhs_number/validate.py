@@ -17,6 +17,8 @@ from datetime import datetime
 from nhs_number.standardise import standardise_format
 from nhs_number.constants import Region, REGION_SCOTLAND
 
+import warnings
+
 
 def calculate_checksum(identifier_digits: str) -> int | None:
     """
@@ -79,6 +81,10 @@ def is_valid(
             return False
 
         if sex:
+            if sex.lower() not in ("female", "male"):
+                warnings.warn(
+                    "Sex value supplied not male or female. Ignoring sex check"
+                )
             if int(nhs_number[8]) % 2 == 0 and sex.lower() == "male":
                 return False
 

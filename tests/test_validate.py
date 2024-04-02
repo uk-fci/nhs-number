@@ -1,5 +1,6 @@
 from nhs_number import is_valid, calculate_checksum
 from nhs_number import REGION_ENGLAND_WALES_IOM, REGION_SCOTLAND
+import pytest
 
 
 def test_string_is_valid_good_one():
@@ -64,6 +65,16 @@ def test_chi_incorrect_sex_female():
 
 def test_nhs_pass_when_sex_supplied():
     assert is_valid("4000000632", sex="female") is True
+
+
+def test_bad_sex_option():
+    with pytest.warns():
+        is_valid("0101011113", sex="other")
+
+
+def test_no_message_bad_sex_option_and_not_chi():
+    with pytest.warns(None):
+        is_valid("4000000632", sex="other")
 
 
 def test_valid_england_wales_number():
