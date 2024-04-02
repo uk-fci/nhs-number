@@ -1,7 +1,17 @@
 import pytest
 
+from datetime import datetime
 
-from nhs_number import generate, is_valid, REGION_ENGLAND_WALES_IOM
+
+from nhs_number import (
+    generate,
+    random_chi_str,
+    is_valid,
+    REGION_ENGLAND_WALES_IOM,
+    REGION_SCOTLAND,
+    REGION_NORTHERN_IRELAND,
+    REGION_SYNTHETIC,
+)
 
 
 def test_create_valid_nhs_number():
@@ -42,7 +52,14 @@ def test_random_nhs_numbers():
         assert is_valid(nhs_number)
 
 
-def test_nhs_numbers_for_a_specific_region():
+def test_nhs_numbers_with_no_region():
+    nhs_numbers = generate()
+    assert len(nhs_numbers) == 1
+    assert is_valid(nhs_numbers[0])
+    assert REGION_SYNTHETIC.contains_number(nhs_numbers[0])
+
+
+def test_nhs_numbers_for_specific_regions():
     """
     Test that NHS numbers for a specific region are generated
     """
@@ -50,6 +67,16 @@ def test_nhs_numbers_for_a_specific_region():
     assert len(nhs_numbers) == 1
     assert is_valid(nhs_numbers[0])
     assert REGION_ENGLAND_WALES_IOM.contains_number(nhs_numbers[0])
+
+    nhs_numbers = generate(for_region=REGION_SCOTLAND)
+    assert len(nhs_numbers) == 1
+    assert is_valid(nhs_numbers[0])
+    assert REGION_SCOTLAND.contains_number(nhs_numbers[0])
+
+    nhs_numbers = generate(for_region=REGION_NORTHERN_IRELAND)
+    assert len(nhs_numbers) == 1
+    assert is_valid(nhs_numbers[0])
+    assert REGION_NORTHERN_IRELAND.contains_number(nhs_numbers[0])
 
 
 def test_fail_when_non_region_supplied():
@@ -61,3 +88,16 @@ def test_fail_when_non_region_supplied():
     with pytest.raises(TypeError) as error:
         # noinspection PyTypeChecker
         nhs_numbers = generate(for_region="REGION_ENGLAND_WALES_IOM")
+
+
+def test_random_chi_str_len():
+    partial_chi_number = random_chi_str()
+    assert len(partial_chi_number) == 9
+
+
+def test_random_chi_str_is_real_date():
+    partial_chi_number = random_chi_str()
+    try:
+        datetime.strptime(partial_chi_number[:6], "%d%m%y")
+    except ValueError as e:
+        pytest.fail(f"Unexpected ValueError: {e}")
