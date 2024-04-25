@@ -75,7 +75,7 @@ def test_warning_if_not_sex_type_given():
 
 
 def test_nhs_pass_when_sex_supplied_thing():
-    assert is_valid("0101011113", sex="female") is True
+    assert is_valid("0101011113", sex=Sex.FEMALE) is True
 
 
 def test_valid_england_wales_number():
