@@ -15,7 +15,7 @@ from __future__ import (
 )  # for Python 3.7 (remove once we stop supporting 3.7)
 from datetime import datetime
 from nhs_number.standardise import standardise_format
-from nhs_number.constants import Region, REGION_SCOTLAND
+from nhs_number.constants import Region, REGION_SCOTLAND, Sex
 
 import warnings
 
@@ -44,10 +44,7 @@ def calculate_checksum(identifier_digits: str) -> int | None:
 
 
 def is_valid(
-    nhs_number: str,
-    for_region: Region = None,
-    is_male: bool = False,
-    is_female: bool = False,
+    nhs_number: str, for_region: Region = None, sex: Sex = None
 ) -> bool:
     """
     Checks the supplied NHS number (as a string) is valid and returns True
@@ -83,14 +80,16 @@ def is_valid(
         except ValueError:
             return False
 
-        if is_male and is_female:
-            warnings.warn("Select male or female not both. Ignoring sex check")
+        if sex and not isinstance(sex, Sex):
+            warnings.warn(
+                "Sex argument must be of type Sex. Ignoring sex check"
+            )
 
-        else:
-            if int(nhs_number[8]) % 2 == 0 and is_male:
+        if sex and isinstance(sex, Sex):
+            if int(nhs_number[8]) % 2 == 0 and sex == Sex.MALE:
                 return False
 
-            if int(nhs_number[8]) % 2 != 0 and is_female:
+            if int(nhs_number[8]) % 2 != 0 and sex == Sex.FEMALE:
                 return False
 
     # Test for checksum validity
