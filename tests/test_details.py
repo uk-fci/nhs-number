@@ -12,5 +12,7 @@ def test_valid_synthetic_nhs_number_details():
     assert number.calculated_checksum == 0
     assert isinstance(number.region, Region)
     assert "test" in number.region.tags
-    assert number.region_comment == ("Not to be issued "
-                                     "(Synthetic/test patients PDS)")
+    assert (
+        number.region_comment
+        == "Not to be issued (Synthetic/test patients PDS)"
+    )

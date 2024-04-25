@@ -23,7 +23,6 @@ def generate(
     for_region: Region = None,
     quantity: int = 1,
 ) -> list:
-
     """
     Generates valid or invalid NHS numbers, for testing.
 
