@@ -2,7 +2,6 @@ from nhs_number import is_valid, calculate_checksum
 from nhs_number import REGION_ENGLAND_WALES_IOM, REGION_SCOTLAND
 from nhs_number import Sex
 import pytest
-import warnings
 
 
 def test_string_is_valid_good_one():
