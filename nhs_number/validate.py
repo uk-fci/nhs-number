@@ -44,7 +44,10 @@ def calculate_checksum(identifier_digits: str) -> int | None:
 
 
 def is_valid(
-    nhs_number: str, for_region: Region = None, sex: str = None
+    nhs_number: str,
+    for_region: Region = None,
+    is_male: bool = False,
+    is_female: bool = False,
 ) -> bool:
     """
     Checks the supplied NHS number (as a string) is valid and returns True
@@ -80,16 +83,11 @@ def is_valid(
         except ValueError:
             return False
 
-        if sex:
-            if sex.lower() not in ("female", "male"):
-                warnings.warn(
-                    "Sex value supplied not male or female. Ignoring sex check"
-                )
-            if int(nhs_number[8]) % 2 == 0 and sex.lower() == "male":
-                return False
+        if int(nhs_number[8]) % 2 == 0 and is_male:
+            return False
 
-            if int(nhs_number[8]) % 2 != 0 and sex.lower() == "female":
-                return False
+        if int(nhs_number[8]) % 2 != 0 and is_female:
+            return False
 
     # Test for checksum validity
     # The first 9 numbers are used to calculate the checksum, which should

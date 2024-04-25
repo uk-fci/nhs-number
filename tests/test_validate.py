@@ -49,34 +49,23 @@ def test_chi_impossible_date_no_region():
 
 
 def test_chi_correct_sex_male():
-    assert is_valid("0101011113", sex="male") is True
+    assert is_valid("0101011113", is_male=True) is True
 
 
 def test_chi_incorrect_sex_male():
-    assert is_valid("0101011121", sex="male") is False
+    assert is_valid("0101011121", is_male=True) is False
 
 
 def test_chi_correct_sex_female():
-    assert is_valid("0101011121", sex="female") is True
+    assert is_valid("0101011121", is_female=True) is True
 
 
 def test_chi_incorrect_sex_female():
-    assert is_valid("0101011113", sex="female") is False
+    assert is_valid("0101011113", is_female=True) is False
 
 
 def test_nhs_pass_when_sex_supplied():
-    assert is_valid("4000000632", sex="female") is True
-
-
-def test_bad_sex_option():
-    with pytest.warns():
-        is_valid("0101011113", sex="other")
-
-
-def test_no_message_bad_sex_option_and_not_chi():
-    with warnings.catch_warnings():
-        warnings.simplefilter("error")
-        is_valid("4000000632", sex="other")
+    assert is_valid("4000000632", is_female=True) is True
 
 
 def test_valid_england_wales_number():
