@@ -24,6 +24,7 @@ from nhs_number.constants import (
     REGION_EIRE,
 )
 from nhs_number.constants import FULL_RANGE, RANGE_NOT_ISSUED_SYNTHETIC
+from nhs_number.constants import Sex
 from nhs_number.details import NhsNumber
 from nhs_number.generate import generate, random_chi_str
 from nhs_number.standardise import standardise_format, normalise_number

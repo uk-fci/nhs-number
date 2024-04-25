@@ -1,5 +1,6 @@
 from nhs_number import is_valid, calculate_checksum
 from nhs_number import REGION_ENGLAND_WALES_IOM, REGION_SCOTLAND
+from nhs_number import Sex
 import pytest
 import warnings
 
@@ -49,28 +50,32 @@ def test_chi_impossible_date_no_region():
 
 
 def test_chi_correct_sex_male():
-    assert is_valid("0101011113", is_male=True) is True
+    assert is_valid("0101011113", sex=Sex.MALE) is True
 
 
 def test_chi_incorrect_sex_male():
-    assert is_valid("0101011121", is_male=True) is False
+    assert is_valid("0101011121", sex=Sex.MALE) is False
 
 
 def test_chi_correct_sex_female():
-    assert is_valid("0101011121", is_female=True) is True
+    assert is_valid("0101011121", sex=Sex.FEMALE) is True
 
 
 def test_chi_incorrect_sex_female():
-    assert is_valid("0101011113", is_female=True) is False
-
-
-def test_warning_if_both_male_and_female():
-    with pytest.warns(UserWarning, match="Select male or female not both"):
-        is_valid("0101011113", is_male=True, is_female=True)
+    assert is_valid("0101011113", sex=Sex.FEMALE) is False
 
 
 def test_nhs_pass_when_sex_supplied():
-    assert is_valid("4000000632", is_female=True) is True
+    assert is_valid("4000000632", sex=Sex.FEMALE) is True
+
+
+def test_warning_if_not_sex_type_given():
+    with pytest.warns(UserWarning, match="Sex argument must be of type Sex"):
+        is_valid("0101011113", sex="female")
+
+
+def test_nhs_pass_when_sex_supplied_thing():
+    assert is_valid("0101011113", sex="female") is True
 
 
 def test_valid_england_wales_number():
