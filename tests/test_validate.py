@@ -1,6 +1,7 @@
 from nhs_number import is_valid, calculate_checksum
 from nhs_number import REGION_ENGLAND_WALES_IOM, REGION_SCOTLAND
 import pytest
+import warnings
 
 
 def test_string_is_valid_good_one():
@@ -73,7 +74,8 @@ def test_bad_sex_option():
 
 
 def test_no_message_bad_sex_option_and_not_chi():
-    with pytest.warns(None):
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
         is_valid("4000000632", sex="other")
 
 
