@@ -64,6 +64,11 @@ def test_chi_incorrect_sex_female():
     assert is_valid("0101011113", is_female=True) is False
 
 
+def test_warning_if_both_male_and_female():
+    with pytest.warns(UserWarning, match="Select male or female not both"):
+        is_valid("0101011113", is_male=True, is_female=True)
+
+
 def test_nhs_pass_when_sex_supplied():
     assert is_valid("4000000632", is_female=True) is True
 

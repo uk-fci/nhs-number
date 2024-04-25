@@ -83,11 +83,15 @@ def is_valid(
         except ValueError:
             return False
 
-        if int(nhs_number[8]) % 2 == 0 and is_male:
-            return False
+        if is_male and is_female:
+            warnings.warn("Select male or female not both. Ignoring sex check")
 
-        if int(nhs_number[8]) % 2 != 0 and is_female:
-            return False
+        else:
+            if int(nhs_number[8]) % 2 == 0 and is_male:
+                return False
+
+            if int(nhs_number[8]) % 2 != 0 and is_female:
+                return False
 
     # Test for checksum validity
     # The first 9 numbers are used to calculate the checksum, which should
