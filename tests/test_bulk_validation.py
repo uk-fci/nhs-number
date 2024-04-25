@@ -17,10 +17,14 @@ csv.field_size_limit(sys.maxsize)
 
 
 @pytest.mark.skipif(
-    not os.path.exists("local-test-data/testdata-909090-valid-nhs-numbers.csv"),
-    reason="This test requires a large list of valid NHS numbers which we do"
-           " not want to include in the repo by default for reasons of file"
-           " size",
+    not os.path.exists(
+        "local-test-data/testdata-909090-valid-nhs-numbers.csv"
+    ),
+    reason=(
+        "This test requires a large list of valid NHS numbers which we do"
+        " not want to include in the repo by default for reasons of file"
+        " size"
+    ),
 )
 def test_with_large_numbers_of_known_valid_nhs_numbers():
     with open(

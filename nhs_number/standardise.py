@@ -10,7 +10,9 @@ Contributors
 * Marcus Baw <marcusbaw@gmail.com>
 """
 # standard imports
-from __future__ import annotations # for Python 3.7 (remove once we stop supporting 3.7)
+from __future__ import (
+    annotations,
+)  # for Python 3.7 (remove once we stop supporting 3.7)
 import re
 import warnings
 
@@ -51,6 +53,11 @@ def standardise_format(nhs_number: str | int) -> str:
 
 
 def normalise_number(nhs_number: str) -> str:
-    warnings.warn("The normalise_number() function is deprecated - use "
-                  "standardise_format() instead", DeprecationWarning)
+    warnings.warn(
+        (
+            "The normalise_number() function is deprecated - use "
+            "standardise_format() instead"
+        ),
+        DeprecationWarning,
+    )
     return standardise_format(nhs_number)
