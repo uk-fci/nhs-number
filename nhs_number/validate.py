@@ -9,9 +9,15 @@ Contributors
 * Andy Law <andy.law@roslin.ed.ac.uk>
 * Marcus Baw <marcusbaw@gmail.com>
 """
-from __future__ import annotations # for Python 3.7 (remove once we stop supporting 3.7)
+
+from __future__ import (
+    annotations,
+)  # for Python 3.7 (remove once we stop supporting 3.7)
+from datetime import datetime
 from nhs_number.standardise import standardise_format
-from nhs_number.constants import Region
+from nhs_number.constants import Region, REGION_SCOTLAND, Sex
+
+import warnings
 
 
 def calculate_checksum(identifier_digits: str) -> int | None:
@@ -37,7 +43,9 @@ def calculate_checksum(identifier_digits: str) -> int | None:
     return checksum
 
 
-def is_valid(nhs_number: str, for_region: Region = None) -> bool:
+def is_valid(
+    nhs_number: str, for_region: Region = None, sex: Sex = None
+) -> bool:
     """
     Checks the supplied NHS number (as a string) is valid and returns True
     or False.
@@ -62,10 +70,27 @@ def is_valid(nhs_number: str, for_region: Region = None) -> bool:
 
     # If the NHS number is outside the range for the supplied region,
     # return False
-    if for_region:
-        if not for_region.contains_number(nhs_number):
+    if for_region and not for_region.contains_number(nhs_number):
+        return False
+
+    if REGION_SCOTLAND.contains_number(nhs_number):
+        try:
+            # Should start with ddmmyy date
+            datetime.strptime(nhs_number[:6], "%d%m%y")
+        except ValueError:
             return False
-        # Additional checks for Scotland CHI number DOB validity will go here
+
+        if sex and not isinstance(sex, Sex):
+            warnings.warn(
+                "Sex argument must be of type Sex. Ignoring sex check"
+            )
+
+        if sex and isinstance(sex, Sex):
+            if int(nhs_number[8]) % 2 == 0 and sex == Sex.MALE:
+                return False
+
+            if int(nhs_number[8]) % 2 != 0 and sex == Sex.FEMALE:
+                return False
 
     # Test for checksum validity
     # The first 9 numbers are used to calculate the checksum, which should

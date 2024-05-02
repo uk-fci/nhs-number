@@ -37,12 +37,6 @@ This package aims to provide a single, well-maintained, well-documented solution
 docs/_assets/_snippets/live-usage-warning.md
 --8<--
 
---8<--
-docs/_assets/_snippets/scottish-chi-number.md
---8<--
-
 ## Roadmap
 
-- Additional validation for Scottish CHI numbers to ensure the first 6 digits are a valid `DDMMYY` Date of Birth.
-- Generation of valid Scottish CHI numbers along the same rules.
 - Validation and generation of [IHI Numbers for the Republic of Ireland](ihi-ireland.md), subject to contributors wanting to collaborate on this, and there being a demand for implementation.

@@ -3,7 +3,14 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 1.4.0
+
+- Add a check to ensure CHI numbers start with a date
+- Generated numbers now come from synthetic range
+- Generated numbers from Scottish range will start with a date
+
 ## 1.3.4
+
 - Revert of the new logo, minor edits to the documentation, accepted Anchit PR
 - Reverted to plain code rather than Carbon for the code snippets.
 - No changes to Python code

@@ -25,6 +25,8 @@ Ranges are INCLUSIVE of the start and end values.
     9000000000 - 9999999999 Not to be issued (Synthetic/test patients PDS)
 """
 
+from enum import Enum
+
 
 # using dataclasses would force Python 3.7 or above so we'll use a simple
 # class instead
@@ -67,6 +69,11 @@ class Region:
             if _range.contains_number(number):
                 return True
         return False
+
+
+class Sex(Enum):
+    MALE = 1
+    FEMALE = 2
 
 
 RANGE_UNALLOCATED_1 = Range(

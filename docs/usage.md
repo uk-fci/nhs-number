@@ -19,6 +19,7 @@ Returns `False` if the NHS Number is not valid.
       - `123-456-7890`
       - `1234567890`
 - `for_region` (*optional, default=None, `Region`*): If provided, additionally validates number is included within the given [`Region`](#regions) range.
+- `sex` (*optional, default=None, enum `Sex`*): If provided and the number is in the Scottish range will check if the identifying digit matches the corresponding sex.
 
 ```python
 import nhs_number
@@ -37,9 +38,34 @@ nhs_number.is_valid('7709030025', for_region=nhs_number.REGION_ENGLAND)
 # True
 ```
 
---8<--
-docs/_assets/_snippets/scottish-chi-number.md
---8<--
+The `sex` parameter takes an enum, `Sex`, of with options MALE or FEMALE and can be used to add additional checks for CHI numbers. Supplying a region is optional which is useful if you want to check for the identified sex when dealing with mixed region numbers. For anything other than CHI this is ignored even if supplied.
+
+```python
+
+nhs_number.is_valid('0101011121', for_region=nhs_number.REGION_SCOTLAND, sex=nhs_number.Sex.FEMALE)
+# True
+
+nhs_number.is_valid('0101011113', sex=nhs_number.Sex.MALE)
+# True
+
+# Ignores sex when supplied with non CHI numbers
+male = nhs_number.Sex.MALE
+
+patients = {
+    1: {"identifier": "4698194180", "sex": male},
+    2: {"identifier": "0101011113", "sex": male},
+    3: {"identifier": "0101011121", "sex": male},
+}
+
+for patient_info in patients.values():
+    identifier = patient_info["identifier"]
+    sex = patient_info["sex"]
+    nhs_number.is_valid(identifier, sex=sex)
+# True
+# True
+# False
+
+```
 
 ## `normalise_number()`
 
@@ -126,8 +152,4 @@ Each Region has some aliases for ease of use:
 nhs_number.ENGLAND_WALES_IOM == nhs_number.REGION_ENGLAND
 # True
 ```
-
---8<--
-docs/_assets/_snippets/scottish-chi-number.md
---8<--
 
