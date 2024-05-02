@@ -72,8 +72,8 @@ class Region:
 
 
 class Sex(Enum):
-    MALE = "MALE"
-    FEMALE = "FEMALE"
+    MALE = 1
+    FEMALE = 2
 
 
 RANGE_UNALLOCATED_1 = Range(
