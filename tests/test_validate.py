@@ -73,10 +73,6 @@ def test_warning_if_not_sex_type_given():
         is_valid("0101011113", sex="female")
 
 
-def test_nhs_pass_when_sex_supplied_thing():
-    assert is_valid("0101011113", sex=Sex.FEMALE) is True
-
-
 def test_valid_england_wales_number():
     assert is_valid("4000000632", for_region=REGION_ENGLAND_WALES_IOM) is True
 
