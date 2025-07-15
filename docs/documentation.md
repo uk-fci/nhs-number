@@ -2,12 +2,9 @@
 authors: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
-The main documentation site is at <https://nhs-number.uk-fci.tech>. Pushes of code to the `main` branch will automatically trigger a publication to Netlify.
+The main documentation site is at <https://uk-fci.github.io/nhs-number/>. Pushes of code to the `main` branch will automatically trigger a publication to Netlify.
 
-Non-`main` branches of the documentation are automatically published to Netlify for review purposes:
-
-* `develop` -> <https://develop.nhs-number.uk-fci.tech>
-* `staging` -> <https://staging.nhs-number.uk-fci.tech>
+Non-`main` branches of the documentation are no longer automatically published for review purposes:
 
 ## Material for MkDocs
 

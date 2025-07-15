@@ -4,7 +4,7 @@ site_name: nhs-number
 repo_url: https://github.com/uk-fci/nhs-number
 repo_name: uk-fci/nhs-number
 
-copyright: Copyright &copy; 2021-2025 Andy Law, The University of Edinburgh, Marcus Baw, and the Faculty of Clinical Informatics (now defunct)
+copyright: Copyright &copy; 2021-2025 Andy Law, The University of Edinburgh, Dr Marcus Baw, and the Faculty of Clinical Informatics (now defunct)
 
 # explicitly defines the Nav so we can set order of pages other than default alphabetical
 nav:

@@ -3,6 +3,12 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 1.3.6
+- Adds Python 3.13 to the supported versions which are tested in the GitHub Action CI/CD pipeline. No versions have been removed.
+- Adds a Github Action workflow to publish the documentation site to GitHub Pages.
+- Removes the now-defunct `uk-fci.tech` domain in all of this package, replacing with (for now) uk-fci.github.io until we decide what to do with the `uk-fci` GH organisation.
+- Removes all references to Netlify, as we no longer use it for the documentation site.
+
 ## 1.3.5
 
 - Adds Python 3.12 to the supported versions which are tested in the GitHub Action CI/CD pipeline.

@@ -33,9 +33,11 @@ Python package to provide utilities for NHS Numbers, including validity checks, 
 
 ## Documentation
 
-A new and improved documentation site is available at <https://nhs-number.uk-fci.tech>
+All documentation is available at <https://uk-fci.github.io/nhs-number/>
+
+Please note that since the demise of the Faculty of Clinical Informatics, the domain `uk-fci.tech` has been removed from the package and replaced with `uk-fci.github.io`. This is a temporary measure until we decide what to do with the `uk-fci` GitHub organisation.
 
 
 ## Changelog
 
-<https://nhs-number.uk-fci.tech/changelog/>
+<https://uk-fci.github.io/nhs-number/>
