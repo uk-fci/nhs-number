@@ -4,20 +4,20 @@ site_name: nhs-number
 repo_url: https://github.com/uk-fci/nhs-number
 repo_name: uk-fci/nhs-number
 
-copyright: Copyright &copy; 2021-2023 Andy Law, The University of Edinburgh, and the Faculty of Clinical Informatics
+copyright: Copyright &copy; 2021-2025 Andy Law, The University of Edinburgh, Marcus Baw, and the Faculty of Clinical Informatics (now defunct)
 
 # explicitly defines the Nav so we can set order of pages other than default alphabetical
 nav:
   - Introduction:
-    - "index.md"
-    - About NHS Numbers: "nhs-numbers.md"
+      - "index.md"
+      - About NHS Numbers: "nhs-numbers.md"
   - Getting Started:
-    - Installation: "installation.md"
-    - Usage: "usage.md"
+      - Installation: "installation.md"
+      - Usage: "usage.md"
   - Developer Guide:
-    - Project Structure: "developing.md"
-    - Documentation: 'documentation.md'
-    - Useful URLs: "useful_urls.md"
+      - Project Structure: "developing.md"
+      - Documentation: "documentation.md"
+      - Useful URLs: "useful_urls.md"
   - Contributors: "contributors.md"
   - Changelog: "changelog.md"
 
@@ -35,7 +35,7 @@ theme:
   icon:
     logo: material/check-all
   favicon: _assets/_images/done_all.svg
-  custom_dir: 'overrides'
+  custom_dir: "overrides"
   features:
     - content.action.edit # explicitly adds edit button (Material4MkDocs9.0)
     - content.action.view # explicitly adds view button (Material4MkDocs9.0)
