@@ -5,8 +5,8 @@ black
 pytest
 
 #################### DOCS ####################
-# documentation site - Material for MkDocs
-mkdocs-material
+# documentation site - Zensical
+zensical
 
 # for the feature which displays authors at the bottom of the page
 mkdocs-git-committers-plugin-2
