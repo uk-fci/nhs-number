@@ -13,7 +13,7 @@ jobs:
     name: Build the distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 # latest as at Feb 2024
+      - uses: actions/checkout@v6 # latest as at Feb 2024
       - uses: actions/setup-python@v5 # latest as at Feb 2024
         with:
           python-version: 3.11
