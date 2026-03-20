@@ -22,7 +22,7 @@ jobs:
           pip install poetry
           poetry build
 
-      - uses: actions/upload-artifact@v4 # latest as at 2026.03.20
+      - uses: actions/upload-artifact@v7 # latest as at 2026.03.20
         with:
           path: ./dist
 
