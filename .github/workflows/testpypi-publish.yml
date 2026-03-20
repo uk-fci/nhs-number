@@ -38,7 +38,7 @@ jobs:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
     - name: Download package distributions from build job
-      uses: actions/download-artifact@v4 # latest as at Feb 2024
+      uses: actions/download-artifact@v8 # latest as at Feb 2024
 
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1 # latest as at Feb 2024
