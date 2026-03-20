@@ -13,8 +13,8 @@ jobs:
     name: Build the distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6 # latest as at Feb 2024
-      - uses: actions/setup-python@v5 # latest as at Feb 2024
+      - uses: actions/checkout@v6 # latest as at 2026.03.20
+      - uses: actions/setup-python@v6 # latest as at 2026.03.20
         with:
           python-version: 3.11
 
@@ -22,25 +22,25 @@ jobs:
           pip install poetry
           poetry build
 
-      - uses: actions/upload-artifact@v4 # latest as at Feb 2024
+      - uses: actions/upload-artifact@v4 # latest as at 2026.03.20
         with:
           path: ./dist
 
   # this is a separate job so that the build job does not have access to the PyPI token
   pypi-test-publish:
-    needs: ['build']
+    needs: ["build"]
     environment: release
 
     name: Upload from main branch to pypi.org
     runs-on: ubuntu-latest
 
     permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
-    - name: Download package distributions from build job
-      uses: actions/download-artifact@v8 # latest as at Feb 2024
+      - name: Download package distributions from build job
+        uses: actions/download-artifact@v8 # latest as at 2026.03.20
 
-    - name: Publish package distributions to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1 # latest as at Feb 2024
-      with:
-        packages-dir: artifact
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1 # latest as at 2026.03.20
+        with:
+          packages-dir: artifact
