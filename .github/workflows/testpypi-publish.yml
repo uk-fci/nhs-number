@@ -24,6 +24,7 @@ jobs:
 
       - uses: actions/upload-artifact@v7
         with:
+          name: dist
           path: ./dist
 
   # this is a separate job so that the build job does not have access to the PyPI token
@@ -38,10 +39,12 @@ jobs:
       id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
       - name: Download package distributions from build job
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v8 # latest as at 2026.03.20
+        with:
+          name: dist
+          path: dist
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository_url: https://test.pypi.org/legacy/
-          packages-dir: artifact/artifact
