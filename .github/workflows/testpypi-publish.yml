@@ -44,4 +44,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1 # latest as at 2026.03.20
         with:
           repository_url: https://test.pypi.org/legacy/
-          packages-dir: artifact
+          packages-dir: artifact/artifact
