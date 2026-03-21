@@ -13,7 +13,7 @@ The package derives from code written by Andy Law at the Roslin Institute, and t
 
 - [Andy Law](https://github.com/andylaw) - author of the PyPi package [nhs-number](https://pypi.org/project/nhs-number/), head of research computing at The Roslin Institute.
 
-- [Matt Stibbs](https://github.com/mattstibbs) - author of [nhspy](https://pypi.org/project/nhspy/).
+- [Matt Stibbs](https://github.com/mattstibbs) - author of [nhspy](https://github.com/mattstibbs/nhspy).
 
 - [Marcus Baw](https://github.com/pacharanero) - Freelance developer working at the [RCPCH](https://github.com/rcpch).
 

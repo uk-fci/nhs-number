@@ -10,7 +10,7 @@ authors: Dr Marcus Baw
 ├── tests/              # Python package tests
 ├── __init__.py
 ├── LICENSE             # MIT License
-├── mkdocs.yml          # Configuration file for the Material for MkDocs documentation site
+├── mkdocs.yml          # Configuration file for the Zensical documentation site
 ├── netlify.toml        # Netlify build file - required for Netlify to build the documentation site
 ├── pyproject.toml      # Poetry configuration file - defines dependencies, etc
 ├── pytest.ini          # pytest configuration file - defines test discovery, etc

@@ -1,23 +1,24 @@
-# This file configures the documentation site
+# This file configures the documentation site.
+# Updated March 2026 to use Zensical.
 
 site_name: nhs-number
 repo_url: https://github.com/uk-fci/nhs-number
 repo_name: uk-fci/nhs-number
 
-copyright: Copyright &copy; 2021-2023 Andy Law, The University of Edinburgh, and the Faculty of Clinical Informatics
+copyright: Copyright &copy; 2021-2026 Andy Law, The University of Edinburgh, Dr Marcus Baw, and the Faculty of Clinical Informatics (now defunct)
 
 # explicitly defines the Nav so we can set order of pages other than default alphabetical
 nav:
   - Introduction:
-    - "index.md"
-    - About NHS Numbers: "nhs-numbers.md"
+      - "index.md"
+      - About NHS Numbers: "nhs-numbers.md"
   - Getting Started:
-    - Installation: "installation.md"
-    - Usage: "usage.md"
+      - Installation: "installation.md"
+      - Usage: "usage.md"
   - Developer Guide:
-    - Project Structure: "developing.md"
-    - Documentation: 'documentation.md'
-    - Useful URLs: "useful_urls.md"
+      - Project Structure: "developing.md"
+      - Documentation: "documentation.md"
+      - Useful URLs: "useful_urls.md"
   - Contributors: "contributors.md"
   - Changelog: "changelog.md"
 
@@ -31,11 +32,11 @@ extra:
 
 # theme and mkdocs additional features
 theme:
-  name: material
+  variant: classic
   icon:
     logo: material/check-all
   favicon: _assets/_images/done_all.svg
-  custom_dir: 'overrides'
+  custom_dir: "overrides"
   features:
     - content.action.edit # explicitly adds edit button (Material4MkDocs9.0)
     - content.action.view # explicitly adds view button (Material4MkDocs9.0)
@@ -64,8 +65,8 @@ markdown_extensions:
   - md_in_html
   - pymdownx.details
   - pymdownx.emoji:
-      emoji_generator: !!python/name:materialx.emoji.to_svg
-      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:zensical.extensions.emoji.to_svg
+      emoji_index: !!python/name:zensical.extensions.emoji.twemoji
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
