@@ -13,8 +13,8 @@ jobs:
     name: Build the distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6 # latest as at 2026.03.20
-      - uses: actions/setup-python@v6 # latest as at 2026.03.20
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: 3.13
 
@@ -22,8 +22,9 @@ jobs:
           pip install poetry
           poetry build
 
-      - uses: actions/upload-artifact@v7 # latest as at 2026.03.20
+      - uses: actions/upload-artifact@v7
         with:
+          name: dist
           path: ./dist
 
   # this is a separate job so that the build job does not have access to the PyPI token
@@ -39,9 +40,11 @@ jobs:
     steps:
       - name: Download package distributions from build job
         uses: actions/download-artifact@v8 # latest as at 2026.03.20
+        with:
+          name: dist
+          path: dist
 
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1 # latest as at 2026.03.20
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          repository_url: https://test.pypi.org/legacy/
-          packages-dir: artifact
+          repository-url: https://test.pypi.org/legacy/
