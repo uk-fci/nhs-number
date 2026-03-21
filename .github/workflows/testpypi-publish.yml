@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v6 # latest as at 2026.03.20
       - uses: actions/setup-python@v6 # latest as at 2026.03.20
         with:
-          python-version: 3.11
+          python-version: 3.13
 
       - run: |
           pip install poetry
