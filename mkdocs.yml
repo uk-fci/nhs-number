@@ -1,4 +1,5 @@
-# This file configures the documentation site
+# This file configures the documentation site.
+# Updated March 2026 to use Zensical.
 
 site_name: nhs-number
 repo_url: https://github.com/uk-fci/nhs-number
