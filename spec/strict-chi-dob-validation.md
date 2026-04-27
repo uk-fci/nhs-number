@@ -1,8 +1,7 @@
 # Strict CHI date-of-birth validation
 
 **Status:** draft / not implemented. Tracked at issue
-[`#NN`](https://github.com/uk-fci/nhs-number/issues/NN) (replace once
-opened).
+[`#61`](https://github.com/uk-fci/nhs-number/issues/61).
 
 This document is the design sketch for the feature foreshadowed by the
 TODO at `nhs_number/validate.py:68`:
