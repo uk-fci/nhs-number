@@ -4,7 +4,7 @@ Generates valid or invalid NHS numbers, for testing
 License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors
-* Marcus Baw <marcusbaw@gmail.com>
+* Marcus Baw <marcus@marcusbaw.com>
 """
 import random
 
