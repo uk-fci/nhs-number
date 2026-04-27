@@ -4,7 +4,7 @@ Returns more detailed information on NHS numbers.
 License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors
-* Marcus Baw <marcusbaw@gmail.com>
+* Marcus Baw <marcus@marcusbaw.com>
 """
 
 # standard imports
@@ -18,7 +18,6 @@ from nhs_number.validate import is_valid, calculate_checksum
 
 
 class NhsNumber:
-    nhs_number: str
     """
     A class which returns more information about an NHS Number than simply
     Boolean validity.
@@ -49,9 +48,19 @@ class NhsNumber:
 
     Usage:
     >>> from nhs_number import NhsNumber
-    >>> nhs_number = NhsNumber('9876543210')
-    >>> vars(nhs_number)
-    {'nhs_number': '9876543210', 'identifier_digits': '987654321', 'check_digit': 0, 'valid': True, 'calculated_checksum': 0, 'region': <nhs_number.constants.Region object at 0x7fcb31de5e90>, 'region_comment': 'Not to be issued (Synthetic/test patients PDS)'}
+    >>> nhs = NhsNumber('9876543210')
+    >>> nhs.nhs_number
+    '9876543210'
+    >>> nhs.identifier_digits
+    '987654321'
+    >>> nhs.check_digit
+    0
+    >>> nhs.valid
+    True
+    >>> nhs.calculated_checksum
+    0
+    >>> nhs.region_comment
+    'Not to be issued (Synthetic/test patients PDS)'
 
     """
 
