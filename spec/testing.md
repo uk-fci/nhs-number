@@ -172,19 +172,53 @@ When adding a new tripwire:
 
 ```
 tests/
-├── test_constants.py     # Range / Region boundaries and invariants
-├── test_details.py       # NhsNumber class
-├── test_generate.py      # generate() — quantity, regions, invariants
-├── test_public_api.py    # importable surface
-├── test_standardise.py   # standardise_format / normalise_number
-├── test_validate.py      # is_valid + calculate_checksum
-└── test_bulk_validation.py  # opt-in test against a large local dataset
+├── test_constants.py        # Range / Region boundaries and invariants
+├── test_details.py          # NhsNumber class
+├── test_generate.py         # generate() — quantity, regions, invariants
+├── test_public_api.py       # importable surface
+├── test_standardise.py      # standardise_format / normalise_number
+├── test_validate.py         # is_valid + calculate_checksum
+├── test_bulk_validation.py  # 909,090 known-valid numbers from local dataset
+└── local-test-data/         # synthetic NHS numbers, committed to repo,
+                             # excluded from the published wheel via
+                             # pyproject.toml's `exclude` rule
 ```
 
 In-package doctests live in `nhs_number/details.py` (the `NhsNumber` usage
 example) and are collected via `--doctest-modules` (configured in
 `pytest.ini`). Add new doctests sparingly and only as documentation for the
 public surface.
+
+### Bulk-validation dataset
+
+`tests/local-test-data/testdata-909090-valid-nhs-numbers.csv` contains
+909,090 known-valid synthetic NHS numbers (all in the `999…` synthetic
+range — no real patient data). It's used by `test_bulk_validation.py` as a
+backstop against any change that breaks `is_valid` for inputs that look
+nothing like the small set we hand-craft elsewhere.
+
+The dataset is committed to the repo deliberately (commit `713268d`,
+June 2023) and excluded from the published PyPI package via
+`pyproject.toml`'s `exclude` rule, so library consumers don't pay the
+download cost. The bulk test runs by default; the cost is ~1.5s on a
+modern machine.
+
+If you add another opt-in or large-dataset test, follow these rules to
+avoid the gotcha that hid the bulk test as a silent skip for ~3 years:
+
+1. **Resolve dataset paths via `__file__`**, not relative to the cwd.
+   `os.path.join(os.path.dirname(__file__), "local-test-data", "...")`
+   works regardless of where pytest is invoked from. A bare relative path
+   like `"local-test-data/..."` skips silently if the test is run from a
+   subdirectory or via an IDE.
+2. **Have the `skipif` reason name the path** it's looking for. A reason
+   like "dataset not present" is mute; "dataset not found at
+   /full/path/here.csv" tells the developer immediately whether the
+   skipif itself is wrong.
+3. **Periodically check skips aren't load-bearing.** A test that always
+   skips is a test that doesn't exist. `pytest -rs` (or the existing
+   `-r a` in `pytest.ini`) makes skips visible in the summary — read
+   them.
 
 ## Running tests
 
@@ -202,9 +236,11 @@ s/test tests/test_constants.py
 s/test -k for_region
 ```
 
-`tests/test_bulk_validation.py` is skipped by default; it requires a large
-local dataset of valid NHS numbers (intentionally not committed for size /
-sensitivity reasons).
+`tests/test_bulk_validation.py` runs by default and adds ~1.5s to the
+total runtime. It uses the dataset committed at
+`tests/local-test-data/` — see the **Bulk-validation dataset** section
+above for context. If you've removed or moved the dataset locally, the
+test skips with a path-specific reason rather than failing.
 
 ## Acceptance criteria for new tests
 
@@ -215,7 +251,8 @@ A test belongs in this suite if it:
 3. Either (a) was red before a code change was made, or (b) explicitly
    pins existing behaviour and says so in a comment.
 4. Doesn't depend on test order or shared mutable state.
-5. Runs in milliseconds (the whole suite should stay sub-second).
+5. Runs in milliseconds (the whole suite should stay under a couple of
+   seconds; `test_bulk_validation` is the one deliberate exception).
 
 A test does **not** belong if it:
 
