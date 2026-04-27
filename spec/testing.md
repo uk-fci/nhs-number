@@ -108,7 +108,7 @@ own try/except.
 ### Invariants
 
 - **Region non-overlap** — every documented boundary value belongs to
-  exactly one `Region`. Sweeped in `tests/test_constants.py`.
+  exactly one `Region`. Swept in `tests/test_constants.py`.
 - **`generate(valid=False, for_region=R)`** — invalid numbers must still
   fall inside `R`'s ranges. The `valid` flag must only affect the check
   digit, never the range.

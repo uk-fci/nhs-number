@@ -4,7 +4,7 @@ Constants which define ranges of NHS Numbers
 License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors:
-* Marcus Baw <marcusbaw@gmail.com>
+* Marcus Baw <marcus@marcusbaw.com>
 * Andy Law <andy.law@roslin.ed.ac.uk>
 
 The most accurate information on the NHS Number ranges we could find is
@@ -26,8 +26,6 @@ Ranges are INCLUSIVE of the start and end values.
 """
 
 
-# using dataclasses would force Python 3.7 or above so we'll use a simple
-# class instead
 class Range:
     """
     A class to represent contiguous blocks of allocated NHS Numbers

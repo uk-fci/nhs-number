@@ -7,10 +7,10 @@ License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors
 * Andy Law <andy.law@roslin.ed.ac.uk>
-* Marcus Baw <marcusbaw@gmail.com>
+* Marcus Baw <marcus@marcusbaw.com>
 """
+
 # standard imports
-from __future__ import annotations # for Python 3.7 (remove once we stop supporting 3.7)
 import re
 import warnings
 
