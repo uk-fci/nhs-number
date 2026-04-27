@@ -22,9 +22,9 @@ import warnings
 GOOD_FORMAT = r"^(\d{10}|\d{3} \d{3} \d{4}|\d{3}-\d{3}-\d{4})$"
 
 
-def standardise_format(nhs_number: str | int) -> str:
+def standardise_format(nhs_number) -> str:
     """
-    Extract the 10 digits of an NHS number if the supplied string is a valid
+    Extract the 10 digits of an NHS number if the supplied input is a valid
     format. If supplied as an int it will attempt to convert it to a string for
     processing.
     Valid formats are:
@@ -33,17 +33,21 @@ def standardise_format(nhs_number: str | int) -> str:
       1234567890
     with any amount of leading and trailing white space
     If Valid, this routine will return '1234567890' for all of the above inputs.
-    An invalid input will result in the empty string which makes it possible
-    to use a call to this function to test for valid format (but not valid
-    checksum)
-    :type nhs_number: basestring
-    :param nhs_number:
+    An invalid input (including None, floats, or any non-str/non-int type)
+    results in the empty string, which makes it possible to use a call to this
+    function to test for valid format (but not valid checksum).
+    :param nhs_number: a string or int; any other type is treated as invalid
     :return: 10 digit numerical string or the empty string
     """
+    # bool is a subclass of int but is never a meaningful NHS number; reject.
+    if isinstance(nhs_number, bool):
+        return ""
     if isinstance(nhs_number, int):
         working_number = str(nhs_number).zfill(10)
-    else:
+    elif isinstance(nhs_number, str):
         working_number = nhs_number.strip()
+    else:
+        return ""
     if re.search(GOOD_FORMAT, working_number) is None:
         working_number = ""
     working_number = re.sub("[- ]", "", working_number)

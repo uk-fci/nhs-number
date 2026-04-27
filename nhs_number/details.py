@@ -60,11 +60,9 @@ class NhsNumber:
 
         # Standardise first so formatted strings ("987 654 3210"), ints, and
         # surrounding whitespace all parse correctly. Returns "" for inputs
-        # that cannot be coerced to a 10-digit NHS number format.
-        if isinstance(nhs_number, (str, int)):
-            standardised = standardise_format(nhs_number)
-        else:
-            standardised = ""
+        # that cannot be coerced to a 10-digit NHS number format (including
+        # None and other unsupported types).
+        standardised = standardise_format(nhs_number)
 
         if standardised:
             self.identifier_digits = standardised[:-1]
