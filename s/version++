@@ -42,6 +42,15 @@ esac
 
 NEW="$MAJOR.$MINOR.$PATCH"
 
+# Require a changelog entry for the new version before bumping or tagging,
+# so every release has a record of what changed.
+ESCAPED_NEW=${NEW//./\\.}
+if ! grep -qE "^## ${ESCAPED_NEW}( |$)" docs/changelog.md; then
+  echo "error: docs/changelog.md has no '## $NEW' entry." >&2
+  echo "Add a '## $NEW' section to docs/changelog.md describing what changed, then re-run." >&2
+  exit 1
+fi
+
 echo "bumping $CURRENT -> $NEW ($BUMP)"
 
 # Update pyproject.toml
@@ -53,8 +62,8 @@ if ! grep -q "^version = \"$NEW\"" pyproject.toml; then
   exit 1
 fi
 
-# Commit and tag
-git add pyproject.toml
+# Commit and tag (changelog entry verified above, so include it in the commit)
+git add pyproject.toml docs/changelog.md
 git commit -m "bump version to $NEW"
 git tag "$NEW"
 

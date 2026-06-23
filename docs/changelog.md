@@ -11,6 +11,22 @@ authors: Dr Marcus Baw
 - Fixes the in-package doctest so `pytest --doctest-modules` actually collects and runs it.
 - No public API surface change: all previously-supported calls behave identically.
 
+## 1.3.10
+
+- Fixes artifact naming and the `repository_url` key (normalised hyphenated form) in the PyPI / test.pypi publishing workflows so automated publishing succeeds. No changes to the `nhs_number` library code.
+
+## 1.3.9
+
+- Fixes the `packages-dir` path in the test.pypi publishing workflow, tidies workflow formatting, and bumps `actions/cache`. No changes to the `nhs_number` library code.
+
+## 1.3.8
+
+- Adds the `s/version++` script to automate version bumping and tagging, extends Dependabot to pip dependencies, adds Python 3.13 to the publishing CI, and clarifies the mkdocs configuration. No changes to the `nhs_number` library code.
+
+## 1.3.7
+
+- Migrates the documentation site from MkDocs to Zensical (including the GitHub Pages deployment), adds Dependabot for GitHub Actions, bumps the pinned GitHub Actions across the workflows, and adds the PyPI and test.pypi publishing workflows. No changes to the `nhs_number` library code.
+
 ## 1.3.6
 - Adds Python 3.13 to the supported versions which are tested in the GitHub Action CI/CD pipeline. No versions have been removed.
 - Adds a Github Action workflow to publish the documentation site to GitHub Pages.
