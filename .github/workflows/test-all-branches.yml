@@ -29,3 +29,8 @@ jobs:
       - name: Test with pytest
         run: |
           pytest --cov=nhs_number --cov-branch --cov-report=term --cov-fail-under=100
+      - name: Check code formatting with black
+        if: matrix.python-version == '3.13'
+        run: |
+          pip install black
+          black --check .
