@@ -3,6 +3,14 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 1.4.0
+
+- Major test robustness pass: increases the suite from 42 to 200 tests while maintaining 100% line and branch coverage, adding boundary, invariant, region-coverage, checksum-edge, input-type, and public-API tests. Adds `spec/testing.md` documenting the testing strategy and conventions.
+- `is_valid()`, `NhsNumber()`, and `standardise_format()` no longer raise on unexpected input. Previously `None`, integers, pre-formatted strings (e.g. `"987 654 3210"`), empty strings, and other unsupported types could raise an exception; they now return `False` / construct cleanly / return `""` as documented.
+- `NhsNumber` now standardises its input before parsing, and sets `region` to `None` for numbers that fall outside all known ranges (previously accessing `.region` raised `AttributeError`).
+- Fixes the in-package doctest so `pytest --doctest-modules` actually collects and runs it.
+- No public API surface change: all previously-supported calls behave identically.
+
 ## 1.3.6
 - Adds Python 3.13 to the supported versions which are tested in the GitHub Action CI/CD pipeline. No versions have been removed.
 - Adds a Github Action workflow to publish the documentation site to GitHub Pages.
