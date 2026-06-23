@@ -5,9 +5,9 @@ If a name is removed or renamed accidentally — or if a new public name is
 added without consideration — this test fires. Adding to PUBLIC_NAMES is a
 deliberate decision; removing is a breaking-change decision.
 """
+
 import nhs_number
 from nhs_number.constants import Range
-
 
 PUBLIC_NAMES = [
     # Constants module
@@ -56,7 +56,8 @@ def test_top_level_import_does_not_expose_private_names():
     import types
 
     public_attrs = {
-        name for name in dir(nhs_number)
+        name
+        for name in dir(nhs_number)
         if not name.startswith("_")
         and not isinstance(getattr(nhs_number, name), types.ModuleType)
     }
@@ -99,6 +100,6 @@ def test_public_constants_are_correct_types():
         "REGION_SYNTHETIC",
         "REGION_EIRE",
     ]:
-        assert isinstance(getattr(nhs_number, name), nhs_number.Region), (
-            f"{name} is not a Region instance"
-        )
+        assert isinstance(
+            getattr(nhs_number, name), nhs_number.Region
+        ), f"{name} is not a Region instance"

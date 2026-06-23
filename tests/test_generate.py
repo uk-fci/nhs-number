@@ -77,6 +77,7 @@ def test_fail_when_non_region_supplied():
 # Quantity edge cases
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.parametrize("quantity", [0, -1, -100])
 def test_generate_zero_or_negative_quantity_returns_empty(quantity):
     """The while-loop guard ``len(numbers) < quantity`` means zero and
@@ -97,18 +98,22 @@ def test_generate_returns_exact_quantity(quantity):
 # ---------------------------------------------------------------------------
 
 ALL_REGIONS = [
-    ("SCOTLAND",          REGION_SCOTLAND),
-    ("NORTHERN_IRELAND",  REGION_NORTHERN_IRELAND),
+    ("SCOTLAND", REGION_SCOTLAND),
+    ("NORTHERN_IRELAND", REGION_NORTHERN_IRELAND),
     ("ENGLAND_WALES_IOM", REGION_ENGLAND_WALES_IOM),
-    ("RESERVED",          REGION_RESERVED),
-    ("EIRE",              REGION_EIRE),
-    ("UNALLOCATED",       REGION_UNALLOCATED),
-    ("SYNTHETIC",         REGION_SYNTHETIC),
+    ("RESERVED", REGION_RESERVED),
+    ("EIRE", REGION_EIRE),
+    ("UNALLOCATED", REGION_UNALLOCATED),
+    ("SYNTHETIC", REGION_SYNTHETIC),
 ]
 
 
-@pytest.mark.parametrize("name,region", ALL_REGIONS, ids=[r[0] for r in ALL_REGIONS])
-def test_generate_valid_for_region_yields_in_region_valid_numbers(name, region):
+@pytest.mark.parametrize(
+    "name,region", ALL_REGIONS, ids=[r[0] for r in ALL_REGIONS]
+)
+def test_generate_valid_for_region_yields_in_region_valid_numbers(
+    name, region
+):
     """For every Region, a batch of generate(valid=True, for_region=...) must
     produce numbers that are (a) checksum-valid and (b) inside the region.
     """
@@ -119,8 +124,12 @@ def test_generate_valid_for_region_yields_in_region_valid_numbers(name, region):
         assert region.contains_number(n), f"{n} not in region {name}"
 
 
-@pytest.mark.parametrize("name,region", ALL_REGIONS, ids=[r[0] for r in ALL_REGIONS])
-def test_generate_invalid_for_region_yields_in_region_invalid_numbers(name, region):
+@pytest.mark.parametrize(
+    "name,region", ALL_REGIONS, ids=[r[0] for r in ALL_REGIONS]
+)
+def test_generate_invalid_for_region_yields_in_region_invalid_numbers(
+    name, region
+):
     """generate(valid=False, for_region=...) is an "in-region but checksum-
     invalid" generator — the number should still fall inside the requested
     region's ranges. Pins the cross-cutting invariant that ``valid`` only
@@ -136,6 +145,7 @@ def test_generate_invalid_for_region_yields_in_region_invalid_numbers(name, regi
 # ---------------------------------------------------------------------------
 # valid=False at scale
 # ---------------------------------------------------------------------------
+
 
 def test_generate_invalid_at_scale_all_invalid():
     """Pin that generate(valid=False, quantity=N) never sneaks a checksum-
@@ -154,6 +164,7 @@ def test_generate_invalid_at_scale_all_invalid():
 # NHS number. This is a breaking change from the previous FULL_RANGE default.
 # ---------------------------------------------------------------------------
 
+
 def test_generate_default_is_synthetic_range():
     for n in generate(quantity=100):
         assert REGION_SYNTHETIC.contains_number(n), (
@@ -166,6 +177,7 @@ def test_generate_default_is_synthetic_range():
 # random_chi_str - the internal CHI body generator used for Scotland.
 # Produces nine digits (DDMMYY + serial) whose date segment is a real date.
 # ---------------------------------------------------------------------------
+
 
 def test_random_chi_str_is_nine_digits():
     assert len(random_chi_str()) == 9

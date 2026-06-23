@@ -9,6 +9,7 @@ If someone runs the suite without the dataset present (e.g. a sparse
 checkout), the test skips with a pointer rather than failing — but the
 default expectation is that it runs.
 """
+
 import csv
 import os.path
 import sys
@@ -16,7 +17,6 @@ import sys
 import pytest
 
 from nhs_number import is_valid
-
 
 csv.field_size_limit(sys.maxsize)
 

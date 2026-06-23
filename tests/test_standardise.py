@@ -139,18 +139,22 @@ def test_normalise_deprecated():
 # Defensive handling of unsupported input types
 # ---------------------------------------------------------------------------
 
-@pytest.mark.parametrize("bad_input", [
-    None,
-    3.14,
-    -1.0,
-    [],
-    {},
-    set(),
-    (1, 2, 3),
-    object(),
-    True,            # bool is a subclass of int but never a meaningful NHS num
-    False,
-])
+
+@pytest.mark.parametrize(
+    "bad_input",
+    [
+        None,
+        3.14,
+        -1.0,
+        [],
+        {},
+        set(),
+        (1, 2, 3),
+        object(),
+        True,  # bool is a subclass of int but never a meaningful NHS num
+        False,
+    ],
+)
 def test_format_unsupported_types_return_empty_string(bad_input):
     """Unsupported input types must return "" rather than raising.
 

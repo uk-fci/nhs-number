@@ -50,4 +50,3 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 79
-experimental-string-processing = true
