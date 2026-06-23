@@ -7,9 +7,12 @@ License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors
 * Andy Law <andy.law@roslin.ed.ac.uk>
-* Marcus Baw <marcusbaw@gmail.com>
+* Marcus Baw <marcus@marcusbaw.com>
 """
-from __future__ import annotations # for Python 3.7 (remove once we stop supporting 3.7)
+# PEP 604 union syntax (`int | None`) is 3.10+; defer annotation evaluation
+# so we keep working on Python 3.8 and 3.9. Remove this once 3.8/3.9 are
+# dropped from the test matrix.
+from __future__ import annotations
 from nhs_number.standardise import standardise_format
 from nhs_number.constants import Region
 

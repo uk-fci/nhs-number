@@ -19,7 +19,7 @@ In 2015, the NHS Number was legally mandated to be used as a single patient iden
 
 The use of the NHS number in health and care organisations in England is specified in the [Information Standards Board](https://digital.nhs.uk/data-and-information/information-standards) standard [ISB 0149 NHS Number](https://digital.nhs.uk/data-and-information/information-standards/information-standards-and-data-collections-including-extractions/publications-and-notifications/standards-and-collections/isb-0149-nhs-number) (Note that these NHS Digital links, while live at the time of editing this documentation, may at some stage move to NHS England following the merger of those organisations, which is ongoing, in 2023)
 
-### Scotland
+### Scotland - CHI Numbers
 
 Scotland calls the identifier a Community Health Index (CHI) Number, using a similar standard for check-digit validation. However, the first 6 digits of the number are the date of birth in the format `DDMMYY` rather than a sequential number. Following this, there is a 3-sequence number.
 
@@ -51,7 +51,7 @@ This table shows how different ranges within the standard number format are dist
 | 600000000n - 799999999n              | England, Wales, IOM | Used for NHS numbers in England, Wales and the Isle of Man.                                                                                                                                            |
 | 800000000n - 859999999n              | Republic of Ireland | Used by the Republic of Ireland within the IHI (digits 8-17).                                                                                                                                          |
 
-### Test/Unallocated Number Ranges
+### Test / Unallocated Number Ranges
 
 This table shows the ranges not assigned to live use (e.g. testing, unallocated).
 

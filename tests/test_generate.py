@@ -2,6 +2,14 @@ import pytest
 
 
 from nhs_number import generate, is_valid, REGION_ENGLAND_WALES_IOM
+from nhs_number.constants import (
+    REGION_SCOTLAND,
+    REGION_NORTHERN_IRELAND,
+    REGION_RESERVED,
+    REGION_EIRE,
+    REGION_UNALLOCATED,
+    REGION_SYNTHETIC,
+)
 
 
 def test_create_valid_nhs_number():
@@ -61,3 +69,78 @@ def test_fail_when_non_region_supplied():
     with pytest.raises(TypeError) as error:
         # noinspection PyTypeChecker
         nhs_numbers = generate(for_region="REGION_ENGLAND_WALES_IOM")
+
+
+# ---------------------------------------------------------------------------
+# Quantity edge cases
+# ---------------------------------------------------------------------------
+
+@pytest.mark.parametrize("quantity", [0, -1, -100])
+def test_generate_zero_or_negative_quantity_returns_empty(quantity):
+    """The while-loop guard ``len(numbers) < quantity`` means zero and
+    negative quantities never enter the loop. Pin this so a future rewrite
+    can't silently change it (e.g. to "raise ValueError" — which would be a
+    breaking change).
+    """
+    assert generate(quantity=quantity) == []
+
+
+@pytest.mark.parametrize("quantity", [1, 2, 5, 50])
+def test_generate_returns_exact_quantity(quantity):
+    assert len(generate(quantity=quantity)) == quantity
+
+
+# ---------------------------------------------------------------------------
+# All Regions covered
+# ---------------------------------------------------------------------------
+
+ALL_REGIONS = [
+    ("SCOTLAND",          REGION_SCOTLAND),
+    ("NORTHERN_IRELAND",  REGION_NORTHERN_IRELAND),
+    ("ENGLAND_WALES_IOM", REGION_ENGLAND_WALES_IOM),
+    ("RESERVED",          REGION_RESERVED),
+    ("EIRE",              REGION_EIRE),
+    ("UNALLOCATED",       REGION_UNALLOCATED),
+    ("SYNTHETIC",         REGION_SYNTHETIC),
+]
+
+
+@pytest.mark.parametrize("name,region", ALL_REGIONS, ids=[r[0] for r in ALL_REGIONS])
+def test_generate_valid_for_region_yields_in_region_valid_numbers(name, region):
+    """For every Region, a batch of generate(valid=True, for_region=...) must
+    produce numbers that are (a) checksum-valid and (b) inside the region.
+    """
+    numbers = generate(valid=True, for_region=region, quantity=100)
+    assert len(numbers) == 100
+    for n in numbers:
+        assert is_valid(n), f"{n} from region {name} is not checksum-valid"
+        assert region.contains_number(n), f"{n} not in region {name}"
+
+
+@pytest.mark.parametrize("name,region", ALL_REGIONS, ids=[r[0] for r in ALL_REGIONS])
+def test_generate_invalid_for_region_yields_in_region_invalid_numbers(name, region):
+    """generate(valid=False, for_region=...) is an "in-region but checksum-
+    invalid" generator — the number should still fall inside the requested
+    region's ranges. Pins the cross-cutting invariant that ``valid`` only
+    affects the check digit, never the range.
+    """
+    numbers = generate(valid=False, for_region=region, quantity=100)
+    assert len(numbers) == 100
+    for n in numbers:
+        assert not is_valid(n), f"{n} from region {name} unexpectedly valid"
+        assert region.contains_number(n), f"{n} not in region {name}"
+
+
+# ---------------------------------------------------------------------------
+# valid=False at scale
+# ---------------------------------------------------------------------------
+
+def test_generate_invalid_at_scale_all_invalid():
+    """Pin that generate(valid=False, quantity=N) never sneaks a checksum-
+    valid number through. Catches any future bug in the wrong-checksum
+    selection loop (e.g. an off-by-one that lets the real checksum slip).
+    """
+    numbers = generate(valid=False, quantity=1000)
+    assert len(numbers) == 1000
+    for n in numbers:
+        assert not is_valid(n), f"{n} unexpectedly has a valid checksum"
