@@ -1,33 +1,40 @@
 """
-Development-only bulk testing of testing NHS numbers against the code
+Bulk validation of 909,090 known-valid synthetic NHS numbers.
+
+The dataset lives at tests/local-test-data/ and is committed to the repo
+deliberately (see commit 713268d) but excluded from the published package
+via pyproject.toml's `exclude` rule, so PyPI consumers don't download it.
+
+If someone runs the suite without the dataset present (e.g. a sparse
+checkout), the test skips with a pointer rather than failing — but the
+default expectation is that it runs.
 """
-# standard imports
-import os.path
 import csv
+import os.path
 import sys
 
-# third-party imports
 import pytest
 
-# local imports
 from nhs_number import is_valid
 
 
 csv.field_size_limit(sys.maxsize)
 
+DATA_DIR = os.path.join(os.path.dirname(__file__), "local-test-data")
+DATA_FILE = os.path.join(DATA_DIR, "testdata-909090-valid-nhs-numbers.csv")
+
 
 @pytest.mark.skipif(
-    not os.path.exists("local-test-data/testdata-909090-valid-nhs-numbers.csv"),
-    reason="This test requires a large list of valid NHS numbers which we do"
-           " not want to include in the repo by default for reasons of file"
-           " size",
+    not os.path.exists(DATA_FILE),
+    reason=(
+        f"bulk-validation dataset not found at {DATA_FILE}. "
+        "It is committed to the repo at tests/local-test-data/ but excluded "
+        "from the PyPI package via pyproject.toml — restore it with "
+        "`git checkout tests/local-test-data/`."
+    ),
 )
 def test_with_large_numbers_of_known_valid_nhs_numbers():
-    with open(
-        "local-test-data/testdata-909090-valid-nhs-numbers.csv",
-        newline="",
-        encoding="utf-8-sig",
-    ) as csvfile:
+    with open(DATA_FILE, newline="", encoding="utf-8-sig") as csvfile:
         testdata = []
         for line in csv.reader(csvfile):
             testdata += line

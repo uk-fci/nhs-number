@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# s/test - run the project's pytest suite, passing through any extra args
+#
+# Usage:
+#   s/test                 # run all tests
+#   s/test tests/test_details.py
+#   s/test -k region       # filter by keyword
+#   s/test --cov=nhs_number --cov-branch   # with coverage (needs pytest-cov)
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+exec python -m pytest "$@"

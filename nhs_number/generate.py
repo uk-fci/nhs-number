@@ -4,7 +4,7 @@ Generates valid or invalid NHS numbers, for testing
 License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors
-* Marcus Baw <marcusbaw@gmail.com>
+* Marcus Baw <marcus@marcusbaw.com>
 """
 
 import datetime
@@ -17,7 +17,8 @@ from random import randint
 
 # local imports
 from nhs_number.validate import calculate_checksum
-from nhs_number import Region, RANGE_NOT_ISSUED_SYNTHETIC, REGION_SCOTLAND
+from nhs_number import Region, REGION_SCOTLAND
+from nhs_number.constants import RANGE_NOT_ISSUED_SYNTHETIC
 
 
 def generate(

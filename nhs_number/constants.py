@@ -4,7 +4,7 @@ Constants which define ranges of NHS Numbers
 License: MIT (https://www.opensource.org/licenses/mit-license.php)
 
 Contributors:
-* Marcus Baw <marcusbaw@gmail.com>
+* Marcus Baw <marcus@marcusbaw.com>
 * Andy Law <andy.law@roslin.ed.ac.uk>
 
 The most accurate information on the NHS Number ranges we could find is
@@ -25,11 +25,7 @@ Ranges are INCLUSIVE of the start and end values.
     9000000000 - 9999999999 Not to be issued (Synthetic/test patients PDS)
 """
 
-from enum import Enum
 
-
-# using dataclasses would force Python 3.7 or above so we'll use a simple
-# class instead
 class Range:
     """
     A class to represent contiguous blocks of allocated NHS Numbers
@@ -71,19 +67,14 @@ class Region:
         return False
 
 
-class Sex(Enum):
-    MALE = 1
-    FEMALE = 2
-
-
 RANGE_UNALLOCATED_1 = Range(
     start=10,
-    end=9_999_999,
+    end=99_999_999,
     label="Unallocated 1 (not in use)",
 )
 
 RANGE_SCOTLAND = Range(
-    start=10_000_000,
+    start=100_000_000,
     end=3_112_999_999,
     label="Scotland CHI numbers",
 )
