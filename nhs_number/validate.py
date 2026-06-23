@@ -9,6 +9,7 @@ Contributors
 * Andy Law <andy.law@roslin.ed.ac.uk>
 * Marcus Baw <marcus@marcusbaw.com>
 """
+
 # PEP 604 union syntax (`int | None`) is 3.10+; defer annotation evaluation
 # so we keep working on Python 3.8 and 3.9. Remove this once 3.8/3.9 are
 # dropped from the test matrix.
@@ -81,7 +82,7 @@ def is_valid(nhs_number: str, for_region: Region = None) -> bool:
     # Test for checksum validity
     # The first 9 numbers are used to calculate the checksum, which should
     # match the last digit
-    (identifier_digits, check_digit) = (nhs_number[:-1], int(nhs_number[-1]))
+    identifier_digits, check_digit = (nhs_number[:-1], int(nhs_number[-1]))
     calculated_checksum = calculate_checksum(identifier_digits)
     # NOTE: a checksum of 10 is invalid (and is quoted as a special case),
     # but the check for equality

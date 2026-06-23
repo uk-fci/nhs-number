@@ -23,22 +23,29 @@ def test_valid_synthetic_nhs_number_details():
     assert number.calculated_checksum == 0
     assert isinstance(number.region, Region)
     assert "test" in number.region.tags
-    assert number.region_comment == ("Not to be issued "
-                                     "(Synthetic/test patients PDS)")
+    assert number.region_comment == (
+        "Not to be issued " "(Synthetic/test patients PDS)"
+    )
 
 
 # --- Region coverage: one valid number per region ---------------------------
 
-@pytest.mark.parametrize("nhs_num,expected_region,expected_label_substr", [
-    ("0101011113", REGION_SCOTLAND,          "Scotland"),
-    ("3462950622", REGION_NORTHERN_IRELAND,  "Northern Ireland"),
-    ("4149827702", REGION_ENGLAND_WALES_IOM, "England Wales"),
-    ("5726600533", REGION_RESERVED,          "Reserved"),
-    ("8453035113", REGION_EIRE,              "Republic of Ireland"),
-    ("0000499927", REGION_UNALLOCATED,       "Unallocated"),
-    ("9234760735", REGION_SYNTHETIC,         "Synthetic"),
-])
-def test_nhs_number_region_detection(nhs_num, expected_region, expected_label_substr):
+
+@pytest.mark.parametrize(
+    "nhs_num,expected_region,expected_label_substr",
+    [
+        ("0101011113", REGION_SCOTLAND, "Scotland"),
+        ("3462950622", REGION_NORTHERN_IRELAND, "Northern Ireland"),
+        ("4149827702", REGION_ENGLAND_WALES_IOM, "England Wales"),
+        ("5726600533", REGION_RESERVED, "Reserved"),
+        ("8453035113", REGION_EIRE, "Republic of Ireland"),
+        ("0000499927", REGION_UNALLOCATED, "Unallocated"),
+        ("9234760735", REGION_SYNTHETIC, "Synthetic"),
+    ],
+)
+def test_nhs_number_region_detection(
+    nhs_num, expected_region, expected_label_substr
+):
     n = NhsNumber(nhs_num)
     assert n.nhs_number == nhs_num
     assert n.identifier_digits == nhs_num[:-1]
@@ -51,6 +58,7 @@ def test_nhs_number_region_detection(nhs_num, expected_region, expected_label_su
 
 
 # --- Latent bug: out-of-all-ranges input ------------------------------------
+
 
 def test_nhs_number_below_all_regions_has_no_region():
     """Numbers below FULL_RANGE.start (10) match no region.
@@ -67,11 +75,15 @@ def test_nhs_number_below_all_regions_has_no_region():
 
 # --- Input parsing: formatted strings ---------------------------------------
 
-@pytest.mark.parametrize("formatted", [
-    "987 654 3210",
-    "987-654-3210",
-    "  9876543210  ",
-])
+
+@pytest.mark.parametrize(
+    "formatted",
+    [
+        "987 654 3210",
+        "987-654-3210",
+        "  9876543210  ",
+    ],
+)
 def test_nhs_number_accepts_formatted_input(formatted):
     n = NhsNumber(formatted)
     assert n.identifier_digits == "987654321"
@@ -81,6 +93,7 @@ def test_nhs_number_accepts_formatted_input(formatted):
 
 
 # --- Input parsing: int -----------------------------------------------------
+
 
 def test_nhs_number_accepts_int_input():
     n = NhsNumber(9876543210)
@@ -92,7 +105,10 @@ def test_nhs_number_accepts_int_input():
 
 # --- Garbage / empty / None: construct cleanly, valid=False -----------------
 
-@pytest.mark.parametrize("bad_input", ["", "   ", "abcdefghij", "987654321X", None])
+
+@pytest.mark.parametrize(
+    "bad_input", ["", "   ", "abcdefghij", "987654321X", None]
+)
 def test_nhs_number_invalid_input_constructs_cleanly(bad_input):
     n = NhsNumber(bad_input)
     assert n.valid is False

@@ -76,7 +76,9 @@ class NhsNumber:
         if standardised:
             self.identifier_digits = standardised[:-1]
             self.check_digit = int(standardised[-1])
-            self.calculated_checksum = calculate_checksum(self.identifier_digits)
+            self.calculated_checksum = calculate_checksum(
+                self.identifier_digits
+            )
             self.valid = is_valid(standardised)
         else:
             self.identifier_digits = ""

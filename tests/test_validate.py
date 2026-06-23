@@ -74,25 +74,35 @@ def test_checksum_returns_none_if_more_than_nine_digits():
 #   ``region`` (used to assert for_region rejects numbers outside the region
 #   even though their checksum is fine)
 REGION_CASES = [
-    ("SCOTLAND",         REGION_SCOTLAND,         "0101011113", "9876543210"),
+    ("SCOTLAND", REGION_SCOTLAND, "0101011113", "9876543210"),
     ("NORTHERN_IRELAND", REGION_NORTHERN_IRELAND, "3462950622", "9876543210"),
-    ("ENGLAND_WALES",    REGION_ENGLAND_WALES_IOM, "4149827702", "9876543210"),
-    ("RESERVED",         REGION_RESERVED,         "5726600533", "9876543210"),
-    ("EIRE",             REGION_EIRE,             "8453035113", "9876543210"),
-    ("UNALLOCATED",      REGION_UNALLOCATED,      "0000499927", "9876543210"),
-    ("SYNTHETIC",        REGION_SYNTHETIC,        "9234760735", "0101011113"),
+    ("ENGLAND_WALES", REGION_ENGLAND_WALES_IOM, "4149827702", "9876543210"),
+    ("RESERVED", REGION_RESERVED, "5726600533", "9876543210"),
+    ("EIRE", REGION_EIRE, "8453035113", "9876543210"),
+    ("UNALLOCATED", REGION_UNALLOCATED, "0000499927", "9876543210"),
+    ("SYNTHETIC", REGION_SYNTHETIC, "9234760735", "0101011113"),
 ]
 
 
-@pytest.mark.parametrize("name,region,in_range,out_of_range", REGION_CASES,
-                         ids=[c[0] for c in REGION_CASES])
-def test_is_valid_for_region_accepts_in_range_numbers(name, region, in_range, out_of_range):
+@pytest.mark.parametrize(
+    "name,region,in_range,out_of_range",
+    REGION_CASES,
+    ids=[c[0] for c in REGION_CASES],
+)
+def test_is_valid_for_region_accepts_in_range_numbers(
+    name, region, in_range, out_of_range
+):
     assert is_valid(in_range, for_region=region) is True
 
 
-@pytest.mark.parametrize("name,region,in_range,out_of_range", REGION_CASES,
-                         ids=[c[0] for c in REGION_CASES])
-def test_is_valid_for_region_rejects_out_of_range_numbers(name, region, in_range, out_of_range):
+@pytest.mark.parametrize(
+    "name,region,in_range,out_of_range",
+    REGION_CASES,
+    ids=[c[0] for c in REGION_CASES],
+)
+def test_is_valid_for_region_rejects_out_of_range_numbers(
+    name, region, in_range, out_of_range
+):
     """Even with a valid checksum, a number outside ``region`` must be False."""
     # Sanity: the out-of-range fixture itself must have a valid checksum
     # (otherwise the test would pass for the wrong reason).
@@ -106,6 +116,7 @@ def test_is_valid_for_region_rejects_out_of_range_numbers(name, region, in_range
 # A number in the Scotland CHI range whose date segment is not a real
 # calendar date is invalid, regardless of checksum. Applied by default.
 # ---------------------------------------------------------------------------
+
 
 def test_chi_valid_date_is_accepted():
     # 01/01/01 (1 Jan 2001), valid checksum, in the Scotland CHI range
@@ -127,6 +138,7 @@ def test_chi_impossible_date_rejected_by_default():
 # Checksum == 10 (special case noted in validate.py)
 # ---------------------------------------------------------------------------
 
+
 def test_calculate_checksum_can_return_10():
     """For some 9-digit identifiers the formula yields 10. validate.py
     relies on the equality check (10 != any single digit) to mark such
@@ -140,7 +152,9 @@ def test_calculate_checksum_can_return_10():
 
 
 @pytest.mark.parametrize("check_digit", list(range(10)))
-def test_is_valid_rejects_every_check_digit_when_real_checksum_is_10(check_digit):
+def test_is_valid_rejects_every_check_digit_when_real_checksum_is_10(
+    check_digit,
+):
     """When the real checksum is 10, NO single-digit check digit can match,
     so every candidate full number must be rejected.
 
@@ -157,23 +171,27 @@ def test_is_valid_rejects_every_check_digit_when_real_checksum_is_10(check_digit
 # Input-type robustness — is_valid never raises
 # ---------------------------------------------------------------------------
 
-@pytest.mark.parametrize("bad_input", [
-    None,
-    "",
-    "   ",
-    "abc",
-    "987654321X",
-    3.14,
-    -1.0,
-    -1,
-    -1234567890,
-    99_999_999_999,    # > 10 digits, zfill is a no-op so format regex fails
-    [],
-    {},
-    object(),
-    True,
-    False,
-])
+
+@pytest.mark.parametrize(
+    "bad_input",
+    [
+        None,
+        "",
+        "   ",
+        "abc",
+        "987654321X",
+        3.14,
+        -1.0,
+        -1,
+        -1234567890,
+        99_999_999_999,  # > 10 digits, zfill is a no-op so format regex fails
+        [],
+        {},
+        object(),
+        True,
+        False,
+    ],
+)
 def test_is_valid_returns_false_for_unparseable_input(bad_input):
     """is_valid must never raise — anything it can't standardise is False."""
     assert is_valid(bad_input) is False
