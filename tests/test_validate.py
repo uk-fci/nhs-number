@@ -74,13 +74,13 @@ def test_checksum_returns_none_if_more_than_nine_digits():
 #   ``region`` (used to assert for_region rejects numbers outside the region
 #   even though their checksum is fine)
 REGION_CASES = [
-    ("SCOTLAND",         REGION_SCOTLAND,         "0117420360", "9876543210"),
+    ("SCOTLAND",         REGION_SCOTLAND,         "0101011113", "9876543210"),
     ("NORTHERN_IRELAND", REGION_NORTHERN_IRELAND, "3462950622", "9876543210"),
     ("ENGLAND_WALES",    REGION_ENGLAND_WALES_IOM, "4149827702", "9876543210"),
     ("RESERVED",         REGION_RESERVED,         "5726600533", "9876543210"),
     ("EIRE",             REGION_EIRE,             "8453035113", "9876543210"),
     ("UNALLOCATED",      REGION_UNALLOCATED,      "0000499927", "9876543210"),
-    ("SYNTHETIC",        REGION_SYNTHETIC,        "9234760735", "0117420360"),
+    ("SYNTHETIC",        REGION_SYNTHETIC,        "9234760735", "0101011113"),
 ]
 
 
@@ -98,6 +98,29 @@ def test_is_valid_for_region_rejects_out_of_range_numbers(name, region, in_range
     # (otherwise the test would pass for the wrong reason).
     assert is_valid(out_of_range) is True
     assert is_valid(out_of_range, for_region=region) is False
+
+
+# ---------------------------------------------------------------------------
+# CHI (Scotland) date-of-birth validation - issue #25
+# A CHI number encodes the date of birth in its first 6 digits as DDMMYY.
+# A number in the Scotland CHI range whose date segment is not a real
+# calendar date is invalid, regardless of checksum. Applied by default.
+# ---------------------------------------------------------------------------
+
+def test_chi_valid_date_is_accepted():
+    # 01/01/01 (1 Jan 2001), valid checksum, in the Scotland CHI range
+    assert is_valid("0101011113") is True
+
+
+def test_chi_impossible_date_rejected_with_region():
+    # 01/13/01 - month 13 - checksum is valid, so only the date can reject it
+    assert is_valid("0113011113", for_region=REGION_SCOTLAND) is False
+
+
+def test_chi_impossible_date_rejected_by_default():
+    # The CHI date check applies to any number in the Scotland range, even
+    # without an explicit for_region.
+    assert is_valid("0113011113") is False
 
 
 # ---------------------------------------------------------------------------

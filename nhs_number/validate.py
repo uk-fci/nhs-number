@@ -13,8 +13,9 @@ Contributors
 # so we keep working on Python 3.8 and 3.9. Remove this once 3.8/3.9 are
 # dropped from the test matrix.
 from __future__ import annotations
+from datetime import datetime
 from nhs_number.standardise import standardise_format
-from nhs_number.constants import Region
+from nhs_number.constants import Region, REGION_SCOTLAND
 
 
 def calculate_checksum(identifier_digits: str) -> int | None:
@@ -65,10 +66,17 @@ def is_valid(nhs_number: str, for_region: Region = None) -> bool:
 
     # If the NHS number is outside the range for the supplied region,
     # return False
-    if for_region:
-        if not for_region.contains_number(nhs_number):
+    if for_region and not for_region.contains_number(nhs_number):
+        return False
+
+    # CHI numbers (Scotland) encode the date of birth in the first 6 digits
+    # as DDMMYY. A number in the CHI range whose first 6 digits are not a real
+    # calendar date is not a valid CHI number. See issue #25.
+    if REGION_SCOTLAND.contains_number(nhs_number):
+        try:
+            datetime.strptime(nhs_number[:6], "%d%m%y")
+        except ValueError:
             return False
-        # Additional checks for Scotland CHI number DOB validity will go here
 
     # Test for checksum validity
     # The first 9 numbers are used to calculate the checksum, which should

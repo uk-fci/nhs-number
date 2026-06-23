@@ -1,7 +1,9 @@
 import pytest
+from datetime import datetime
 
 
 from nhs_number import generate, is_valid, REGION_ENGLAND_WALES_IOM
+from nhs_number.generate import random_chi_str
 from nhs_number.constants import (
     REGION_SCOTLAND,
     REGION_NORTHERN_IRELAND,
@@ -144,3 +146,34 @@ def test_generate_invalid_at_scale_all_invalid():
     assert len(numbers) == 1000
     for n in numbers:
         assert not is_valid(n), f"{n} unexpectedly has a valid checksum"
+
+
+# ---------------------------------------------------------------------------
+# Default range is the synthetic / test range - issue #24
+# generate() with no region must never return a number that could be a live
+# NHS number. This is a breaking change from the previous FULL_RANGE default.
+# ---------------------------------------------------------------------------
+
+def test_generate_default_is_synthetic_range():
+    for n in generate(quantity=100):
+        assert REGION_SYNTHETIC.contains_number(n), (
+            f"{n} is not in the synthetic range - generate() must default "
+            f"to synthetic numbers"
+        )
+
+
+# ---------------------------------------------------------------------------
+# random_chi_str - the internal CHI body generator used for Scotland.
+# Produces nine digits (DDMMYY + serial) whose date segment is a real date.
+# ---------------------------------------------------------------------------
+
+def test_random_chi_str_is_nine_digits():
+    assert len(random_chi_str()) == 9
+
+
+def test_random_chi_str_starts_with_a_real_date():
+    for _ in range(100):
+        partial = random_chi_str()
+        # strptime raises ValueError on an impossible date; a clean parse over
+        # many samples pins that the date segment is always real.
+        datetime.strptime(partial[:6], "%d%m%y")

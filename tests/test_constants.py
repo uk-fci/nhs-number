@@ -5,12 +5,10 @@ These tests pin every documented Range edge so that off-by-one errors and
 accidental edits are caught immediately — 100% line/branch coverage on its
 own does NOT exercise boundaries.
 
-Two of the values pinned below (RANGE_UNALLOCATED_1.end and
-RANGE_SCOTLAND.start) are known to disagree with the module docstring and
-the CHI specification — see issue #59. They are pinned at their current
-(buggy) values here so the tests pass against today's behaviour; when #59 is
-resolved the corrected values must be updated in this file in the same
-commit, which acts as a deliberate tripwire.
+RANGE_UNALLOCATED_1.end and RANGE_SCOTLAND.start were corrected in the 2.0
+release to agree with the module docstring and the CHI specification: the
+Scotland CHI range starts at 100_000_000 (the smallest plausible CHI,
+01/01/00), not 10_000_000 - see issue #59.
 """
 import pytest
 
@@ -45,8 +43,8 @@ from nhs_number.constants import (
 # (name, range_obj, start, end) — order matches the documented sequence in
 # constants.py so the non-overlap test below sweeps boundaries in order.
 ALL_RANGES = [
-    ("UNALLOCATED_1",       RANGE_UNALLOCATED_1,        10,            9_999_999),       # noqa: E501  # see issue #59 - end should be 99_999_999
-    ("SCOTLAND",            RANGE_SCOTLAND,             10_000_000,    3_112_999_999),   # noqa: E501  # see issue #59 - start should be 100_000_000
+    ("UNALLOCATED_1",       RANGE_UNALLOCATED_1,        10,            99_999_999),
+    ("SCOTLAND",            RANGE_SCOTLAND,             100_000_000,   3_112_999_999),
     ("UNALLOCATED_2",       RANGE_UNALLOCATED_2,        3_113_000_000, 3_199_999_999),
     ("NORTHERN_IRELAND",    RANGE_NORTHERN_IRELAND,     3_200_000_000, 3_999_999_999),
     ("ENGLAND_WALES_IOM_1", RANGE_ENGLAND_WALES_IOM_1,  4_000_000_000, 4_999_999_999),

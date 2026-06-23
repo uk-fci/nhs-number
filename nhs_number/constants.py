@@ -69,12 +69,12 @@ class Region:
 
 RANGE_UNALLOCATED_1 = Range(
     start=10,
-    end=9_999_999,
+    end=99_999_999,
     label="Unallocated 1 (not in use)",
 )
 
 RANGE_SCOTLAND = Range(
-    start=10_000_000,
+    start=100_000_000,
     end=3_112_999_999,
     label="Scotland CHI numbers",
 )

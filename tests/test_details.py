@@ -30,7 +30,7 @@ def test_valid_synthetic_nhs_number_details():
 # --- Region coverage: one valid number per region ---------------------------
 
 @pytest.mark.parametrize("nhs_num,expected_region,expected_label_substr", [
-    ("0117420360", REGION_SCOTLAND,          "Scotland"),
+    ("0101011113", REGION_SCOTLAND,          "Scotland"),
     ("3462950622", REGION_NORTHERN_IRELAND,  "Northern Ireland"),
     ("4149827702", REGION_ENGLAND_WALES_IOM, "England Wales"),
     ("5726600533", REGION_RESERVED,          "Reserved"),

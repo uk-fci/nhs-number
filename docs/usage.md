@@ -37,9 +37,15 @@ nhs_number.is_valid('7709030025', for_region=nhs_number.REGION_ENGLAND)
 # True
 ```
 
---8<--
-docs/_assets/_snippets/scottish-chi-number.md
---8<--
+CHI numbers (Scotland) encode the patient's date of birth in their first 6 digits as `DDMMYY`. A number in the Scotland CHI range whose date segment is not a real calendar date is not a valid CHI number. This check is applied automatically - no extra argument is needed:
+
+```python
+nhs_number.is_valid('0101011113')
+# True  - 01/01/01 is a real date
+
+nhs_number.is_valid('0113011113')
+# False - there is no 13th month
+```
 
 ## `normalise_number()`
 
@@ -131,8 +137,4 @@ Each Region has some aliases for ease of use:
 nhs_number.ENGLAND_WALES_IOM == nhs_number.REGION_ENGLAND
 # True
 ```
-
---8<--
-docs/_assets/_snippets/scottish-chi-number.md
---8<--
 

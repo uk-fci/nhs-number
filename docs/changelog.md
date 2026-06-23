@@ -3,6 +3,16 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 2.0.0
+
+**Breaking changes** to CHI number validation and to `generate()`. The changes make the library more accurate for real-world use; callers relying on the previous behaviour may see different results.
+
+- **CHI (Scotland) numbers now validate the date of birth.** A CHI number encodes the date of birth in its first 6 digits as `DDMMYY`. A number in the Scotland CHI range whose date segment is not a real calendar date is now reported as invalid by `is_valid()` and `NhsNumber`; previously only the checksum and range were checked. The check is applied by default - a CHI number is either valid or it is not, there is no opt-out. Resolves #25.
+- **`generate()` now defaults to the synthetic / test range** instead of the full range of all NHS numbers, so a generated number can never be mistaken for a live NHS number. Pass `for_region=` to target a specific region; `generate(for_region=REGION_SCOTLAND)` produces CHI numbers with a valid date of birth. Resolves #24.
+- **Corrects the Scotland CHI range boundary** (#59): the range now starts at `100_000_000` (the smallest plausible CHI, 01/01/00), not `10_000_000`, matching the module docstring and the CHI specification. Numbers in `10_000_000`-`99_999_999` are now correctly classified as unallocated rather than Scotland CHI.
+- Removes the documentation warnings about CHI numbers being unsupported.
+- No change to the public import surface.
+
 ## 1.4.0
 
 - Major test robustness pass: increases the suite from 42 to 200 tests while maintaining 100% line and branch coverage, adding boundary, invariant, region-coverage, checksum-edge, input-type, and public-API tests. Adds `spec/testing.md` documenting the testing strategy and conventions.
