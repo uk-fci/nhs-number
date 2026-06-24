@@ -8,14 +8,9 @@ pytest
 # documentation site - Zensical
 zensical
 
-# for the feature which displays authors at the bottom of the page
-mkdocs-git-committers-plugin-2
-
-# for the feature which displays last edit date at the bottom of the page
-mkdocs-git-revision-date-localized-plugin
-
-# for the feature which enables 'foldable' admonition text (used for large code blocks)
-mkdocs-macros-plugin
-
-# for the PDF export feature
-mkdocs-with-pdf
+# The following MkDocs plugins were removed because Zensical has no plugin
+# system yet and cannot consume them. Re-add when Zensical supports them:
+#   mkdocs-git-committers-plugin-2             (page authors footer)
+#   mkdocs-git-revision-date-localized-plugin  (last-edit date footer)
+#   mkdocs-macros-plugin                       (foldable admonitions)
+#   mkdocs-with-pdf                            (PDF export)
