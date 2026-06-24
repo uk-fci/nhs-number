@@ -39,7 +39,6 @@ python = "^3.8"
 [tool.poetry.dev-dependencies]
 pytest = "^9.0.0"
 black = "^26.0.0"
-mkdocs-material = "^9.7.0"
 
 [tool.poetry.urls]
 "Issue Tracker" = "https://github.com/uk-fci/nhs-number/issues"
