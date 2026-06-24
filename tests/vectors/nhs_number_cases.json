@@ -1,0 +1,88 @@
+{
+  "_about": "Language-agnostic behavioural test vectors for nhs-number, frozen against the Python reference implementation (2.0.0). Validated by tests/test_vectors.py, and intended to be consumed by ports in other languages, so the implementations stay in lockstep. 'region' names map to the package's REGION_* constants; 'range' names to the RANGE_* constants. Python-specific type-robustness cases (None, lists, objects, floats) live in the native test files, not here, because they are not expressible across languages.",
+  "calculate_checksum": [
+    { "identifier": "987654321", "checksum": 0 },
+    { "identifier": "400000063", "checksum": 2 },
+    {
+      "identifier": "000000006",
+      "checksum": 10,
+      "note": "checksum 10 means no single check digit can match - any number with this identifier is invalid"
+    },
+    { "identifier": "12345", "checksum": null, "note": "fewer than 9 digits" },
+    {
+      "identifier": "1234567890123",
+      "checksum": null,
+      "note": "more than 9 digits"
+    }
+  ],
+  "standardise": [
+    { "input": "9876543210", "output": "9876543210" },
+    { "input": "987 654 3210", "output": "9876543210" },
+    { "input": "987-654-3210", "output": "9876543210" },
+    { "input": "  9876543210  ", "output": "9876543210" },
+    { "input": "", "output": "" },
+    { "input": "abcdefghij", "output": "" },
+    { "input": "987654321X", "output": "", "note": "non-digit character" }
+  ],
+  "standardise_from_int": [
+    { "input": 9876543210, "output": "9876543210" },
+    { "input": 0, "output": "0000000000" },
+    { "input": -1, "output": "", "note": "negative" },
+    { "input": 99999999999, "output": "", "note": "more than 10 digits" }
+  ],
+  "is_valid": [
+    { "input": "9876543210", "valid": true },
+    { "input": "1234567890", "valid": false },
+    {
+      "input": "0000000000",
+      "valid": true,
+      "note": "checksum-valid; range is not checked without for_region (issue #44)"
+    },
+    {
+      "input": "987 654 3210",
+      "valid": true,
+      "note": "formatted input is standardised first"
+    },
+    { "input": "", "valid": false },
+    { "input": "garbage", "valid": false },
+    {
+      "input": "0101011113",
+      "valid": true,
+      "note": "Scotland CHI, 01/01/01 - a real date"
+    },
+    {
+      "input": "0113011113",
+      "valid": false,
+      "note": "Scotland CHI, month 13 - impossible date; checksum is valid, only the date rejects it"
+    }
+  ],
+  "is_valid_for_region": [
+    { "input": "0101011113", "region": "SCOTLAND", "valid": true },
+    {
+      "input": "9876543210",
+      "region": "SCOTLAND",
+      "valid": false,
+      "note": "synthetic number, not in the Scotland range"
+    },
+    { "input": "4000000632", "region": "ENGLAND_WALES_IOM", "valid": true },
+    { "input": "9876543210", "region": "ENGLAND_WALES_IOM", "valid": false }
+  ],
+  "region_of": [
+    { "number": "0101011113", "region": "SCOTLAND" },
+    { "number": "3462950622", "region": "NORTHERN_IRELAND" },
+    { "number": "4000000632", "region": "ENGLAND_WALES_IOM" },
+    { "number": "8453035113", "region": "EIRE" },
+    { "number": "9234760735", "region": "SYNTHETIC" }
+  ],
+  "range_boundaries": [
+    { "range": "UNALLOCATED_1", "start": 10, "end": 99999999 },
+    {
+      "range": "SCOTLAND",
+      "start": 100000000,
+      "end": 3112999999,
+      "note": "corrected boundary - issue #59"
+    },
+    { "range": "NORTHERN_IRELAND", "start": 3200000000, "end": 3999999999 },
+    { "range": "SYNTHETIC", "start": 9000000000, "end": 9999999999 }
+  ]
+}
