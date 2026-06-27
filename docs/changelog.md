@@ -3,6 +3,10 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 2.0.1
+
+- Adds a `py.typed` marker (PEP 561) so type-checkers and IDEs pick up the package's type annotations when it is installed as a dependency. No API or behaviour change. Resolves #65.
+
 ## 2.0.0
 
 **Breaking changes** to CHI number validation and to `generate()`. The changes make the library more accurate for real-world use; callers relying on the previous behaviour may see different results.
