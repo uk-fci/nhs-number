@@ -26,6 +26,8 @@ PUBLIC_NAMES = [
     "REGION_EIRE",
     # Details
     "NhsNumber",
+    # Disguise
+    "disguise",
     # Generate
     "generate",
     # Standardise
