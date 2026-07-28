@@ -1,31 +1,119 @@
 # .github/workflows/pypi-publish.yml
-# Builds the Python project and publishes it to pypi.org.
 #
-# This workflow does NOT run on every push. It is invoked by auto-tag.yml when
-# a version bump lands on `main`, so that merges which do not change the
-# version (documentation, CI, tests) never publish anything. It can also be
-# run by hand from the Actions tab - e.g. if a publish was missed or its
-# deployment approval expired.
+# The release cascade. Landing a version bump on `main` is what releases this
+# package: this workflow notices the new version, tags it, builds, and uploads
+# to PyPI.
+#
+# It is keyed on "does a tag for the version in pyproject.toml already exist?"
+# rather than on diffing the file. That makes it idempotent - and means merges
+# which do not change the version (documentation, CI, tests, refactors) tag
+# nothing and publish nothing.
+#
+# IMPORTANT: the tagging, build and upload all live in THIS file on purpose.
+# PyPI's Trusted Publishing does not support reusable workflows - if the upload
+# runs in a workflow invoked via `workflow_call`, the OIDC claim names the
+# *calling* workflow and PyPI rejects the upload. Splitting this into
+# auto-tag.yml plus a `workflow_call`-able publish workflow therefore does not
+# work here, however tidy it looks. See
+# https://docs.pypi.org/trusted-publishers/troubleshooting/#reusable-workflows-on-github
 
 name: Publish library to pypi.org
 
 on:
-  workflow_call:
-    inputs:
-      ref:
-        description: "Tag or ref to build and publish"
-        required: true
-        type: string
+  push:
+    branches:
+      - main
+  # Re-run a release by hand - e.g. if a publish was missed, or its deployment
+  # approval expired. Give the tag to publish, such as `v2.1.0`.
   workflow_dispatch:
     inputs:
       ref:
-        description: "Tag or ref to build and publish (defaults to this branch)"
+        description: "Tag or ref to build and publish (e.g. v2.1.0)"
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
+  check:
+    name: Check whether the version needs releasing
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # needed to create the release tag
+    outputs:
+      released: ${{ steps.check.outputs.released }}
+      version: ${{ steps.check.outputs.version }}
+      tag: ${{ steps.check.outputs.tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Full history and tags, so we can tell whether this version has
+          # already been released.
+          fetch-depth: 0
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Check whether this version needs releasing
+        id: check
+        run: |
+          version="$(grep '^version = ' pyproject.toml | head -1 | sed 's/version = "\(.*\)"/\1/')"
+          if [ -z "$version" ]; then
+            echo "::error::Could not read the version from pyproject.toml"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+          # A manual run is an explicit "publish this ref", so it always
+          # proceeds - that is how a missed or expired release is recovered.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manual run - publishing version $version as requested."
+            echo "released=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Tags are `vX.Y.Z`. Releases up to and including 2.0.1 were tagged
+          # bare (`X.Y.Z`), so treat either form as "already released".
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null \
+            || git rev-parse -q --verify "refs/tags/$version" >/dev/null; then
+            echo "Version '$version' is already tagged - nothing to release."
+            echo "released=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Version '$version' has no tag yet - this is a new release."
+            echo "released=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create the release tag
+        if: github.event_name == 'push' && steps.check.outputs.released == 'true'
+        env:
+          TAG: ${{ steps.check.outputs.tag }}
+          VERSION: ${{ steps.check.outputs.version }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $VERSION"
+          git push origin "refs/tags/$TAG"
+          echo "Tagged $TAG"
+
+      - name: Summary
+        env:
+          VERSION: ${{ steps.check.outputs.version }}
+          RELEASED: ${{ steps.check.outputs.released }}
+        run: |
+          if [ "$RELEASED" = "true" ]; then
+            echo "### Releasing \`$VERSION\` :rocket:" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "The upload is waiting for a deployment approval on the \`release\` environment." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### No release" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Version \`$VERSION\` is already tagged, so this push changed no version and nothing was published." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
   build:
     name: Build the distribution
+    needs: check
+    if: needs.check.outputs.released == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -46,7 +134,8 @@ jobs:
 
   # this is a separate job so that the build job does not have access to the PyPI token
   pypi-publish:
-    needs: ["build"]
+    needs: ["check", "build"]
+    if: needs.check.outputs.released == 'true'
     environment: release
 
     name: Upload to pypi.org

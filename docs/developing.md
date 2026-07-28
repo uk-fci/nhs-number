@@ -36,6 +36,6 @@ This project uses [Poetry](https://python-poetry.org/docs/) for dependency manag
 
 **There is one release command, `s/version++`, and the full process is documented in [Cutting a release](releasing.md).** Start there.
 
-In brief: landing a version bump on `main` is what releases the package. An ordinary merge that does not change the version in `pyproject.toml` publishes nothing, so documentation and CI changes can be merged freely. When the version does change, the auto-tag workflow creates the tag and starts the PyPI publish, which then waits for a deployment approval on the `release` environment.
+In brief: landing a version bump on `main` is what releases the package. An ordinary merge that does not change the version in `pyproject.toml` publishes nothing, so documentation and CI changes can be merged freely. When the version does change, the publish workflow creates the tag and starts the PyPI upload, which then waits for a deployment approval on the `release` environment.
 
 To smoke-test a build on Test PyPi, run the **Publish library to TEST.pypi.org** workflow manually from the Actions tab, choosing whichever branch or tag you want. (This replaced an older `staging` branch, which drifted behind `main` and kept catching contributors out by becoming the base branch for their pull requests.)

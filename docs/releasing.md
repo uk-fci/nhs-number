@@ -62,7 +62,7 @@ Merging is the moment the release happens.
 
 ### 4. Approve the deployment
 
-The publish waits for a human. Go to the **Actions** tab, open the running **Auto-tag and release on version bump** workflow, and approve the deployment to the `release` environment.
+The publish waits for a human. Go to the **Actions** tab, open the running **Publish library to pypi.org** workflow, and approve the deployment to the `release` environment.
 
 Nothing reaches PyPI until someone approves this, which is the last chance to stop a release.
 
@@ -87,19 +87,19 @@ s/version++ minor
           (you merge it)
                 │
                 ▼
-   auto-tag.yml   (runs on every push to main)
+   pypi-publish.yml   (runs on every push to main)
         │
-        ├─ reads the version from pyproject.toml
-        ├─ is there already a tag for it?  ──yes──▶  stop, nothing to release
-        └─ no ▶ create the tag, then call…
-                │
-                ▼
-   pypi-publish.yml
-        ├─ build the distribution
-        └─ upload to PyPI  ◀── waits for your approval on the `release` environment
+        ├─ check: read the version from pyproject.toml
+        │     └─ is there already a tag for it?  ──yes──▶  stop, nothing to release
+        │        no ▶ create the tag vX.Y.Z
+        ├─ build: build the distribution
+        └─ publish: upload to PyPI  ◀── waits for your approval on the `release` environment
 ```
 
-The "is there already a tag for it?" check is what makes documentation-only and CI-only merges safe: the version has not changed, so its tag already exists, and the workflow stops without publishing.
+The "is there already a tag for it?" check is what makes documentation-only and CI-only merges safe: the version has not changed, so its tag already exists, and the workflow stops before building or publishing anything.
+
+!!! note "Why it is all one workflow"
+    Tagging, building and uploading deliberately live in a single workflow file. PyPI's Trusted Publishing [does not support reusable workflows](https://docs.pypi.org/trusted-publishers/troubleshooting/#reusable-workflows-on-github): if the upload runs in a workflow invoked via `workflow_call`, the OIDC token names the *calling* workflow and PyPI rejects the upload. Splitting this into a separate auto-tag workflow looks tidier but does not work - we tried it, and the 2.1.0 upload failed with `Invalid attestations supplied during upload`.
 
 ## Testing a build before releasing
 
@@ -108,7 +108,7 @@ To put a build on [Test PyPI](https://test.pypi.org/project/nhs-number/) first, 
 ## Troubleshooting
 
 **"I merged my pull request but nothing was published."**
-That is the expected behaviour unless the merge changed the version in `pyproject.toml`. Check the **Auto-tag** run: if it says the tag already exists, no version bump landed. Run `s/version++` to actually cut a release.
+That is the expected behaviour unless the merge changed the version in `pyproject.toml`. Open the **Publish library to pypi.org** run for your merge: if its summary says the version is already tagged, no version bump landed. Run `s/version++` to actually cut a release.
 
 **"The deployment approval expired and the run failed."**
 The tag was still created, so the release just needs re-running. Run the **Publish library to pypi.org** workflow from the Actions tab, setting `ref` to the tag (for example `v2.1.0`), and approve it this time.
