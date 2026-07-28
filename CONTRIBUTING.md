@@ -61,7 +61,7 @@ When a release is wanted, a maintainer runs one command:
 s/version++ patch|minor|major
 ```
 
-That bumps the version, opens a release pull request, and - once merged - the auto-tag workflow creates the tag and starts the PyPI publish, which waits for a deployment approval on the `release` environment. Nothing reaches PyPI without someone approving it.
+That bumps the version, opens a release pull request, and - once merged - the publish workflow creates the tag and starts the PyPI upload, which waits for a deployment approval on the `release` environment. Nothing reaches PyPI without someone approving it.
 
 **The full process, including troubleshooting, is in [docs/releasing.md](docs/releasing.md).** Read that before cutting your first release.
 
