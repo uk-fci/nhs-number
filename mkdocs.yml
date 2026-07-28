@@ -18,6 +18,7 @@ nav:
       - Usage: "usage.md"
   - Developer Guide:
       - Contributing: "contributing.md"
+      - Other language implementations: "other-languages.md"
       - Cutting a release: "releasing.md"
       - Project Structure: "developing.md"
       - Documentation: "documentation.md"
