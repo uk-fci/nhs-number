@@ -42,6 +42,6 @@ Also add a note to the `docs/changelog.md` file to explain the updates.
 
 Publication to PyPi is handled by GitHub Actions. The workflows are defined in the `.github/workflows` folder.
 
-Pushes of code to the `staging` branch will trigger a publication to Test PyPi.
+Merging a pull request to `main` triggers a publication to live PyPi. The upload step requires a manual deployment approval on the `release` environment, so a release is never published without a maintainer approving it.
 
-Pushes of code to the `main` branch will trigger a publication to live PyPi.
+To publish to Test PyPi, run the **Publish library to TEST.pypi.org** workflow manually from the Actions tab, choosing whichever branch or tag you want to smoke-test. (This replaced an older `staging` branch, which drifted behind `main` and kept catching contributors out by becoming the base branch for their pull requests.)

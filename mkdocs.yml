@@ -16,6 +16,7 @@ nav:
       - Installation: "installation.md"
       - Usage: "usage.md"
   - Developer Guide:
+      - Contributing: "contributing.md"
       - Project Structure: "developing.md"
       - Documentation: "documentation.md"
       - Useful URLs: "useful_urls.md"
