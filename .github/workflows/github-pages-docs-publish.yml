@@ -42,12 +42,7 @@ jobs:
           fi
 
       - name: Build site
-        run: |
-          if command -v zensical >/dev/null 2>&1; then
-            zensical build --clean
-          else
-            mkdocs build --clean
-          fi
+        run: zensical build --clean
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
