@@ -14,6 +14,7 @@ nav:
       - About NHS Numbers: "nhs-numbers.md"
   - Getting Started:
       - Installation: "installation.md"
+      - Walkthrough: "walkthrough.md"
       - Usage: "usage.md"
   - Developer Guide:
       - Contributing: "contributing.md"
