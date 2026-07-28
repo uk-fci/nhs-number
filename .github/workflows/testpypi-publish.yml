@@ -1,14 +1,14 @@
 # .github/workflows/testpypi-publish.yml
 # This workflow will build a Python project, and publish it to TEST.pypi.org
 
-name: Publish library to TEST.pypi.org on push to `staging` branch
+name: Publish library to TEST.pypi.org (manual)
 
 on:
-  push:
-    branches:
-      - staging
-  # Allows a test.pypi.org publish to be run from the Actions tab against any
-  # ref, without needing a push to `staging`.
+  # Run from the Actions tab against any ref. This replaces the old
+  # `push: staging` trigger: the `staging` branch drifted a long way behind
+  # `main` and repeatedly caught contributors out by becoming the default base
+  # for their PRs, so it has been removed. Dispatching this workflow gives the
+  # same test.pypi.org smoke-test from whichever ref you actually want.
   workflow_dispatch:
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
     needs: ["build"]
     environment: test-release
 
-    name: Upload from staging branch to TEST.pypi.org
+    name: Upload to TEST.pypi.org
     runs-on: ubuntu-latest
 
     permissions:
