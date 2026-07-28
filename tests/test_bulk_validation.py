@@ -18,7 +18,13 @@ import pytest
 
 from nhs_number import is_valid
 
-csv.field_size_limit(sys.maxsize)
+# The csv module's field size limit is a C long. On Windows that is 32-bit,
+# so sys.maxsize overflows it and raises at import time (see issue #80). Fall
+# back to the largest value a 32-bit signed long can hold.
+try:
+    csv.field_size_limit(sys.maxsize)
+except OverflowError:
+    csv.field_size_limit(2**31 - 1)
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "local-test-data")
 DATA_FILE = os.path.join(DATA_DIR, "testdata-909090-valid-nhs-numbers.csv")
