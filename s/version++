@@ -99,10 +99,13 @@ case "$BUMP" in
 esac
 
 NEW="$MAJOR.$MINOR.$PATCH"
+TAG="v$NEW"
 
-# Refuse to reuse a version that has already been tagged/released.
-if git rev-parse -q --verify "refs/tags/$NEW" >/dev/null; then
-  echo "error: tag '$NEW' already exists - that version has already been released." >&2
+# Refuse to reuse a version that has already been released. Tags are `vX.Y.Z`;
+# releases up to and including 2.0.1 were tagged bare, so check both forms.
+if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null \
+  || git rev-parse -q --verify "refs/tags/$NEW" >/dev/null; then
+  echo "error: version $NEW has already been released (tag exists)." >&2
   exit 1
 fi
 
@@ -159,7 +162,7 @@ if [[ "$MODE" == "pr" ]]; then
     --body "Release **$NEW**.
 
 Merging this pull request publishes the release: the auto-tag workflow will
-create the \`$NEW\` tag and start the PyPI publish, which then waits for a
+create the \`$TAG\` tag and start the PyPI publish, which then waits for a
 deployment approval on the \`release\` environment.
 
 See [docs/releasing.md](docs/releasing.md) for the full process.

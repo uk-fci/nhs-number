@@ -26,6 +26,7 @@ jobs:
     outputs:
       released: ${{ steps.check.outputs.released }}
       version: ${{ steps.check.outputs.version }}
+      tag: ${{ steps.check.outputs.tag }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -42,9 +43,15 @@ jobs:
             exit 1
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
 
-          if git rev-parse -q --verify "refs/tags/$version" >/dev/null; then
-            echo "Tag '$version' already exists - nothing to release."
+          # Tags are `vX.Y.Z`. Releases up to and including 2.0.1 were tagged
+          # bare (`X.Y.Z`), so treat either form as "already released" -
+          # otherwise the first push after the prefix change would re-tag and
+          # try to re-publish a version PyPI already has.
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null \
+            || git rev-parse -q --verify "refs/tags/$version" >/dev/null; then
+            echo "Version '$version' is already tagged - nothing to release."
             echo "released=false" >> "$GITHUB_OUTPUT"
           else
             echo "Version '$version' has no tag yet - this is a new release."
@@ -54,13 +61,14 @@ jobs:
       - name: Create the release tag
         if: steps.check.outputs.released == 'true'
         env:
+          TAG: ${{ steps.check.outputs.tag }}
           VERSION: ${{ steps.check.outputs.version }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag -a "$VERSION" -m "Release $VERSION"
-          git push origin "refs/tags/$VERSION"
-          echo "Tagged $VERSION"
+          git tag -a "$TAG" -m "Release $VERSION"
+          git push origin "refs/tags/$TAG"
+          echo "Tagged $TAG"
 
       - name: Summary
         env:
@@ -83,7 +91,7 @@ jobs:
     if: needs.auto-tag.outputs.released == 'true'
     uses: ./.github/workflows/pypi-publish.yml
     with:
-      ref: ${{ needs.auto-tag.outputs.version }}
+      ref: ${{ needs.auto-tag.outputs.tag }}
     permissions:
       contents: read
       id-token: write

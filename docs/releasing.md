@@ -71,7 +71,7 @@ Nothing reaches PyPI until someone approves this, which is the last chance to st
 
 ### 5. Check it worked
 
-- The tag `X.Y.Z` exists in the repository
+- The tag `vX.Y.Z` exists in the repository
 - The new version appears on [PyPI](https://pypi.org/project/nhs-number/)
 - `pip install nhs-number==X.Y.Z` works
 
@@ -111,7 +111,7 @@ To put a build on [Test PyPI](https://test.pypi.org/project/nhs-number/) first, 
 That is the expected behaviour unless the merge changed the version in `pyproject.toml`. Check the **Auto-tag** run: if it says the tag already exists, no version bump landed. Run `s/version++` to actually cut a release.
 
 **"The deployment approval expired and the run failed."**
-The tag was still created, so the release just needs re-running. Run the **Publish library to pypi.org** workflow from the Actions tab, setting `ref` to the tag (for example `2.1.0`), and approve it this time.
+The tag was still created, so the release just needs re-running. Run the **Publish library to pypi.org** workflow from the Actions tab, setting `ref` to the tag (for example `v2.1.0`), and approve it this time.
 
 **"The publish failed with 'file already exists'."**
 That version is already on PyPI - PyPI never allows re-uploading the same version, even if you delete it. Bump to a new patch version and release again.
@@ -127,6 +127,6 @@ Add the `## X.Y.Z` section to `docs/changelog.md` first (step 1), commit it, the
 
 ## Notes for maintainers
 
-- Tags in this repository are **bare** (`2.0.1`), not `v`-prefixed, matching the existing tag history back to 1.0.0.
+- Releases are tagged **`vX.Y.Z`**. Releases up to and including `2.0.1` were tagged bare (`2.0.1`), so both forms exist in the history; the "has this version already been released?" check accepts either, which is what stops the prefix change from re-releasing an old version.
 - The `release` environment holds the PyPI trusted-publishing configuration and the approval requirement. Publishing uses OIDC trusted publishing, so there is no PyPI token stored in the repository.
 - `s/version++` auto-detects branch protection: with `main` protected it opens a release pull request, and without protection it pushes directly. Force either with `--pr` or `--direct`.
