@@ -116,20 +116,26 @@ produce the same fake number.
   generated fake. Use a different seed to produce a different fake for the
   same real number.
 
+An English/Welsh/IoM number is replaced with one from the synthetic range, so the fake can never collide with a live issued number:
+
 ```python
 import nhs_number
 
 nhs_number.disguise("4000000632", seed=1)
-# '9901234567'
+# '9869172326'
+
+nhs_number.disguise("4000000632", seed=2)
+# '9451424865'
 ```
 
-For CHI numbers, the generated fake has digits 7 and 8 fixed to `99` to make
-it clearly identifiable as a fake:
+For CHI numbers the fake is another CHI-shaped number, with digits 7 and 8 fixed to `99` to make it identifiable as a fake:
 
 ```python
 nhs_number.disguise("0101011113", seed=1)
-# '0101990007'
+# '0603129978'
 ```
+
+Note that the fake carries a **different, randomly chosen date of birth** - it does not preserve the date from the real number. That is deliberate: the date of birth is itself identifying, so keeping it would undermine the point of disguising the number.
 
 !!! warning "Not a reversible process"
     The generated fake is deterministic, but the original number cannot be
