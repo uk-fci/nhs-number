@@ -45,23 +45,27 @@ Optionally, `tox` will run the suite across the supported Python versions plus t
 tox
 ```
 
-## Changelog and versioning
+## Changelog
 
-If your change should be released, bump the version and add a changelog entry. Use the helper script, which takes `patch`, `minor` or `major`:
+If your change is user-visible, add a note to `docs/changelog.md` under the version it will ship in. Every released version has an entry, and the release script enforces it.
 
-```bash
-s/version++ patch
-```
-
-It refuses to run unless `docs/changelog.md` already contains a `## <new version>` section, so **write the changelog entry first**. Every released version has an entry; please keep it that way.
-
-Not every change needs a release. Documentation-only and CI-only changes are usually merged without a version bump.
+You do not need to bump the version yourself in an ordinary pull request - releases are cut separately by a maintainer.
 
 ## How releases happen
 
-Merging to `main` triggers the PyPI publish workflow. The upload step is gated behind a manual deployment approval on the `release` environment, so nothing reaches PyPI without a maintainer approving it.
+**Landing a version bump on `main` is the release.** An ordinary merge that does not change the version in `pyproject.toml` publishes nothing, so bug fixes, documentation and CI changes can be merged freely without cutting a release.
 
-To smoke-test a build on Test PyPI first, run the **Publish library to TEST.pypi.org** workflow manually from the Actions tab against any branch or tag.
+When a release is wanted, a maintainer runs one command:
+
+```bash
+s/version++ patch|minor|major
+```
+
+That bumps the version, opens a release pull request, and - once merged - the auto-tag workflow creates the tag and starts the PyPI publish, which waits for a deployment approval on the `release` environment. Nothing reaches PyPI without someone approving it.
+
+**The full process, including troubleshooting, is in [docs/releasing.md](docs/releasing.md).** Read that before cutting your first release.
+
+To smoke-test a build on Test PyPI, run the **Publish library to TEST.pypi.org** workflow manually from the Actions tab against any branch or tag.
 
 ## Conventions worth knowing
 

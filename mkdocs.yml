@@ -17,6 +17,7 @@ nav:
       - Usage: "usage.md"
   - Developer Guide:
       - Contributing: "contributing.md"
+      - Cutting a release: "releasing.md"
       - Project Structure: "developing.md"
       - Documentation: "documentation.md"
       - Useful URLs: "useful_urls.md"
