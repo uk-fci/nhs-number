@@ -3,6 +3,11 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 2.1.0
+
+- Adds `disguise()`, which generates a deterministic, valid fake NHS/CHI/HSC number from a real one given a seed. The same number and seed always produce the same fake, so a dataset can be de-identified consistently. NHS numbers are replaced from the synthetic range so a fake can never collide with a live issued number; CHI fakes carry a different, randomly chosen date of birth with digits 7-8 set to `99` to mark them as fake. Contributed by @andyatterton.
+- Releases are now cut with `s/version++`, and are published only when the version changes rather than on every merge to `main`. See [Cutting a release](releasing.md).
+
 ## 2.0.1
 
 - Adds a `py.typed` marker (PEP 561) so type-checkers and IDEs pick up the package's type annotations when it is installed as a dependency. No API or behaviour change. Resolves #65.

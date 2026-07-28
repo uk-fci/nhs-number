@@ -25,6 +25,7 @@ from nhs_number.constants import (
 )
 from nhs_number.constants import FULL_RANGE
 from nhs_number.details import NhsNumber
+from nhs_number.disguise import disguise
 from nhs_number.generate import generate
 from nhs_number.standardise import standardise_format, normalise_number
 from nhs_number.validate import is_valid, calculate_checksum
