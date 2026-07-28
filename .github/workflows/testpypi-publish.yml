@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - staging
+  # Allows a test.pypi.org publish to be run from the Actions tab against any
+  # ref, without needing a push to `staging`.
+  workflow_dispatch:
 
 jobs:
   build:

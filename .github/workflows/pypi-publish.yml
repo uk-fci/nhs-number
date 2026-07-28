@@ -7,6 +7,10 @@ on:
   push:
     branches:
       - main
+  # Allows a release to be re-run from the Actions tab without needing a new
+  # push to `main` - e.g. if a publish run was missed or its deployment
+  # approval expired.
+  workflow_dispatch:
 
 jobs:
   build:
