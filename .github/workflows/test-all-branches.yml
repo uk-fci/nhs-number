@@ -11,10 +11,18 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        # One Windows job, so that platform-specific breakage is caught here
+        # rather than by a contributor. Issue #80 was exactly this: the csv
+        # field size limit overflows a 32-bit C long on Windows, which an
+        # ubuntu-only matrix can never see.
+        include:
+          - os: windows-latest
+            python-version: "3.13"
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -30,7 +38,7 @@ jobs:
         run: |
           pytest --cov=nhs_number --cov-branch --cov-report=term --cov-fail-under=100
       - name: Check code formatting with black
-        if: matrix.python-version == '3.13'
+        if: matrix.python-version == '3.13' && matrix.os == 'ubuntu-latest'
         run: |
           pip install black
           black --check .
