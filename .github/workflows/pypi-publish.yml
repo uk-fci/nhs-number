@@ -1,16 +1,27 @@
 # .github/workflows/pypi-publish.yml
-# This workflow will build the Python project, and publish it to pypi.org
+# Builds the Python project and publishes it to pypi.org.
+#
+# This workflow does NOT run on every push. It is invoked by auto-tag.yml when
+# a version bump lands on `main`, so that merges which do not change the
+# version (documentation, CI, tests) never publish anything. It can also be
+# run by hand from the Actions tab - e.g. if a publish was missed or its
+# deployment approval expired.
 
-name: Publish library to pypi.org on pushes to `main` branch
+name: Publish library to pypi.org
 
 on:
-  push:
-    branches:
-      - main
-  # Allows a release to be re-run from the Actions tab without needing a new
-  # push to `main` - e.g. if a publish run was missed or its deployment
-  # approval expired.
+  workflow_call:
+    inputs:
+      ref:
+        description: "Tag or ref to build and publish"
+        required: true
+        type: string
   workflow_dispatch:
+    inputs:
+      ref:
+        description: "Tag or ref to build and publish (defaults to this branch)"
+        required: false
+        type: string
 
 jobs:
   build:
@@ -18,6 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: 3.13
@@ -32,11 +45,11 @@ jobs:
           path: ./dist
 
   # this is a separate job so that the build job does not have access to the PyPI token
-  pypi-test-publish:
+  pypi-publish:
     needs: ["build"]
     environment: release
 
-    name: Upload from main branch to pypi.org
+    name: Upload to pypi.org
     runs-on: ubuntu-latest
 
     permissions:

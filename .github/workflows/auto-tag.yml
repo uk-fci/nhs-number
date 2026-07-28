@@ -1,0 +1,89 @@
+# .github/workflows/auto-tag.yml
+#
+# The release cascade. Landing a version bump on `main` is what releases this
+# package: this workflow notices the new version, tags it, and invokes the
+# PyPI publish workflow.
+#
+# It is deliberately keyed on "does a tag for the version in pyproject.toml
+# already exist?" rather than on diffing the file. That makes it idempotent -
+# and means merges that do not change the version (documentation, CI, tests,
+# refactors) release nothing at all.
+
+name: Auto-tag and release on version bump
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  auto-tag:
+    name: Tag the release if the version changed
+    runs-on: ubuntu-latest
+    outputs:
+      released: ${{ steps.check.outputs.released }}
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Need the full history and tags to tell whether this version has
+          # already been released.
+          fetch-depth: 0
+
+      - name: Check whether this version needs releasing
+        id: check
+        run: |
+          version="$(grep '^version = ' pyproject.toml | head -1 | sed 's/version = "\(.*\)"/\1/')"
+          if [ -z "$version" ]; then
+            echo "::error::Could not read the version from pyproject.toml"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+          if git rev-parse -q --verify "refs/tags/$version" >/dev/null; then
+            echo "Tag '$version' already exists - nothing to release."
+            echo "released=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Version '$version' has no tag yet - this is a new release."
+            echo "released=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create the release tag
+        if: steps.check.outputs.released == 'true'
+        env:
+          VERSION: ${{ steps.check.outputs.version }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$VERSION" -m "Release $VERSION"
+          git push origin "refs/tags/$VERSION"
+          echo "Tagged $VERSION"
+
+      - name: Summary
+        env:
+          VERSION: ${{ steps.check.outputs.version }}
+          RELEASED: ${{ steps.check.outputs.released }}
+        run: |
+          if [ "$RELEASED" = "true" ]; then
+            echo "### Releasing \`$VERSION\` :rocket:" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Tag created. The PyPI publish is now waiting for a deployment approval on the \`release\` environment." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### No release" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Version \`$VERSION\` is already tagged, so this push changed no version and nothing was published." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  publish:
+    name: Publish to PyPI
+    needs: auto-tag
+    if: needs.auto-tag.outputs.released == 'true'
+    uses: ./.github/workflows/pypi-publish.yml
+    with:
+      ref: ${{ needs.auto-tag.outputs.version }}
+    permissions:
+      contents: read
+      id-token: write

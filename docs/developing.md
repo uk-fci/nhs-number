@@ -32,16 +32,10 @@ poetry run pytest
 
 ## Publishing to PyPi
 
-This project uses [Poetry](https://python-poetry.org/docs/) for dependency management and packaging.
+This project uses [Poetry](https://python-poetry.org/docs/) for dependency management and packaging, and publication is handled by GitHub Actions - the workflows are in the `.github/workflows` folder.
 
-Any edit **MUST** have a new version number otherwise it will be rejected by PyPi.
+**There is one release command, `s/version++`, and the full process is documented in [Cutting a release](releasing.md).** Start there.
 
-To publish a new version to PyPi, update the version number in `pyproject.toml`.
+In brief: landing a version bump on `main` is what releases the package. An ordinary merge that does not change the version in `pyproject.toml` publishes nothing, so documentation and CI changes can be merged freely. When the version does change, the auto-tag workflow creates the tag and starts the PyPI publish, which then waits for a deployment approval on the `release` environment.
 
-Also add a note to the `docs/changelog.md` file to explain the updates.
-
-Publication to PyPi is handled by GitHub Actions. The workflows are defined in the `.github/workflows` folder.
-
-Merging a pull request to `main` triggers a publication to live PyPi. The upload step requires a manual deployment approval on the `release` environment, so a release is never published without a maintainer approving it.
-
-To publish to Test PyPi, run the **Publish library to TEST.pypi.org** workflow manually from the Actions tab, choosing whichever branch or tag you want to smoke-test. (This replaced an older `staging` branch, which drifted behind `main` and kept catching contributors out by becoming the base branch for their pull requests.)
+To smoke-test a build on Test PyPi, run the **Publish library to TEST.pypi.org** workflow manually from the Actions tab, choosing whichever branch or tag you want. (This replaced an older `staging` branch, which drifted behind `main` and kept catching contributors out by becoming the base branch for their pull requests.)

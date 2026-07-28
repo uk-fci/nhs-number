@@ -1,71 +1,181 @@
 #!/usr/bin/env bash
-# s/version++ - bump the project version, update pyproject.toml, and create a git tag
+# s/version++ - the one release command.
+#
+# Bumps the version in pyproject.toml, commits it with the changelog entry,
+# and lands that commit on `main`. Landing the bump on `main` IS the release:
+# the auto-tag workflow notices the new version, creates the tag, and invokes
+# the PyPI publish workflow.
 #
 # Usage:
-#   s/version++ patch   # 1.3.6 -> 1.3.7 (default if no argument given)
-#   s/version++ minor   # 1.3.6 -> 1.4.0
-#   s/version++ major   # 1.3.6 -> 2.0.0
+#   s/version++            # patch: 2.0.1 -> 2.0.2 (default)
+#   s/version++ patch      # 2.0.1 -> 2.0.2
+#   s/version++ minor      # 2.0.1 -> 2.1.0
+#   s/version++ major      # 2.0.1 -> 3.0.0
+#
+#   s/version++ minor --pr        # force release-PR mode
+#   s/version++ minor --direct    # force direct-push mode
+#
+# By default the script detects whether `main` is branch-protected: if it is,
+# the bump lands via a `release/X.Y.Z` pull request; if not, it pushes to
+# `main` directly. Either way the result is a push to `main`, which is what
+# the cascade listens for.
+#
+# This script deliberately does NOT create the tag. Tagging happens in CI,
+# after the bump has actually landed on `main`, so the tag can never point at
+# a commit that was reviewed away or never merged.
 
 set -euo pipefail
 
-BUMP=${1:-patch}
+# Always operate from the repository root.
+cd "$(dirname "$0")/.."
 
-# Read current version from pyproject.toml
+BUMP=""
+MODE="auto"
+
+for arg in "$@"; do
+  case "$arg" in
+    major|minor|patch) BUMP="$arg" ;;
+    --pr)              MODE="pr" ;;
+    --direct)          MODE="direct" ;;
+    -h|--help)         sed -n '2,27p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    *)
+      echo "error: unknown argument '$arg' - use major, minor, patch, --pr or --direct" >&2
+      exit 1
+      ;;
+  esac
+done
+
+BUMP=${BUMP:-patch}
+
+# ---------------------------------------------------------------------------
+# Gate: a release must start from a clean, up-to-date main.
+# ---------------------------------------------------------------------------
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [[ "$BRANCH" != "main" ]]; then
+  echo "error: releases start from 'main' (you are on '$BRANCH')." >&2
+  exit 1
+fi
+
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "error: working tree is not clean - commit or stash your changes first." >&2
+  exit 1
+fi
+
+echo "fetching origin..."
+git fetch origin --quiet
+
+if [[ -n "$(git rev-list origin/main..main)" ]]; then
+  echo "error: your local main has commits that are not on origin/main." >&2
+  echo "Push or reset them before releasing." >&2
+  exit 1
+fi
+if [[ -n "$(git rev-list main..origin/main)" ]]; then
+  echo "error: your local main is behind origin/main - run 'git pull' first." >&2
+  exit 1
+fi
+
+if ! command -v gh >/dev/null 2>&1; then
+  echo "error: the GitHub CLI ('gh') is required. See https://cli.github.com/" >&2
+  exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# Work out the new version.
+# ---------------------------------------------------------------------------
+
 CURRENT=$(grep '^version = ' pyproject.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
-
 if [[ -z "$CURRENT" ]]; then
   echo "error: could not read version from pyproject.toml" >&2
   exit 1
 fi
 
-# Split into parts
 IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
 
 case "$BUMP" in
-  major)
-    MAJOR=$((MAJOR + 1))
-    MINOR=0
-    PATCH=0
-    ;;
-  minor)
-    MINOR=$((MINOR + 1))
-    PATCH=0
-    ;;
-  patch)
-    PATCH=$((PATCH + 1))
-    ;;
-  *)
-    echo "error: unknown bump type '$BUMP' - use major, minor, or patch" >&2
-    exit 1
-    ;;
+  major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+  minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+  patch) PATCH=$((PATCH + 1)) ;;
 esac
 
 NEW="$MAJOR.$MINOR.$PATCH"
 
-# Require a changelog entry for the new version before bumping or tagging,
-# so every release has a record of what changed.
+# Refuse to reuse a version that has already been tagged/released.
+if git rev-parse -q --verify "refs/tags/$NEW" >/dev/null; then
+  echo "error: tag '$NEW' already exists - that version has already been released." >&2
+  exit 1
+fi
+
+# Every released version must have a changelog entry, and it must be written
+# before the bump so that the release commit contains it.
 ESCAPED_NEW=${NEW//./\\.}
 if ! grep -qE "^## ${ESCAPED_NEW}( |$)" docs/changelog.md; then
   echo "error: docs/changelog.md has no '## $NEW' entry." >&2
-  echo "Add a '## $NEW' section to docs/changelog.md describing what changed, then re-run." >&2
+  echo "Add a '## $NEW' section describing what changed, then re-run." >&2
   exit 1
 fi
 
-echo "bumping $CURRENT -> $NEW ($BUMP)"
+# ---------------------------------------------------------------------------
+# Decide how the bump will land on main.
+# ---------------------------------------------------------------------------
 
-# Update pyproject.toml
+if [[ "$MODE" == "auto" ]]; then
+  REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
+  if gh api "repos/$REPO/branches/main/protection" >/dev/null 2>&1; then
+    MODE="pr"
+  else
+    MODE="direct"
+  fi
+fi
+
+echo "bumping $CURRENT -> $NEW ($BUMP), landing via ${MODE}"
+
+# ---------------------------------------------------------------------------
+# Bump, commit, and land.
+# ---------------------------------------------------------------------------
+
+RELEASE_BRANCH="release/$NEW"
+
+if [[ "$MODE" == "pr" ]]; then
+  git switch -c "$RELEASE_BRANCH"
+fi
+
 sed -i "s/^version = \"$CURRENT\"/version = \"$NEW\"/" pyproject.toml
 
-# Verify the change was made
 if ! grep -q "^version = \"$NEW\"" pyproject.toml; then
-  echo "error: failed to update version in pyproject.toml" >&2
+  echo "error: failed to update the version in pyproject.toml" >&2
   exit 1
 fi
 
-# Commit and tag (changelog entry verified above, so include it in the commit)
 git add pyproject.toml docs/changelog.md
-git commit -m "bump version to $NEW"
-git tag "$NEW"
+git commit --quiet -m "chore(release): $NEW"
 
-echo "done - committed and tagged $NEW"
-echo "to push: git push && git push --tags"
+if [[ "$MODE" == "pr" ]]; then
+  git push --quiet -u origin "$RELEASE_BRANCH"
+  gh pr create \
+    --base main \
+    --head "$RELEASE_BRANCH" \
+    --title "chore(release): $NEW" \
+    --body "Release **$NEW**.
+
+Merging this pull request publishes the release: the auto-tag workflow will
+create the \`$NEW\` tag and start the PyPI publish, which then waits for a
+deployment approval on the \`release\` environment.
+
+See [docs/releasing.md](docs/releasing.md) for the full process.
+
+Changelog entry for this version is in \`docs/changelog.md\`."
+
+  echo
+  echo "done - opened a release PR for $NEW."
+  echo "Next: get it reviewed and merge it (use a merge commit, not squash)."
+  echo "Merging creates the tag and starts the publish, which then needs the"
+  echo "deployment approval on the 'release' environment."
+  git switch --quiet main
+else
+  git push --quiet origin main
+  echo
+  echo "done - pushed the $NEW bump to main."
+  echo "The auto-tag workflow will create the tag and start the publish, which"
+  echo "then needs the deployment approval on the 'release' environment."
+fi
