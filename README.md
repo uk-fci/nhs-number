@@ -44,6 +44,14 @@ Please do - and you are welcome to build on our work. We publish a language-agno
 
 It is MIT licensed, like the rest of the project: **use it freely, no permission needed.** Attribution is appreciated but not required. See [Implementing an NHS Numbers package in other languages](https://uk-fci.github.io/nhs-number/other-languages/) for what the vectors cover, what is deliberately left out and why, and how to use them.
 
+## Other libraries
+
+Similar libraries for other languages:
+
+* Clojure / ClojureScript: [wardle/nhs-number](https://github.com/wardle/nhs-number) by Mark Wardle - validation, formatting and generation of UK NHS Numbers
+
+If you maintain one we have missed, please [open an issue](https://github.com/uk-fci/nhs-number/issues) and we will add it.
+
 ## Changelog
 
 <https://uk-fci.github.io/nhs-number/>

@@ -55,7 +55,17 @@ This project is **MIT licensed**, and that covers the test vectors as much as th
 
 - **You may use the vectors freely**, including in a commercial product, and including in a library that competes with this one. You do not need to ask.
 - **Attribution is appreciated but not required.** If you found this useful, a line in your README saying your implementation is checked against the vectors from [uk-fci/nhs-number](https://github.com/uk-fci/nhs-number) is genuinely helpful to us - it is how other people find the project, and how we find out our work was worth doing. But it is a courtesy, not a condition. Build the thing.
-- **We would love to know.** Open an issue or a discussion to tell us your implementation exists and we will link it from these docs. If you find a case where our vectors are wrong, or a case we should have covered, that is one of the most valuable contributions you can make - please raise it.
+- **We would love to know.** Open an issue or a discussion to tell us your implementation exists and we will add it to the list below. If you find a case where our vectors are wrong, or a case we should have covered, that is one of the most valuable contributions you can make - please raise it.
+
+## Libraries in other languages
+
+| Language | Library | Notes |
+| --- | --- | --- |
+| Clojure / ClojureScript | [wardle/nhs-number](https://github.com/wardle/nhs-number) by Mark Wardle | Validation, formatting and generation of UK NHS Numbers. Eclipse Public License 2.0. |
+
+These are independent projects, not maintained by us - but they solve the same problem, and if one of them fits your stack better than porting the algorithm yourself, use it.
+
+Maintaining another one? [Tell us](https://github.com/uk-fci/nhs-number/issues) and we will list it here.
 
 ## Before you start
 
