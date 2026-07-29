@@ -1,17 +1,16 @@
-import pytest
 from datetime import datetime
 
-
-from nhs_number import generate, is_valid, REGION_ENGLAND_WALES_IOM
-from nhs_number.generate import random_chi_str
+import pytest
+from nhs_number import REGION_ENGLAND_WALES_IOM, generate, is_valid
 from nhs_number.constants import (
-    REGION_SCOTLAND,
+    REGION_EIRE,
     REGION_NORTHERN_IRELAND,
     REGION_RESERVED,
-    REGION_EIRE,
-    REGION_UNALLOCATED,
+    REGION_SCOTLAND,
     REGION_SYNTHETIC,
+    REGION_UNALLOCATED,
 )
+from nhs_number.generate import random_chi_str
 
 
 def test_create_valid_nhs_number():
@@ -68,9 +67,9 @@ def test_fail_when_non_region_supplied():
     object as the for_region argument
     :return:
     """
-    with pytest.raises(TypeError) as error:
+    with pytest.raises(TypeError):
         # noinspection PyTypeChecker
-        nhs_numbers = generate(for_region="REGION_ENGLAND_WALES_IOM")
+        generate(for_region="REGION_ENGLAND_WALES_IOM")
 
 
 # ---------------------------------------------------------------------------

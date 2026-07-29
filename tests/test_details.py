@@ -1,15 +1,14 @@
 import pytest
-
 from nhs_number import NhsNumber
 from nhs_number.constants import (
-    Region,
-    REGION_SCOTLAND,
-    REGION_NORTHERN_IRELAND,
-    REGION_ENGLAND_WALES_IOM,
-    REGION_RESERVED,
     REGION_EIRE,
-    REGION_UNALLOCATED,
+    REGION_ENGLAND_WALES_IOM,
+    REGION_NORTHERN_IRELAND,
+    REGION_RESERVED,
+    REGION_SCOTLAND,
     REGION_SYNTHETIC,
+    REGION_UNALLOCATED,
+    Region,
 )
 
 
@@ -19,7 +18,7 @@ def test_valid_synthetic_nhs_number_details():
     assert number.nhs_number == "9876543210"
     assert number.identifier_digits == "987654321"
     assert number.check_digit == 0
-    assert number.valid == True
+    assert number.valid
     assert number.calculated_checksum == 0
     assert isinstance(number.region, Region)
     assert "test" in number.region.tags

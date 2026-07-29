@@ -1,6 +1,5 @@
 import pytest
-
-from nhs_number import standardise_format, normalise_number
+from nhs_number import normalise_number, standardise_format
 
 
 def test_format_basic():

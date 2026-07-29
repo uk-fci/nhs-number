@@ -40,10 +40,7 @@ class Range:
         self.label = label
 
     def contains_number(self, number):
-        if self.start <= int(number) <= self.end:
-            return True
-        else:
-            return False
+        return self.start <= int(number) <= self.end
 
 
 class Region:
@@ -61,10 +58,7 @@ class Region:
         self.ranges = ranges
 
     def contains_number(self, number):
-        for _range in self.ranges:
-            if _range.contains_number(number):
-                return True
-        return False
+        return any(rng.contains_number(number) for rng in self.ranges)
 
 
 RANGE_UNALLOCATED_1 = Range(

@@ -1,14 +1,12 @@
 import pytest
-
-from nhs_number import is_valid, calculate_checksum
-from nhs_number import REGION_ENGLAND_WALES_IOM
+from nhs_number import REGION_ENGLAND_WALES_IOM, calculate_checksum, is_valid
 from nhs_number.constants import (
-    REGION_SCOTLAND,
+    REGION_EIRE,
     REGION_NORTHERN_IRELAND,
     REGION_RESERVED,
-    REGION_EIRE,
-    REGION_UNALLOCATED,
+    REGION_SCOTLAND,
     REGION_SYNTHETIC,
+    REGION_UNALLOCATED,
 )
 
 

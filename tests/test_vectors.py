@@ -16,9 +16,8 @@ not expressible across languages.
 import json
 import pathlib
 
-import pytest
-
 import nhs_number
+import pytest
 from nhs_number import (
     NhsNumber,
     calculate_checksum,

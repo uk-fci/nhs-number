@@ -8,7 +8,6 @@ License: MIT (https://www.opensource.org/licenses/mit-license.php)
 import datetime
 import random
 from enum import Enum
-from typing import Tuple
 
 from nhs_number.constants import (
     RANGE_NORTHERN_IRELAND,
@@ -47,7 +46,7 @@ def _first_nine_digits(value: int) -> int:
     return int(str(value)[:9])
 
 
-def _fake_range(organization: OrganizationType) -> Tuple[int, int]:
+def _fake_range(organization: OrganizationType) -> tuple[int, int]:
     """
     Return the 9-digit fake number range for the supplied organization.
 
@@ -85,7 +84,7 @@ def _random_chi_digits(rng: random.Random) -> str:
     return f"{date_str}99{sex}"
 
 
-def _check_number(nhs_number: str) -> Tuple[str, OrganizationType]:
+def _check_number(nhs_number: str) -> tuple[str, OrganizationType]:
     """Validate and classify the supplied number."""
     nhs_number = standardise_format(nhs_number)
     if not nhs_number:

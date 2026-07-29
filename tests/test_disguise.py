@@ -1,8 +1,7 @@
 import sys
 
+import nhs_number.disguise  # ruff:ignore[unused-import]  (registers the submodule)
 import pytest
-
-import nhs_number.disguise  # noqa: F401  (registers the submodule)
 from nhs_number import disguise, is_valid
 
 # ``nhs_number.disguise`` resolves to the exported *function*, because the

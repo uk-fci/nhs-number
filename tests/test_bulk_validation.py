@@ -11,11 +11,10 @@ default expectation is that it runs.
 """
 
 import csv
-import os.path
+import pathlib
 import sys
 
 import pytest
-
 from nhs_number import is_valid
 
 # The csv module's field size limit is a C long. On Windows that is 32-bit,
@@ -26,12 +25,12 @@ try:
 except OverflowError:
     csv.field_size_limit(2**31 - 1)
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), "local-test-data")
-DATA_FILE = os.path.join(DATA_DIR, "testdata-909090-valid-nhs-numbers.csv")
+DATA_DIR = pathlib.Path(__file__).parent / "local-test-data"
+DATA_FILE = DATA_DIR / "testdata-909090-valid-nhs-numbers.csv"
 
 
 @pytest.mark.skipif(
-    not os.path.exists(DATA_FILE),
+    not DATA_FILE.exists(),
     reason=(
         f"bulk-validation dataset not found at {DATA_FILE}. "
         "It is committed to the repo at tests/local-test-data/ but excluded "
@@ -40,7 +39,7 @@ DATA_FILE = os.path.join(DATA_DIR, "testdata-909090-valid-nhs-numbers.csv")
     ),
 )
 def test_with_large_numbers_of_known_valid_nhs_numbers():
-    with open(DATA_FILE, newline="", encoding="utf-8-sig") as csvfile:
+    with DATA_FILE.open(newline="", encoding="utf-8-sig") as csvfile:
         testdata = []
         for line in csv.reader(csvfile):
             testdata += line

@@ -50,7 +50,7 @@ def standardise_format(nhs_number) -> str:
         return ""
     if re.search(GOOD_FORMAT, working_number) is None:
         working_number = ""
-    working_number = re.sub("[- ]", "", working_number)
+    working_number = re.sub(r"[- ]", "", working_number)
     return working_number
 
 

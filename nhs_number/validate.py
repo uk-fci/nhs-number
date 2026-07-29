@@ -14,9 +14,11 @@ Contributors
 # so we keep working on Python 3.8 and 3.9. Remove this once 3.8/3.9 are
 # dropped from the test matrix.
 from __future__ import annotations
+
 from datetime import datetime
+
+from nhs_number.constants import REGION_SCOTLAND, Region
 from nhs_number.standardise import standardise_format
-from nhs_number.constants import Region, REGION_SCOTLAND
 
 
 def calculate_checksum(identifier_digits: str) -> int | None:
@@ -87,4 +89,4 @@ def is_valid(nhs_number: str, for_region: Region = None) -> bool:
     # NOTE: a checksum of 10 is invalid (and is quoted as a special case),
     # but the check for equality
     # will catch that circumstance anyway
-    return False if calculated_checksum != check_digit else True
+    return calculated_checksum == check_digit

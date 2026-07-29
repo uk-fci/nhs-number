@@ -10,22 +10,23 @@ without affecting the namespacing of the original library.
 # third-party imports
 
 # local imports
-from nhs_number.constants import REGIONS, Region
 from nhs_number.constants import (
-    REGION_UNALLOCATED,
-    REGION_RESERVED,
-    REGION_ENGLAND,
-    REGION_WALES,
-    REGION_IOM,
-    REGION_ENGLAND_WALES_IOM,
-    REGION_SCOTLAND,
-    REGION_NORTHERN_IRELAND,
-    REGION_SYNTHETIC,
+    FULL_RANGE,
     REGION_EIRE,
+    REGION_ENGLAND,
+    REGION_ENGLAND_WALES_IOM,
+    REGION_IOM,
+    REGION_NORTHERN_IRELAND,
+    REGION_RESERVED,
+    REGION_SCOTLAND,
+    REGION_SYNTHETIC,
+    REGION_UNALLOCATED,
+    REGION_WALES,
+    REGIONS,
+    Region,
 )
-from nhs_number.constants import FULL_RANGE
 from nhs_number.details import NhsNumber
 from nhs_number.disguise import disguise
 from nhs_number.generate import generate
-from nhs_number.standardise import standardise_format, normalise_number
-from nhs_number.validate import is_valid, calculate_checksum
+from nhs_number.standardise import normalise_number, standardise_format
+from nhs_number.validate import calculate_checksum, is_valid

@@ -14,7 +14,7 @@ Contributors
 # local imports
 from nhs_number import REGIONS
 from nhs_number.standardise import standardise_format
-from nhs_number.validate import is_valid, calculate_checksum
+from nhs_number.validate import calculate_checksum, is_valid
 
 
 class NhsNumber:
@@ -89,7 +89,7 @@ class NhsNumber:
         self.region = None
         self.region_comment = "Number did not match a known NHS number range"
         if standardised:
-            for _, region in REGIONS.items():
+            for region in REGIONS.values():
                 if region.contains_number(standardised):
                     self.region = region
                     self.region_comment = region.label

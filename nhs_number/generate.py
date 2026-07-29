@@ -13,12 +13,12 @@ import random
 # standard imports
 from random import randint
 
-# third-party imports
+from nhs_number import REGION_SCOTLAND, Region
+from nhs_number.constants import RANGE_NOT_ISSUED_SYNTHETIC
 
+# third-party imports
 # local imports
 from nhs_number.validate import calculate_checksum
-from nhs_number import Region, REGION_SCOTLAND
-from nhs_number.constants import RANGE_NOT_ISSUED_SYNTHETIC
 
 
 def generate(
@@ -77,7 +77,7 @@ def generate(
             else:
                 wrong_checksum_str = checksum_str
                 while wrong_checksum_str == checksum_str:
-                    wrong_checksum_str = str(random.choice(range(0, 10)))
+                    wrong_checksum_str = str(random.choice(range(10)))
                 nhs_numbers.append(candidate_str + wrong_checksum_str)
 
     return nhs_numbers
