@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
         # One Windows job, so that platform-specific breakage is caught here
         # rather than by a contributor. Issue #80 was exactly this: the csv
         # field size limit overflows a 32-bit C long on Windows, which an

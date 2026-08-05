@@ -1,19 +1,14 @@
-[tool.poetry]
+[project]
 name = "nhs-number"
-version = "2.1.0"
+version = "3.0.0"
 description = "Python package to provide utilities for NHS Numbers, including validity checks, normalisation, and generation."
 authors = [
-    "Andy Law <andy.law@roslin.ed.ac.uk>",
-    "Marcus Baw <marcus@marcusbaw.com>",
-    ]
+    { name = "Andy Law", email = "andy.law@roslin.ed.ac.uk" },
+    { name = "Marcus Baw", email = "marcus@marcusbaw.com" },
+]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "nhs_number"}]
-homepage = "https://uk-fci.github.io/nhs-number/"
-documentation = "https://uk-fci.github.io/nhs-number/"
-repository = "https://github.com/uk-fci/nhs-number"
-
-exclude = ["tests/local-test-data/*"]
+requires-python = ">=3.10"
 
 classifiers = [
     'Development Status :: 5 - Production/Stable',
@@ -24,28 +19,29 @@ classifiers = [
     'Intended Audience :: Healthcare Industry',
     'Intended Audience :: Science/Research',
     'Topic :: Scientific/Engineering :: Medical Science Apps.',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.12',
     'Programming Language :: Python :: 3.13',
     'Programming Language :: Python :: 3.14',
-    ]
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
+dependencies = []
 
-[tool.poetry.dev-dependencies]
-pytest = "^9.0.0"
-black = "^26.0.0"
-
-[tool.poetry.urls]
+[project.urls]
+Homepage = "https://uk-fci.github.io/nhs-number/"
+Documentation = "https://uk-fci.github.io/nhs-number/"
+Repository = "https://github.com/uk-fci/nhs-number"
 "Issue Tracker" = "https://github.com/uk-fci/nhs-number/issues"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry]
+packages = [{ include = "nhs_number" }]
+exclude = ["tests/local-test-data/*"]
 
-[tool.black]
-line-length = 79
+[tool.poetry.group.dev.dependencies]
+pytest = "^9.0.0"
+ruff = "^0.15.0"
+
+[build-system]
+requires = ["poetry-core>=2.0"]
+build-backend = "poetry.core.masonry.api"
