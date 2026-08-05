@@ -5,32 +5,11 @@
 # if a future Ruff release alters its defaults.
 
 target-version = "py310"
-line-length = 88
-indent-width = 4
-
-# Exclude generated / vendored / test-fixture content in addition to Ruff's
-# standard exclude list (.git, .venv, __pycache__, build, dist, etc.).
-extend-exclude = ["tests/local-test-data"]
+line-length = 79
 
 [lint]
 # Default Ruff rule selection: Pyflakes (F) plus the subset of pycodestyle
 # errors Ruff enables out of the box (E4 imports, E7 statements, E9 runtime).
-select = ["E4", "E7", "E9", "F"]
+select = ["E4", "E7", "E9", "F", "I"]
 ignore = []
 
-# Allow autofix for all enabled rules when `--fix` is passed.
-fixable = ["ALL"]
-unfixable = []
-
-# Default naming convention for dunder-like variables recognised as valid.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-
-[format]
-# Default Ruff formatter behaviour (Black-compatible).
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
-
-[lint.pydocstyle]
-convention = "pep257"
