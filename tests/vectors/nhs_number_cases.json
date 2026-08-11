@@ -69,6 +69,82 @@
     { "input": "4000000632", "region": "ENGLAND_WALES_IOM", "valid": true },
     { "input": "9876543210", "region": "ENGLAND_WALES_IOM", "valid": false }
   ],
+  "is_valid_with_sex": [
+    {
+      "input": "0101011113",
+      "sex": "male",
+      "valid": true,
+      "note": "9th digit is odd - male by parity"
+    },
+    {
+      "input": "0101011113",
+      "sex": "female",
+      "valid": false,
+      "note": "mismatch: 9th digit is odd (male), not even"
+    },
+    {
+      "input": "0101011121",
+      "sex": "female",
+      "valid": true,
+      "note": "9th digit is even - female by parity"
+    },
+    {
+      "input": "0101011121",
+      "sex": "male",
+      "valid": false,
+      "note": "mismatch: 9th digit is even (female), not odd"
+    },
+    {
+      "input": "0101011113",
+      "sex": 1,
+      "valid": true,
+      "note": "NHS numeric code for male - see #66"
+    },
+    { "input": "0101011113", "sex": 2, "valid": false },
+    {
+      "input": "0101011113",
+      "sex": "indeterminate",
+      "valid": true,
+      "note": "inert - a single parity digit cannot express this state"
+    },
+    { "input": "0101011113", "sex": "not_known", "valid": true },
+    {
+      "input": "0101011113",
+      "sex": 9,
+      "valid": true,
+      "note": "inert - retired PERSON GENDER CODE 'Not Specified' / current 'Indeterminate'"
+    },
+    {
+      "input": "0101011113",
+      "sex": 0,
+      "valid": true,
+      "note": "inert - retired PERSON GENDER CODE 'Not Known'"
+    },
+    {
+      "input": "0101011113",
+      "sex": "X",
+      "valid": true,
+      "note": "inert - current PERSON STATED GENDER CODE / PERSON PHENOTYPIC SEX 'Not Known'"
+    },
+    {
+      "input": "4000000632",
+      "sex": "female",
+      "valid": true,
+      "note": "not a CHI number - sex has no effect either way"
+    },
+    {
+      "input": "0101011113",
+      "sex": "woman",
+      "raises": true,
+      "note": "unrecognised word"
+    },
+    {
+      "input": "0101011113",
+      "sex": 3,
+      "raises": true,
+      "note": "unrecognised numeric code"
+    }
+  ],
   "region_of": [
     { "number": "0101011113", "region": "SCOTLAND" },
     { "number": "3462950622", "region": "NORTHERN_IRELAND" },

@@ -99,6 +99,19 @@ def test_is_valid_for_region_vectors(case):
 
 
 @pytest.mark.parametrize(
+    "case",
+    _cases("is_valid_with_sex"),
+    ids=lambda c: f'{c["input"]}-sex={c["sex"]!r}',
+)
+def test_is_valid_with_sex_vectors(case):
+    if case.get("raises"):
+        with pytest.raises(ValueError):
+            is_valid(case["input"], sex=case["sex"])
+    else:
+        assert is_valid(case["input"], sex=case["sex"]) is case["valid"]
+
+
+@pytest.mark.parametrize(
     "case", _cases("region_of"), ids=lambda c: c["number"]
 )
 def test_region_of_vectors(case):

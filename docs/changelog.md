@@ -3,6 +3,10 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 2.2.0
+
+- Adds an optional `sex` keyword to `is_valid()` and `NhsNumber()`. If the number is a Scotland CHI number, checks the parity of its 9th digit (odd=male, even=female) against the supplied sex; a mismatch makes the number invalid. Has no effect on non-CHI numbers, on values that cannot express a determinate sex (`"indeterminate"`, `"not_known"`), or when omitted (the default) - existing calls are unaffected. Accepts both words and the NHS's numeric/letter codes (`1`/`2` for male/female, `9`/`0`/`"X"` for indeterminate/not-known), so a value can be passed straight from a database column without translation. Raises `ValueError` for an unrecognised value. See [Sex and gender in this library](sex-and-gender.md) and issue #66 for the full reasoning and the NHS Data Dictionary references behind the design.
+
 ## 2.1.0
 
 - Adds `disguise()`, which generates a deterministic, valid fake NHS/CHI/HSC number from a real one given a seed. The same number and seed always produce the same fake, so a dataset can be de-identified consistently. NHS numbers are replaced from the synthetic range so a fake can never collide with a live issued number; CHI fakes carry a different, randomly chosen date of birth with digits 7-8 set to `99` to mark them as fake. Contributed by @andyatterton.

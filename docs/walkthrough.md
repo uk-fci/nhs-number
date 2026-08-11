@@ -124,7 +124,23 @@ is_valid('0113011113')
 
 Both numbers have a valid check digit. The second is rejected because `011301` claims a **13th month**.
 
-## 7. Getting the details, not just true/false
+## 7. Optionally, check the CHI number's sex too
+
+A CHI number's 9th digit also encodes sex, by parity - odd for male, even for female. `is_valid()` never checks this unless you ask it to.
+
+```python
+from nhs_number import is_valid
+
+is_valid('0101011113', sex='male')
+# True
+
+is_valid('0101011113', sex='female')
+# False
+```
+
+Both numbers above are the same CHI number - only the expected sex differs. It only ever affects the result for an actual CHI number and a determinate `"male"`/`"female"` value; everything else (a non-CHI number, `"indeterminate"`, `"not_known"`, or omitting `sex` entirely) leaves the result unchanged. See [Sex and gender in this library](sex-and-gender.md) for the full reasoning, including why the parameter is called `sex` rather than `gender`.
+
+## 8. Getting the details, not just true/false
 
 When you want to know *why*, use the `NhsNumber` object.
 
@@ -166,7 +182,7 @@ bad.region_comment
 # 'Number did not match a known NHS number range'
 ```
 
-## 8. Generating numbers for testing
+## 9. Generating numbers for testing
 
 Need test data? `generate()` produces valid numbers - and **by default it only draws from the synthetic/test range**, so a generated number can never collide with a real patient's.
 
@@ -239,7 +255,7 @@ is_valid(generate(valid=False)[0])
 !!! warning "Only `for_region=REGION_SYNTHETIC` is guaranteed safe"
     The default is the synthetic range, which is safe. But if you explicitly ask for a live region - England, Scotland, Northern Ireland - you will get numbers from a range that real patients are issued from. Never use those against live systems.
 
-## 9. Disguising real numbers
+## 10. Disguising real numbers
 
 New in 2.1.0. `disguise()` turns a real number into a fake one that is still structurally valid, deterministically - the same number and seed always give the same fake, so a dataset stays internally consistent.
 
@@ -285,12 +301,13 @@ The date is deliberately not preserved - a date of birth is identifying in its o
 !!! warning "Disguising is not anonymisation"
     The mapping is one-way (you cannot recover the original from the fake and the seed), but anyone holding **both** your seed and your original data can reproduce it. Treat the seed as a secret, and treat disguised data according to your own information-governance rules.
 
-## 10. Recap
+## 11. Recap
 
 | You want to… | Use |
 | --- | --- |
 | check a number | `is_valid(number)` |
 | check it belongs to a region | `is_valid(number, for_region=REGION_X)` |
+| check a CHI number's sex digit | `is_valid(number, sex="male")` |
 | tidy a number for storage | `normalise_number(number)` |
 | find out *why* it failed | `NhsNumber(number)` |
 | make safe test numbers | `generate()` |

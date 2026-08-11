@@ -12,6 +12,7 @@ nav:
   - Introduction:
       - "index.md"
       - About NHS Numbers: "nhs-numbers.md"
+      - Sex and gender in this library: "sex-and-gender.md"
   - Getting Started:
       - Installation: "installation.md"
       - Walkthrough: "walkthrough.md"

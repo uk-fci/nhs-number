@@ -19,6 +19,7 @@ Returns `False` if the NHS Number is not valid.
       - `123-456-7890`
       - `1234567890`
 - `for_region` (*optional, default=None, `Region`*): If provided, additionally validates number is included within the given [`Region`](#regions) range.
+- `sex` (*optional, keyword-only, default=None, `str | int`*): If provided and the number is a Scotland CHI number, checks the number's parity digit against the supplied sex. See [Sex and gender in this library](sex-and-gender.md) for the full behaviour and accepted values.
 
 ```python
 import nhs_number
@@ -46,6 +47,21 @@ nhs_number.is_valid('0101011113')
 nhs_number.is_valid('0113011113')
 # False - there is no 13th month
 ```
+
+A CHI number's 9th digit also encodes sex by parity (odd=male, even=female). Optionally check it with `sex=`:
+
+```python
+nhs_number.is_valid('0101011113', sex='male')
+# True  - 9th digit is odd, matches
+
+nhs_number.is_valid('0101011113', sex='female')
+# False - 9th digit is odd, mismatch
+
+nhs_number.is_valid('0101011113', sex=1)
+# True  - the NHS numeric code for male works too
+```
+
+Omitting `sex`, passing a non-CHI number, or passing a value that can't express a determinate sex (`"indeterminate"`, `"not_known"`, or their NHS codes) never affects the result - see [Sex and gender in this library](sex-and-gender.md) for the full table of accepted values and the reasoning behind them.
 
 ## `normalise_number()`
 
@@ -152,6 +168,16 @@ nhs_number = NhsNumber('9876543210')
 
 vars(nhs_number)
 # {'nhs_number': '9876543210', 'identifier_digits': '987654321', 'check_digit': 0, 'valid': True, 'calculated_checksum': 0, 'region': <nhs_number.constants.Region object at 0x000001A0AD3CD490>, 'region_comment': 'Not to be issued (Synthetic/test patients PDS)'}
+```
+
+`NhsNumber` accepts the same `sex=` keyword as `is_valid()`, and a mismatch is reflected in `.valid`:
+
+```python
+NhsNumber('0101011113', sex='male').valid
+# True
+
+NhsNumber('0101011113', sex='female').valid
+# False
 ```
 
 ## Regions

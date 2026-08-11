@@ -36,6 +36,8 @@ class NhsNumber:
     valid: bool
         Whether the NHS number is valid or not according to the checksum
         comparison. ``False`` for any input that ``is_valid()`` would reject.
+        If ``sex`` is supplied and the number is a Scotland CHI number, a
+        mismatch with the number's parity digit also makes this ``False``.
     calculated_checksum: int | None
         The checksum calculated from the identifier digits, so you can compare
         it to the check digit. ``None`` if the input could not be parsed.
@@ -45,6 +47,13 @@ class NhsNumber:
     region_comment: str
         The label of the matched region, or an explanatory message if no
         region matched.
+
+    Optional keyword argument:
+
+    sex: str | int | None
+        If the number is a Scotland CHI number, checks that the parity of
+        its 9th digit matches the supplied sex - see ``is_valid()`` for the
+        accepted values and full behaviour, which this delegates to.
 
     Usage:
     >>> from nhs_number import NhsNumber
@@ -64,7 +73,7 @@ class NhsNumber:
 
     """
 
-    def __init__(self, nhs_number):
+    def __init__(self, nhs_number, *, sex=None):
         self.nhs_number = nhs_number
 
         # Standardise first so formatted strings ("987 654 3210"), ints, and
@@ -79,12 +88,16 @@ class NhsNumber:
             self.calculated_checksum = calculate_checksum(
                 self.identifier_digits
             )
-            self.valid = is_valid(standardised)
         else:
             self.identifier_digits = ""
             self.check_digit = None
             self.calculated_checksum = None
-            self.valid = False
+
+        # is_valid() validates `sex` before it looks at the number itself,
+        # so call it unconditionally (not only when standardised is
+        # truthy) - an unrecognised sex value should raise the same way
+        # whether or not nhs_number itself is well-formed.
+        self.valid = is_valid(nhs_number, sex=sex)
 
         self.region = None
         self.region_comment = "Number did not match a known NHS number range"
