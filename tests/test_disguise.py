@@ -49,6 +49,7 @@ def test_generate_fake_chi_number_has_99_constraint():
 def test_generate_fake_hsc_number_is_valid():
     fake = disguise("3200000010", seed=1)
     assert is_valid(fake)
+    assert fake[6:8] == "99"
     assert len(fake) == 10
 
 
