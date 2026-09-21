@@ -72,6 +72,7 @@ class NhsNumber:
         # that cannot be coerced to a 10-digit NHS number format (including
         # None and other unsupported types).
         standardised = standardise_format(nhs_number)
+        self.standardised = standardised
 
         if standardised:
             self.identifier_digits = standardised[:-1]
