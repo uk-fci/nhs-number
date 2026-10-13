@@ -62,6 +62,7 @@ This project is **MIT licensed**, and that covers the test vectors as much as th
 | Language | Library | Notes |
 | --- | --- | --- |
 | Clojure / ClojureScript | [wardle/nhs-number](https://github.com/wardle/nhs-number) by Mark Wardle | Validation, formatting and generation of UK NHS Numbers. Eclipse Public License 2.0. |
+| Rust | [joelparkerhenderson/nhs-number-using-rust](https://github.com/joelparkerhenderson/nhs-number-using-rust) by Joel Parker Henderson | Also published as [nhs-number on crates.io](https://crates.io/crates/nhs-number). |
 
 These are independent projects, not maintained by us - but they solve the same problem, and if one of them fits your stack better than porting the algorithm yourself, use it.
 
