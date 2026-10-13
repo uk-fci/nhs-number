@@ -27,6 +27,9 @@ class NhsNumber:
         formatted string ("987 654 3210"), an int, or any other input — in
         which case the remaining attributes report invalidity rather than
         raising.
+    standardised: str
+        The supplied NHS number standardised to ten digits, or an empty string
+        if the input could not be parsed.
     identifier_digits: str
         The first 9 digits of the standardised NHS number. Empty string if the
         input could not be parsed into a 10-digit NHS number format.

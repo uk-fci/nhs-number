@@ -17,6 +17,7 @@ def test_valid_synthetic_nhs_number_details():
     number = NhsNumber("9876543210")
 
     assert number.nhs_number == "9876543210"
+    assert number.standardised == "9876543210"
     assert number.identifier_digits == "987654321"
     assert number.check_digit == 0
     assert number.valid == True
@@ -86,6 +87,7 @@ def test_nhs_number_below_all_regions_has_no_region():
 )
 def test_nhs_number_accepts_formatted_input(formatted):
     n = NhsNumber(formatted)
+    assert n.standardised == "9876543210"
     assert n.identifier_digits == "987654321"
     assert n.check_digit == 0
     assert n.valid is True
@@ -111,6 +113,7 @@ def test_nhs_number_accepts_int_input():
 )
 def test_nhs_number_invalid_input_constructs_cleanly(bad_input):
     n = NhsNumber(bad_input)
+    assert n.standardised == ""
     assert n.valid is False
     assert n.region is None
     assert n.identifier_digits == ""
