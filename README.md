@@ -49,6 +49,7 @@ It is MIT licensed, like the rest of the project: **use it freely, no permission
 Similar libraries for other languages:
 
 * Clojure / ClojureScript: [wardle/nhs-number](https://github.com/wardle/nhs-number) by Mark Wardle - validation, formatting and generation of UK NHS Numbers
+* Rust: [joelparkerhenderson/nhs-number-using-rust](https://github.com/joelparkerhenderson/nhs-number-using-rust) by Joel Parker Henderson - also published as [nhs-number on crates.io](https://crates.io/crates/nhs-number)
 
 If you maintain one we have missed, please [open an issue](https://github.com/uk-fci/nhs-number/issues) and we will add it.
 
