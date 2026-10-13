@@ -120,6 +120,8 @@ def disguise(real_nhs_number: str, *, seed: int) -> str:
         else:
             min_value, max_value = _fake_range(organization)
             candidate = str(rng.randint(min_value, max_value))
+            if organization == OrganizationType.HSC:
+                candidate = f"{candidate[:6]}99{candidate[8:]}"
 
         check_digit = calculate_checksum(candidate)
 
