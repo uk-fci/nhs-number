@@ -36,6 +36,7 @@ PUBLIC_NAMES = [
     # Validate
     "is_valid",
     "calculate_checksum",
+    "calculate_checksum_mod10",
 ]
 
 
