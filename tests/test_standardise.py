@@ -190,3 +190,20 @@ def test_format_internal_tab_and_newline_whitespace():
     """
     assert standardise_format("\t1234567890\n") == "1234567890"
     assert standardise_format("\n\n1234567890\t\t") == "1234567890"
+
+
+def test_format_internal_non_breaking_space():
+    """Numbers copied from NHS system screens can carry non-breaking spaces
+    (\\xa0) between the digit groups; they standardise like ordinary spaces.
+    See issue #43.
+    """
+    assert standardise_format("123\xa0456\xa07891") == "1234567891"
+    assert standardise_format("123 456\xa07891") == "1234567891"
+    assert standardise_format("\xa0123 456 7891\xa0") == "1234567891"
+
+
+def test_format_non_breaking_space_with_hyphens():
+    """A non-breaking space mixed with hyphens is still not one of the
+    recognised formats — the fix does not loosen them.
+    """
+    assert standardise_format("123\xa0456-7891") == ""
