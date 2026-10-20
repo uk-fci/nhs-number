@@ -16,7 +16,7 @@ from random import randint
 # third-party imports
 
 # local imports
-from nhs_number.validate import calculate_checksum
+from nhs_number.validate import calculate_checksum, calculate_checksum_mod10
 from nhs_number import Region, REGION_SCOTLAND
 from nhs_number.constants import RANGE_NOT_ISSUED_SYNTHETIC
 
@@ -75,8 +75,15 @@ def generate(
             if valid:
                 nhs_numbers.append(candidate_str + checksum_str)
             else:
+                # An "invalid" number must fail validation: for CHI candidates
+                # the wrong check digit has to dodge both the modulus 11 and
+                # the modulus 10 calculations (both are accepted for CHI
+                # numbers since August 2026 - see issue #107).
+                avoid = {checksum_str}
+                if for_region == REGION_SCOTLAND:
+                    avoid.add(str(calculate_checksum_mod10(candidate_str)))
                 wrong_checksum_str = checksum_str
-                while wrong_checksum_str == checksum_str:
+                while wrong_checksum_str in avoid:
                     wrong_checksum_str = str(random.choice(range(0, 10)))
                 nhs_numbers.append(candidate_str + wrong_checksum_str)
 

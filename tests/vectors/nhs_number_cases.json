@@ -3,14 +3,24 @@
   "_licence": "MIT, like the rest of the project. You may use these vectors freely to build an NHS number implementation in any language, including commercially. Attribution is appreciated but not required. See https://uk-fci.github.io/nhs-number/other-languages/",
   "_not_covered": "Deliberately excluded: (1) language-specific input robustness - Python's guarantee that None, lists, floats and arbitrary objects never raise is tested natively, since 'unparseable input' differs by language; (2) generate(), which is random - assert its properties instead (valid, in the requested region, synthetic range by default); (3) disguise() outputs, which come from a seeded PRNG and would require reimplementing CPython's Mersenne Twister bit-for-bit - assert its properties instead (deterministic per number+seed, output valid, NHS fakes from the synthetic range, CHI fakes carrying '99' at digits 7-8 and a different date of birth).",
   "calculate_checksum": [
-    { "identifier": "987654321", "checksum": 0 },
-    { "identifier": "400000063", "checksum": 2 },
+    {
+      "identifier": "987654321",
+      "checksum": 0
+    },
+    {
+      "identifier": "400000063",
+      "checksum": 2
+    },
     {
       "identifier": "000000006",
       "checksum": 10,
       "note": "checksum 10 means no single check digit can match - any number with this identifier is invalid"
     },
-    { "identifier": "12345", "checksum": null, "note": "fewer than 9 digits" },
+    {
+      "identifier": "12345",
+      "checksum": null,
+      "note": "fewer than 9 digits"
+    },
     {
       "identifier": "1234567890123",
       "checksum": null,
@@ -18,23 +28,65 @@
     }
   ],
   "standardise": [
-    { "input": "9876543210", "output": "9876543210" },
-    { "input": "987 654 3210", "output": "9876543210" },
-    { "input": "987-654-3210", "output": "9876543210" },
-    { "input": "  9876543210  ", "output": "9876543210" },
-    { "input": "", "output": "" },
-    { "input": "abcdefghij", "output": "" },
-    { "input": "987654321X", "output": "", "note": "non-digit character" }
+    {
+      "input": "9876543210",
+      "output": "9876543210"
+    },
+    {
+      "input": "987 654 3210",
+      "output": "9876543210"
+    },
+    {
+      "input": "987-654-3210",
+      "output": "9876543210"
+    },
+    {
+      "input": "  9876543210  ",
+      "output": "9876543210"
+    },
+    {
+      "input": "",
+      "output": ""
+    },
+    {
+      "input": "abcdefghij",
+      "output": ""
+    },
+    {
+      "input": "987654321X",
+      "output": "",
+      "note": "non-digit character"
+    }
   ],
   "standardise_from_int": [
-    { "input": 9876543210, "output": "9876543210" },
-    { "input": 0, "output": "0000000000" },
-    { "input": -1, "output": "", "note": "negative" },
-    { "input": 99999999999, "output": "", "note": "more than 10 digits" }
+    {
+      "input": 9876543210,
+      "output": "9876543210"
+    },
+    {
+      "input": 0,
+      "output": "0000000000"
+    },
+    {
+      "input": -1,
+      "output": "",
+      "note": "negative"
+    },
+    {
+      "input": 99999999999,
+      "output": "",
+      "note": "more than 10 digits"
+    }
   ],
   "is_valid": [
-    { "input": "9876543210", "valid": true },
-    { "input": "1234567890", "valid": false },
+    {
+      "input": "9876543210",
+      "valid": true
+    },
+    {
+      "input": "1234567890",
+      "valid": false
+    },
     {
       "input": "0000000000",
       "valid": true,
@@ -45,8 +97,14 @@
       "valid": true,
       "note": "formatted input is standardised first"
     },
-    { "input": "", "valid": false },
-    { "input": "garbage", "valid": false },
+    {
+      "input": "",
+      "valid": false
+    },
+    {
+      "input": "garbage",
+      "valid": false
+    },
     {
       "input": "0101011113",
       "valid": true,
@@ -56,35 +114,116 @@
       "input": "0113011113",
       "valid": false,
       "note": "Scotland CHI, month 13 - impossible date; checksum is valid, only the date rejects it"
+    },
+    {
+      "input": "0101201234",
+      "valid": true,
+      "note": "Scotland CHI, 01/01/20 - valid under the modulus 10 check only (mod 11 gives 0)"
+    },
+    {
+      "input": "4000000630",
+      "valid": false,
+      "note": "mod 10 check digit matches, but the number is in the England/Wales range, where only mod 11 applies"
+    },
+    {
+      "input": "0113201230",
+      "valid": false,
+      "note": "mod 10 check digit matches, but 01/13/20 is not a real date, so the CHI date-of-birth rule rejects it"
     }
   ],
   "is_valid_for_region": [
-    { "input": "0101011113", "region": "SCOTLAND", "valid": true },
+    {
+      "input": "0101011113",
+      "region": "SCOTLAND",
+      "valid": true
+    },
     {
       "input": "9876543210",
       "region": "SCOTLAND",
       "valid": false,
       "note": "synthetic number, not in the Scotland range"
     },
-    { "input": "4000000632", "region": "ENGLAND_WALES_IOM", "valid": true },
-    { "input": "9876543210", "region": "ENGLAND_WALES_IOM", "valid": false }
+    {
+      "input": "4000000632",
+      "region": "ENGLAND_WALES_IOM",
+      "valid": true
+    },
+    {
+      "input": "9876543210",
+      "region": "ENGLAND_WALES_IOM",
+      "valid": false
+    }
   ],
   "region_of": [
-    { "number": "0101011113", "region": "SCOTLAND" },
-    { "number": "3462950622", "region": "NORTHERN_IRELAND" },
-    { "number": "4000000632", "region": "ENGLAND_WALES_IOM" },
-    { "number": "8453035113", "region": "EIRE" },
-    { "number": "9234760735", "region": "SYNTHETIC" }
+    {
+      "number": "0101011113",
+      "region": "SCOTLAND"
+    },
+    {
+      "number": "3462950622",
+      "region": "NORTHERN_IRELAND"
+    },
+    {
+      "number": "4000000632",
+      "region": "ENGLAND_WALES_IOM"
+    },
+    {
+      "number": "8453035113",
+      "region": "EIRE"
+    },
+    {
+      "number": "9234760735",
+      "region": "SYNTHETIC"
+    }
   ],
   "range_boundaries": [
-    { "range": "UNALLOCATED_1", "start": 10, "end": 99999999 },
+    {
+      "range": "UNALLOCATED_1",
+      "start": 10,
+      "end": 99999999
+    },
     {
       "range": "SCOTLAND",
       "start": 100000000,
       "end": 3112999999,
       "note": "corrected boundary - issue #59"
     },
-    { "range": "NORTHERN_IRELAND", "start": 3200000000, "end": 3999999999 },
-    { "range": "SYNTHETIC", "start": 9000000000, "end": 9999999999 }
+    {
+      "range": "NORTHERN_IRELAND",
+      "start": 3200000000,
+      "end": 3999999999
+    },
+    {
+      "range": "SYNTHETIC",
+      "start": 9000000000,
+      "end": 9999999999
+    }
+  ],
+  "calculate_checksum_mod10": [
+    {
+      "identifier": "010120123",
+      "checksum": 4,
+      "note": "CHI (Scotland) modulus 10 check digit; the modulus 11 calculation gives 0, so a full number with this check digit is valid under mod 10 only"
+    },
+    {
+      "identifier": "010101123",
+      "checksum": 7,
+      "note": "the modulus 11 calculation also gives 7, so this identifier is valid under both"
+    },
+    {
+      "identifier": "400000063",
+      "checksum": 0,
+      "note": "mod 10 matches, but this identifier is England/Wales range where only mod 11 applies"
+    },
+    {
+      "identifier": "12345",
+      "checksum": null,
+      "note": "fewer than 9 digits"
+    },
+    {
+      "identifier": "1234567890123",
+      "checksum": null,
+      "note": "more than 9 digits"
+    }
   ]
 }
