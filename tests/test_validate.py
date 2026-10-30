@@ -266,3 +266,15 @@ def test_chi_mod10_still_requires_a_real_date():
     # "0113201230" passes the mod 10 check but 01/13/20 is not a real date,
     # so it is rejected by the CHI date-of-birth rule.
     assert is_valid("0113201230") is False
+
+
+def test_check_mod10_false_restores_v2_behaviour():
+    # "0101201234" passes the mod 10 check only: with check_mod10=False the
+    # number is rejected again, restoring the version 2.x behaviour.
+    assert is_valid("0101201234") is True
+    assert is_valid("0101201234", check_mod10=False) is False
+
+
+def test_check_mod10_false_still_accepts_mod11_chi():
+    # "0101011237" passes both checks, so it stays valid with the flag off.
+    assert is_valid("0101011237", check_mod10=False) is True
