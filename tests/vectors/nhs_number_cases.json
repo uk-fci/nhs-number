@@ -56,6 +56,21 @@
       "input": "0113011113",
       "valid": false,
       "note": "Scotland CHI, month 13 - impossible date; checksum is valid, only the date rejects it"
+    },
+    {
+      "input": "0101201234",
+      "valid": true,
+      "note": "Scotland CHI, 01/01/20 - valid under the modulus 10 check only (mod 11 gives 0)"
+    },
+    {
+      "input": "4000000630",
+      "valid": false,
+      "note": "mod 10 check digit matches, but the number is in the England/Wales range, where only mod 11 applies"
+    },
+    {
+      "input": "0113201230",
+      "valid": false,
+      "note": "mod 10 check digit matches, but 01/13/20 is not a real date, so the CHI date-of-birth rule rejects it"
     }
   ],
   "is_valid_for_region": [
@@ -86,5 +101,24 @@
     },
     { "range": "NORTHERN_IRELAND", "start": 3200000000, "end": 3999999999 },
     { "range": "SYNTHETIC", "start": 9000000000, "end": 9999999999 }
+  ],
+  "calculate_checksum_mod10": [
+    {
+      "identifier": "010120123",
+      "checksum": 4,
+      "note": "CHI (Scotland) modulus 10 check digit; the modulus 11 calculation gives 0, so a full number with this check digit is valid under mod 10 only"
+    },
+    {
+      "identifier": "010101123",
+      "checksum": 7,
+      "note": "the modulus 11 calculation also gives 7, so this identifier is valid under both"
+    },
+    {
+      "identifier": "400000063",
+      "checksum": 0,
+      "note": "mod 10 matches, but this identifier is England/Wales range where only mod 11 applies"
+    },
+    { "identifier": "12345", "checksum": null, "note": "fewer than 9 digits" },
+    { "identifier": "1234567890123", "checksum": null, "note": "more than 9 digits" }
   ]
 }

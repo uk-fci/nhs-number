@@ -23,6 +23,10 @@ The use of the NHS number in health and care organisations in England is specifi
 
 Scotland calls the identifier a Community Health Index (CHI) Number, using a similar standard for check-digit validation. However, the first 6 digits of the number are the date of birth in the format `DDMMYY` rather than a sequential number. Following this, there is a 3-sequence number.
 
+Historically the check digit was calculated with the modulus 11 method. From August 2026, CHI numbers are also issued with a modulus 10 check digit (a Luhn-style sum), so `is_valid()` accepts a number in the CHI range if its check digit passes either calculation. Other regions continue to use modulus 11 only. The source for the modulus 10 algorithm is Public Health Scotland's [phsmethods](https://github.com/Public-Health-Scotland/phsmethods) package and [Working with CHI numbers](https://code.publichealthscotland.scot/phsmethods/articles/chi-operations.html).
+
+This widens the set of numbers `is_valid()` accepts, so it is a semantic change to the library's rules and ships as a major version bump. Pass `check_mod10=False` to `is_valid()` to restore the version 2.x behaviour (modulus 11 only, everywhere) — the same shape as the `check_mod10` argument of Public Health Scotland's `chi_check()`.
+
 The ninth digit is always even for females and odd for males.
 
 ### Northern Ireland
