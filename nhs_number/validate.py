@@ -79,7 +79,9 @@ def calculate_checksum_mod10(identifier_digits: str) -> int | None:
     return 0 if check_digit == 10 else check_digit
 
 
-def is_valid(nhs_number: str, for_region: Region = None, check_mod10: bool = True) -> bool:
+def is_valid(
+    nhs_number: str, for_region: Region = None, check_mod10: bool = True
+) -> bool:
     """
     Checks the supplied NHS number (as a string) is valid and returns True
     or False.
