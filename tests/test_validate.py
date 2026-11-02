@@ -1,6 +1,6 @@
 import pytest
 
-from nhs_number import is_valid, calculate_checksum
+from nhs_number import is_valid, calculate_checksum, calculate_checksum_mod10
 from nhs_number import REGION_ENGLAND_WALES_IOM
 from nhs_number.constants import (
     REGION_SCOTLAND,
@@ -220,3 +220,61 @@ def test_is_valid_for_region_returns_false_for_unparseable_input():
     """
     for bad in (None, "", "garbage", 3.14, []):
         assert is_valid(bad, for_region=REGION_ENGLAND_WALES_IOM) is False
+
+
+# From August 2026, CHI numbers (Scotland) are issued with a modulus 10
+# check digit as well as modulus 11. These are the worked examples from
+# Public Health Scotland's own implementation (phsmethods, R/chi_check.R),
+# which is the source of truth for the algorithm. See issue #107.
+
+
+def test_mod10_checksum_matches_phs_examples():
+    # "0101201234" is valid under mod 10 only; "0101011237" passes both.
+    assert calculate_checksum_mod10("010120123") == 4
+    assert calculate_checksum_mod10("010101123") == 7
+
+
+def test_mod10_checksum_returns_none_for_wrong_lengths():
+    assert calculate_checksum_mod10("12345") is None
+    assert calculate_checksum_mod10("1234567890123") is None
+
+
+def test_chi_number_valid_under_mod10_only():
+    # Mod 11 gives 0 for this identifier, so this number was rejected before
+    # mod 10 support: it is PHS's own example of a valid CHI.
+    assert is_valid("0101201234") is True
+
+
+def test_chi_number_valid_under_mod11_still_valid():
+    assert is_valid("0101011237") is True
+
+
+def test_number_failing_both_checks_stays_invalid():
+    # PHS's worked example of an invalid checksum: passes neither mod 11
+    # nor mod 10 (and is outside the CHI range in any case).
+    assert is_valid("3213201234") is False
+
+
+def test_mod10_is_not_applied_outside_the_chi_range():
+    # "4000000630": the mod 10 calculation gives 0 and matches the check
+    # digit, but this is an England/Wales range number, where only the
+    # mod 11 check digit (2 here) applies.
+    assert is_valid("4000000630") is False
+
+
+def test_chi_mod10_still_requires_a_real_date():
+    # "0113201230" passes the mod 10 check but 01/13/20 is not a real date,
+    # so it is rejected by the CHI date-of-birth rule.
+    assert is_valid("0113201230") is False
+
+
+def test_check_mod10_false_restores_v2_behaviour():
+    # "0101201234" passes the mod 10 check only: with check_mod10=False the
+    # number is rejected again, restoring the version 2.x behaviour.
+    assert is_valid("0101201234") is True
+    assert is_valid("0101201234", check_mod10=False) is False
+
+
+def test_check_mod10_false_still_accepts_mod11_chi():
+    # "0101011237" passes both checks, so it stays valid with the flag off.
+    assert is_valid("0101011237", check_mod10=False) is True
