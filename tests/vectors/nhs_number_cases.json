@@ -22,9 +22,19 @@
     { "input": "987 654 3210", "output": "9876543210" },
     { "input": "987-654-3210", "output": "9876543210" },
     { "input": "  9876543210  ", "output": "9876543210" },
+    {
+      "input": "\t9876543210\n",
+      "output": "9876543210",
+      "note": "leading and trailing whitespace is trimmed"
+    },
     { "input": "", "output": "" },
     { "input": "abcdefghij", "output": "" },
-    { "input": "987654321X", "output": "", "note": "non-digit character" }
+    { "input": "987654321X", "output": "", "note": "non-digit character" },
+    {
+      "input": "987 654-3210",
+      "output": "",
+      "note": "mixed separators are not a supported format"
+    }
   ],
   "standardise_from_int": [
     { "input": 9876543210, "output": "9876543210" },
@@ -34,6 +44,16 @@
   ],
   "is_valid": [
     { "input": "9876543210", "valid": true },
+    {
+      "input": 9876543210,
+      "valid": true,
+      "note": "integer input is zero-padded then validated"
+    },
+    {
+      "input": 0,
+      "valid": true,
+      "note": "0000000000 has a valid checksum; range membership is a separate concern"
+    },
     { "input": "1234567890", "valid": false },
     {
       "input": "0000000000",
@@ -67,13 +87,20 @@
       "note": "synthetic number, not in the Scotland range"
     },
     { "input": "4000000632", "region": "ENGLAND_WALES_IOM", "valid": true },
-    { "input": "9876543210", "region": "ENGLAND_WALES_IOM", "valid": false }
+    { "input": "9876543210", "region": "ENGLAND_WALES_IOM", "valid": false },
+    { "input": "3462950622", "region": "NORTHERN_IRELAND", "valid": true },
+    { "input": "5726600533", "region": "RESERVED", "valid": true },
+    { "input": "8453035113", "region": "EIRE", "valid": true },
+    { "input": "0000499927", "region": "UNALLOCATED", "valid": true },
+    { "input": "9234760735", "region": "SYNTHETIC", "valid": true }
   ],
   "region_of": [
     { "number": "0101011113", "region": "SCOTLAND" },
     { "number": "3462950622", "region": "NORTHERN_IRELAND" },
     { "number": "4000000632", "region": "ENGLAND_WALES_IOM" },
+    { "number": "5726600533", "region": "RESERVED" },
     { "number": "8453035113", "region": "EIRE" },
+    { "number": "0000499927", "region": "UNALLOCATED" },
     { "number": "9234760735", "region": "SYNTHETIC" }
   ],
   "range_boundaries": [
@@ -84,7 +111,14 @@
       "end": 3112999999,
       "note": "corrected boundary - issue #59"
     },
+    { "range": "UNALLOCATED_2", "start": 3113000000, "end": 3199999999 },
     { "range": "NORTHERN_IRELAND", "start": 3200000000, "end": 3999999999 },
-    { "range": "SYNTHETIC", "start": 9000000000, "end": 9999999999 }
+    { "range": "ENGLAND_WALES_IOM_1", "start": 4000000000, "end": 4999999999 },
+    { "range": "RESERVED", "start": 5000000000, "end": 5999999999 },
+    { "range": "ENGLAND_WALES_IOM_2", "start": 6000000000, "end": 7999999999 },
+    { "range": "EIRE", "start": 8000000000, "end": 8599999999 },
+    { "range": "UNALLOCATED_3", "start": 8600000000, "end": 8999999999 },
+    { "range": "SYNTHETIC", "start": 9000000000, "end": 9999999999 },
+    { "range": "FULL", "start": 10, "end": 9999999999 }
   ]
 }

@@ -23,7 +23,7 @@ It is plain JSON, with one section per behaviour, each a list of inputs and thei
 | `is_valid` | overall validity, including formatted input and CHI date-of-birth rejection |
 | `is_valid_for_region` | validity when a specific region is required |
 | `region_of` | which region a number falls into |
-| `range_boundaries` | the exact start and end of each allocated range |
+| `range_boundaries` | the exact start and end of every named range, including unallocated, reserved, synthetic, and the full numeric range |
 
 Each case may carry a `note` explaining *why* it is what it is, which is often the most useful part - several of them encode decisions that are not obvious from the algorithm alone.
 

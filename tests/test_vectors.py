@@ -26,10 +26,17 @@ from nhs_number import (
     standardise_format,
 )
 from nhs_number.constants import (
+    FULL_RANGE,
+    RANGE_EIRE,
+    RANGE_ENGLAND_WALES_IOM_1,
+    RANGE_ENGLAND_WALES_IOM_2,
     RANGE_NORTHERN_IRELAND,
     RANGE_NOT_ISSUED_SYNTHETIC,
+    RANGE_RESERVED,
     RANGE_SCOTLAND,
     RANGE_UNALLOCATED_1,
+    RANGE_UNALLOCATED_2,
+    RANGE_UNALLOCATED_3,
 )
 
 _VECTORS = json.loads(
@@ -51,8 +58,15 @@ REGION_MAP = {
 RANGE_MAP = {
     "UNALLOCATED_1": RANGE_UNALLOCATED_1,
     "SCOTLAND": RANGE_SCOTLAND,
+    "UNALLOCATED_2": RANGE_UNALLOCATED_2,
     "NORTHERN_IRELAND": RANGE_NORTHERN_IRELAND,
+    "ENGLAND_WALES_IOM_1": RANGE_ENGLAND_WALES_IOM_1,
+    "RESERVED": RANGE_RESERVED,
+    "ENGLAND_WALES_IOM_2": RANGE_ENGLAND_WALES_IOM_2,
+    "EIRE": RANGE_EIRE,
+    "UNALLOCATED_3": RANGE_UNALLOCATED_3,
     "SYNTHETIC": RANGE_NOT_ISSUED_SYNTHETIC,
+    "FULL": FULL_RANGE,
 }
 
 
@@ -112,3 +126,11 @@ def test_range_boundary_vectors(case):
     rng = RANGE_MAP[case["range"]]
     assert rng.start == case["start"]
     assert rng.end == case["end"]
+
+
+def test_region_vectors_cover_every_public_region():
+    expected_regions = set(nhs_number.REGIONS)
+    assert {case["region"] for case in _cases("is_valid_for_region")} == (
+        expected_regions
+    )
+    assert {case["region"] for case in _cases("region_of")} == expected_regions
