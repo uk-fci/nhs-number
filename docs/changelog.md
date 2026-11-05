@@ -3,6 +3,10 @@ title: Changelog
 authors: Dr Marcus Baw
 ---
 
+## 2.2.1
+
+- Updates package metadata and documentation links for the transfer to the Open Health Tools Foundation. No library behaviour changes.
+
 ## 2.2.0
 
 - Adds `NhsNumber.standardised`, exposing the ten-digit normalised value while retaining the original input in `NhsNumber.nhs_number`.
