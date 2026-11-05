@@ -33,16 +33,14 @@ Python package to provide utilities for NHS Numbers, including validity checks, 
 
 ## Documentation
 
-All documentation is available at <https://uk-fci.github.io/nhs-number/>
-
-Please note that since the demise of the Faculty of Clinical Informatics, the domain `uk-fci.tech` has been removed from the package and replaced with `uk-fci.github.io`. This is a temporary measure until we decide what to do with the `uk-fci` GitHub organisation.
+All documentation is available at <https://ohtf.github.io/nhs-number-py/>.
 
 
 ## Implementing this in another language?
 
 Please do - and you are welcome to build on our work. We publish a language-agnostic [test vector file](tests/vectors/nhs_number_cases.json) capturing how this library behaves (checksums, standardisation, validity, CHI date-of-birth rules, regions and range boundaries), so a port in any language can check itself against the same definition of correct.
 
-It is MIT licensed, like the rest of the project: **use it freely, no permission needed.** Attribution is appreciated but not required. See [Implementing an NHS Numbers package in other languages](https://uk-fci.github.io/nhs-number/other-languages/) for what the vectors cover, what is deliberately left out and why, and how to use them.
+It is MIT licensed, like the rest of the project: **use it freely, no permission needed.** Attribution is appreciated but not required. See [Implementing an NHS Numbers package in other languages](https://ohtf.github.io/nhs-number-py/other-languages/) for what the vectors cover, what is deliberately left out and why, and how to use them.
 
 ## Other libraries
 
@@ -51,8 +49,8 @@ Similar libraries for other languages:
 * Clojure / ClojureScript: [wardle/nhs-number](https://github.com/wardle/nhs-number) by Mark Wardle - validation, formatting and generation of UK NHS Numbers
 * Rust: [joelparkerhenderson/nhs-number-using-rust](https://github.com/joelparkerhenderson/nhs-number-using-rust) by Joel Parker Henderson - also published as [nhs-number on crates.io](https://crates.io/crates/nhs-number)
 
-If you maintain one we have missed, please [open an issue](https://github.com/uk-fci/nhs-number/issues) and we will add it.
+If you maintain one we have missed, please [open an issue](https://github.com/ohtf/nhs-number-py/issues) and we will add it.
 
 ## Changelog
 
-<https://uk-fci.github.io/nhs-number/>
+<https://ohtf.github.io/nhs-number-py/changelog/>

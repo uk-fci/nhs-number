@@ -9,9 +9,9 @@ authors = [
 license = "MIT"
 readme = "README.md"
 packages = [{include = "nhs_number"}]
-homepage = "https://uk-fci.github.io/nhs-number/"
-documentation = "https://uk-fci.github.io/nhs-number/"
-repository = "https://github.com/uk-fci/nhs-number"
+homepage = "https://ohtf.github.io/nhs-number-py/"
+documentation = "https://ohtf.github.io/nhs-number-py/"
+repository = "https://github.com/ohtf/nhs-number-py"
 
 exclude = ["tests/local-test-data/*"]
 
@@ -41,7 +41,7 @@ pytest = "^9.0.0"
 black = "^26.0.0"
 
 [tool.poetry.urls]
-"Issue Tracker" = "https://github.com/uk-fci/nhs-number/issues"
+"Issue Tracker" = "https://github.com/ohtf/nhs-number-py/issues"
 
 [build-system]
 requires = ["poetry-core"]

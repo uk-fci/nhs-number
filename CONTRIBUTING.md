@@ -13,8 +13,8 @@ If you find your PR shows far more changed files than you expected, that is almo
 ## Getting set up
 
 ```bash
-git clone https://github.com/uk-fci/nhs-number.git
-cd nhs-number
+git clone https://github.com/ohtf/nhs-number-py.git
+cd nhs-number-py
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -75,7 +75,7 @@ To smoke-test a build on Test PyPI, run the **Publish library to TEST.pypi.org**
 
 ## Issues
 
-Bug reports, questions and feature ideas are all welcome in [GitHub Issues](https://github.com/uk-fci/nhs-number/issues). For a bug, the most useful thing you can include is the exact input and what you expected to happen - NHS numbers are full of edge cases, and a concrete example is worth a lot.
+Bug reports, questions and feature ideas are all welcome in [GitHub Issues](https://github.com/ohtf/nhs-number-py/issues). For a bug, the most useful thing you can include is the exact input and what you expected to happen - NHS numbers are full of edge cases, and a concrete example is worth a lot.
 
 Please do not include real patients' NHS numbers in issues, pull requests, tests or documentation. Use `generate()`, which produces numbers from the synthetic/test range by default.
 

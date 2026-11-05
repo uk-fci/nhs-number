@@ -2,7 +2,7 @@
 authors: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
-The main documentation site is at <https://uk-fci.github.io/nhs-number/>. Pushes of code to the `main` branch will automatically trigger a publication to GitHub Pages.
+The main documentation site is at <https://ohtf.github.io/nhs-number-py/>. Pushes of code to the `main` branch will automatically trigger a publication to GitHub Pages.
 
 Non-`main` branches of the documentation are no longer automatically published for review purposes:
 

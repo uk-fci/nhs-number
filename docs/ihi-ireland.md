@@ -39,4 +39,4 @@ We would be very willing to collaborate with any interested parties to add suppo
 
 - <https://www.hse.ie/eng/about/who/national-services/individual-health-identifier/>
 
-- <https://github.com/uk-fci/nhs-number/issues/9>
+- <https://github.com/ohtf/nhs-number-py/issues/9>

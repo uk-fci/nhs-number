@@ -2,8 +2,8 @@
 # Updated March 2026 to use Zensical.
 
 site_name: nhs-number
-repo_url: https://github.com/uk-fci/nhs-number
-repo_name: uk-fci/nhs-number
+repo_url: https://github.com/ohtf/nhs-number-py
+repo_name: ohtf/nhs-number-py
 
 copyright: Copyright &copy; 2021-2026 Andy Law, The University of Edinburgh, Dr Marcus Baw, and the Faculty of Clinical Informatics (now defunct)
 
@@ -29,10 +29,8 @@ nav:
 # footer links and variables
 extra:
   social:
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/ukfci
     - icon: fontawesome/brands/github
-      link: https://github.com/uk-fci
+      link: https://github.com/ohtf
 
 # theme and mkdocs additional features
 theme:
