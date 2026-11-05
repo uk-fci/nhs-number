@@ -11,7 +11,7 @@ To make that easier we publish a **language-agnostic test vector file** that cap
 
 ## The test vectors
 
-[`tests/vectors/nhs_number_cases.json`](https://github.com/uk-fci/nhs-number/blob/main/tests/vectors/nhs_number_cases.json)
+[`tests/vectors/nhs_number_cases.json`](https://github.com/ohtf/nhs-number-py/blob/main/tests/vectors/nhs_number_cases.json)
 
 It is plain JSON, with one section per behaviour, each a list of inputs and their expected results:
 
@@ -31,7 +31,7 @@ If your implementation passes these vectors, it agrees with this library. That i
 
 ### Using them
 
-Read the JSON in whatever your language's test framework prefers, and drive a table test from it. There is a worked example in [`tests/test_vectors.py`](https://github.com/uk-fci/nhs-number/blob/main/tests/test_vectors.py) - it is the same file being used to check the Python implementation, so the vectors cannot quietly rot.
+Read the JSON in whatever your language's test framework prefers, and drive a table test from it. There is a worked example in [`tests/test_vectors.py`](https://github.com/ohtf/nhs-number-py/blob/main/tests/test_vectors.py) - it is the same file being used to check the Python implementation, so the vectors cannot quietly rot.
 
 The `region` and `range` values are names (`"SCOTLAND"`, `"UNALLOCATED_1"`), so map them onto whatever you call those concepts.
 
@@ -54,7 +54,7 @@ Knowing what has been left out matters as much as what is in:
 This project is **MIT licensed**, and that covers the test vectors as much as the code. In practice:
 
 - **You may use the vectors freely**, including in a commercial product, and including in a library that competes with this one. You do not need to ask.
-- **Attribution is appreciated but not required.** If you found this useful, a line in your README saying your implementation is checked against the vectors from [uk-fci/nhs-number](https://github.com/uk-fci/nhs-number) is genuinely helpful to us - it is how other people find the project, and how we find out our work was worth doing. But it is a courtesy, not a condition. Build the thing.
+- **Attribution is appreciated but not required.** If you found this useful, a line in your README saying your implementation is checked against the vectors from [ohtf/nhs-number-py](https://github.com/ohtf/nhs-number-py) is genuinely helpful to us - it is how other people find the project, and how we find out our work was worth doing. But it is a courtesy, not a condition. Build the thing.
 - **We would love to know.** Open an issue or a discussion to tell us your implementation exists and we will add it to the list below. If you find a case where our vectors are wrong, or a case we should have covered, that is one of the most valuable contributions you can make - please raise it.
 
 ## Libraries in other languages
@@ -66,7 +66,7 @@ This project is **MIT licensed**, and that covers the test vectors as much as th
 
 These are independent projects, not maintained by us - but they solve the same problem, and if one of them fits your stack better than porting the algorithm yourself, use it.
 
-Maintaining another one? [Tell us](https://github.com/uk-fci/nhs-number/issues) and we will list it here.
+Maintaining another one? [Tell us](https://github.com/ohtf/nhs-number-py/issues) and we will list it here.
 
 ## Before you start
 
