@@ -38,6 +38,7 @@ python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 pytest = "^9.0.0"
+pytest-cov = "^7.1.0"
 black = "^26.0.0"
 
 [tool.poetry.urls]

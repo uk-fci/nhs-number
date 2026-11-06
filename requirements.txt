@@ -3,6 +3,7 @@ black
 
 # testing
 pytest
+pytest-cov
 
 #################### DOCS ####################
 # documentation site - Zensical
