@@ -45,7 +45,10 @@ def standardise_format(nhs_number) -> str:
     if isinstance(nhs_number, int):
         working_number = str(nhs_number).zfill(10)
     elif isinstance(nhs_number, str):
-        working_number = nhs_number.strip()
+        # Users paste numbers copied from NHS systems where the digit groups
+        # are separated by non-breaking spaces (\xa0); treat those like
+        # ordinary spaces so the recognised formats still match (#43)
+        working_number = nhs_number.strip().replace("\xa0", " ")
     else:
         return ""
     if re.search(GOOD_FORMAT, working_number) is None:
